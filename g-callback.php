@@ -31,7 +31,7 @@
  ('".$userData['givenName']." ".$userData['familyName']."','".$userData['email']."',
  '".$userData['id']."','".$userData['picture']."')";
 	mysqli_query($con,$sql);
-	header('Location: dashboard.php');
+	header('Location: password.php');
 	exit();
 	}
 ?>

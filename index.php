@@ -175,10 +175,10 @@
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text">
-                      <i class="material-icons">mail</i>
+                      <i class="material-icons">perm_identity</i>
                     </span>
                   </div>
-                  <input type="email" class="form-control" placeholder="Email..." required="true">
+                  <input type="text" class="form-control" placeholder="Username..." required="true">
                 </div>
                 <div class="input-group">
                   <div class="input-group-prepend">
@@ -202,7 +202,7 @@
 
 		<div class="col-lg-4 col-md-6 ml-auto mr-auto">
           <div class="card card-login">
-            <form class="form" method="" action="">
+            <form class="form" method="post" action="logindb.php">
               <div class="card-header card-header-primary text-center">
                 <h4 class="card-title">Login </h4>
                 <div class="social-line">
@@ -232,10 +232,10 @@
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text">
-                      <i class="material-icons">mail</i>
+                      <i class="material-icons">perm_identity</i>
                     </span>
                   </div>
-                  <input type="email" class="form-control" placeholder="Email..." required="true">
+                  <input type="text" class="form-control" name="username" placeholder="Username..." required="true">
                 </div>
                 <div class="input-group">
                   <div class="input-group-prepend">
@@ -243,7 +243,7 @@
                       <i class="material-icons">lock_outline</i>
                     </span>
                   </div>
-                  <input type="password" class="form-control" placeholder="Password..." required="true">
+                  <input type="password" class="form-control" name="password" placeholder="Password..." required="true">
                 </div>
 				
 				
