@@ -1,3 +1,11 @@
+<?php
+    require_once "finalconfig.php";
+	if (isset($_SESSION['access_token'])) {
+		header('Location: dashboard.php');
+		exit();
+	}
+	$loginURL = $gClient->createAuthUrl();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -185,12 +193,7 @@
 			  
                 <button type="submit" class="btn btn-primary btn-link btn-wd btn-lg">Login</button>
                 <a href="#pablo" class="btn btn-primary btn-link btn-wd btn-lg">Forgot Password?</a>
-				<p><b>Login Using  Somaiya Mail</b></p>
-				  <div class="row">
-                        <div class="col-md-12">
-                        	<center><div id="my-signin2" data-onsuccess="onSignIn"></div></center>
-                        </div>
-                   </div>
+				 <a onclick="window.location = '<?php echo $loginURL ?>';"  name="google"  class="btn btn-primary btn-link btn-wd btn-lg">Login Using  Somaiya Mail</a>	
 			
                </div>
             </form>
@@ -252,15 +255,8 @@
               <div class="footer text-center">
                 <button type="submit" class="btn btn-primary btn-link btn-wd btn-lg">Login</button>
                 <a href="#pablo" class="btn btn-primary btn-link btn-wd btn-lg">Forgot Password?</a>
-								
-				<p><b>Login Using  Somaiya Mail</b></p>
-				  <div class="row">
-                        <div class="col-md-12">
-                        	<center><div id="my-signin1" data-onsuccess="onSignIn"></div></center>
-                        </div>
-                   </div>
+                <a onclick="window.location = '<?php echo $loginURL ?>';"  name="google"  class="btn btn-primary btn-link btn-wd btn-lg">Login Using  Somaiya Mail</a>						
 				
-				 </div>
 				
               </div>
             </form>
@@ -434,8 +430,8 @@
   <script src="assets/js/material-kit.js?v=2.0.5" type="text/javascript"></script>
   <script src="https://apis.google.com/js/platform.js" async defer></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
- <script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+ <!--<script>
  
 	function onSuccess(googleUser) {
 	  var profile = googleUser.getBasicProfile();
@@ -481,7 +477,7 @@
         'onfailure': onFailure
       });
     }
-  </script>
+  </script>-->
 <script>
 $(document).ready(function(){
   // Add smooth scrolling to all links

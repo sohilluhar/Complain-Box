@@ -1,3 +1,10 @@
+<?php
+	session_start();
+	if (!isset($_SESSION['access_token'])) {
+		header('Location: index.php');
+		exit();
+	}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,7 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-	
+	<meta name="google-signin-client_id" content="1085777605069-2qss1bn1n04qpq0t8ip51o8ulkh1gdte.apps.googleusercontent.com">
 </head>
 <body>
 
@@ -17,7 +24,7 @@
 		<nav>
 
 			<a href='' class="login_name">
-				<?php session_start(); echo $_SESSION['name'];  ?>
+				<?php echo $_SESSION['name'];  ?>
 			</a>
 
 			<a href="#">
@@ -36,9 +43,12 @@
 			<a href="#">
 				<i class="fa fa-cog fa-2x"></i>
 			</a>
-			<a href="#">
+			<a href="/complainbox/logout.php">
 				<i class="fa fa-sign-out fa-2x"></i>
 			</a>
+			
+		
+
 		</nav>
 
 
@@ -148,8 +158,7 @@
 
 </div>
 
-
-
+      
 </body>
 </html>
 
