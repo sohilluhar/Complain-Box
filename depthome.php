@@ -1,6 +1,12 @@
 <?php
 	session_start();
-	//dashboard of normal user
+	//dashboard of department
+	$mysqli = new mysqli("localhost", "root", "", "complainbox");
+	$sql = "SELECT name FROM user WHERE email='".$_SESSION["email"]."'";
+	$res=$res_u=mysqli_query($mysqli,$sql);
+	$row=$res->fetch_assoc();
+	$uname=$row["name"];//set name to department name instead of gmail account name
+	$_SESSION["name"] =$uname;
 ?>
 <!DOCTYPE html>
 <html>
@@ -37,10 +43,10 @@
 				<i class="fa fa-info-circle fa-2x"></i>
 				
 			</a>
-			<a href="#">
+			<a href="./logout.php">
 				<i class="fa fa-cog fa-2x"></i>
 			</a>
-			<a href="./logout.php">
+			<a href="#">
 				<i class="fa fa-sign-out fa-2x"></i>
 			</a>
 			
@@ -74,97 +80,115 @@
 
 	 	</div>
 
-<!-- *******************-->
+<!-- *******************
 
 <div class="card_list">
-<div class="card-columns">
-	<?php
 	
+	<div class="card-columns">
+  
+ 
+  <div class="card">
+    <img src="assets/pictures/carp.jpg" class="card-img-top" alt="...">
+    <div class="card-body">
+     <button class='card_button'>
+     	Carpentry
+     </button>
+    
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="assets/pictures/welding.jpg" class="card-img-top" alt="...">
+    <div class="card-body">
+      <button class='card_button'>
+     	Carpentry
+     </button>
+     
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="assets/pictures/carp.jpg" class="card-img-top" alt="...">
+    <div class="card-body">
+      <button class='card_button'>
+     	Carpentry
+     </button>
+      
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="assets/pictures/carp.jpg" class="card-img-top" alt="...">
+    <div class="card-body">
+     <button class='card_button'>
+     	Carpentry
+     </button>
+      
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="assets/pictures/carp.jpg" class="card-img-top" alt="...">
+    <div class="card-body">
+      <button class='card_button'>
+     	Carpentry
+     </button>
+      
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="assets/pictures/welding.jpg" class="card-img-top" alt="...">
+    <div class="card-body">
+     <button class='card_button'>
+     	Carpentry
+     </button>
+     
+    </div>
+  </div>
+  
+  
+ 
+ 
+  
+
+
+
+
+
+
+</div>
+
+</div>
+-->
+   <?php 
 	$mysqli = new mysqli("localhost", "root", "", "complainbox");
 
 
-	$sql = "SELECT * FROM department ";
+	$sql = "SELECT id,description,complaindate,status FROM complain WHERE Departmentname='".$_SESSION['name']."'";
 	$result=mysqli_query($mysqli,$sql);
-		//display all department
-		while($row = mysqli_fetch_array($result)){ 
-			echo "<form method='POST' action='complain.php' id=".$row['id'].">"; 
-			echo " <input type='hidden' name='dptname' value=".$row['dname'].">";
-			echo '<div class="card">';
-			echo " <img src=".$row['deptimg']." class='card-img-top' alt='...'>";
-			echo ' <div class="card-body">';
-			echo "  <button class='card_button' type='Submit' form=".$row['id'].">";
-			echo "  ".$row['dname']."";
-			echo '   </button>'; 
-			echo '  </div>';
-			echo ' </div></form>';
-		}
+	
+	echo '<table border="1" cellspacing="2" cellpadding="2"> 
+		  <tr> 
+			  <td> <font face="Arial">Id</font> </td> 
+			  <td> <font face="Arial">Details</font> </td> 
+			  <td> <font face="Arial">Date</font> </td> 
+			  <td> <font face="Arial">Status</font> </td> 
+			  <td> <font face="Arial">Action</font> </td> 			
+		  </tr>';
+
+
+
+	while($row = mysqli_fetch_array($result)){  
+	//Creates a loop to dipslay all complain
+		echo "<tr><td>".$row['id']."</td>";
+		echo "<td>". $row['description']."</td>";
+		echo "<td>".$row['complaindate']."</td>";
+		echo "<td>".$row['status']."</td>"; 
+		echo '<td><button type="button" onclick="#">Take Action!</button></td></tr>'; 
+	}
+
 ?>
-
- <!-- <div class="card">
-    <img src="assets/pictures/welding.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-      <button class='card_button'>
-     	Carpentry
-     </button>
-     
-    </div>
-  </div>
-
-  <div class="card">
-    <img src="assets/pictures/carp.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-      <button class='card_button'>
-     	Carpentry
-     </button>
-      
-    </div>
-  </div>
-
-  <div class="card">
-    <img src="assets/pictures/carp.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-     <button class='card_button'>
-     	Carpentry
-     </button>
-      
-    </div>
-  </div>
-
-  <div class="card">
-    <img src="assets/pictures/carp.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-      <button class='card_button'>
-     	Carpentry
-     </button>
-      
-    </div>
-  </div>
-
-  <div class="card">
-    <img src="assets/pictures/welding.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-     <button class='card_button'>
-     	Carpentry
-     </button>
-     
-    </div>
-  </div>-->
-  
-  
- 
- 
-  
-
-
-
-
-
-
-</div>
-
-</div>
-
-      
 </body>
 </html>
 

@@ -1,10 +1,15 @@
 <?php
-    require_once "finalconfig.php";
+    session_start();
+	//landing page first page
 	if (isset($_SESSION['access_token'])) {
 		header('Location: dashboard.php');
 		exit();
 	}
-	$loginURL = $gClient->createAuthUrl();
+	$type='none';
+	if (isset($_SESSION['type'])) {
+		$type=$_SESSION['type'];
+	}
+	
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -141,37 +146,21 @@
         </div>
 		
 		<div class="page-header header-filter" style="background-image: url('assets/img/bg7.jpg'); background-size: cover; background-position: top center;">
-    <div class="container">
-      <div class="row" id="login">
-        <div class="col-lg-4 col-md-6 ml-auto mr-auto">
+    <div class="container" >
+    <div class="row" id="login">
+      <!--    <div class="col-lg-4 col-md-6 ml-auto mr-auto">
           <div class="card card-login">
             <form class="form" method="" action="">
               <div class="card-header card-header-primary text-center">
                 <h4 class="card-title">Department Login</h4>
                 <div class="social-line">
-				 <!-- <a class="btn btn-just-icon btn-link">
-                    <i class="fa fa-facebook-square"></i>
-                  </a>
-                  <a href="#pablo" class="btn btn-just-icon btn-link">
-                    <i class="fa fa-twitter"></i>
-                  </a>
-                  <a href="#pablo" class="btn btn-just-icon btn-link">
-                    <i class="fa fa-google-plus"></i>
-                  </a>-->                
-                   
+				 
               </div>
 			    
 			  </div>
               <p class="description text-center">To view Complain login here </p>
               <div class="card-body">
-              <!--  <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="material-icons">face</i>
-                    </span>
-                  </div>
-                  <input type="text" class="form-control" placeholder="First Name...">
-                </div>-->
+             
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text">
@@ -198,7 +187,7 @@
                </div>
             </form>
           </div>
-        </div>
+        </div>-->
 
 		<div class="col-lg-4 col-md-6 ml-auto mr-auto">
           <div class="card card-login">
@@ -206,29 +195,12 @@
               <div class="card-header card-header-primary text-center">
                 <h4 class="card-title">Login </h4>
                 <div class="social-line">
-                <!--  <a href="#pablo" class="btn btn-just-icon btn-link">
-                    <i class="fa fa-facebook-square"></i>
-                  </a>
-                  <a href="#pablo" class="btn btn-just-icon btn-link">
-                    <i class="fa fa-twitter"></i>
-                  </a>
-                  <a href="#pablo" class="btn btn-just-icon btn-link">
-                    <i class="fa fa-google-plus"></i>
-                  </a>-->
+              
                 </div>
               </div>
-              <p class="description text-center">To complain login here</p>
+              <p class="description text-center">login here</p>
               <div class="card-body">
-                <!--<div class="input-group">
-				
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="material-icons">face</i>
-                    </span>
-                  </div>
-                  <input type="text" class="form-control" placeholder="First Name...">
-				  
-                </div>-->
+             
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text">
@@ -255,8 +227,16 @@
               <div class="footer text-center">
                 <button type="submit" class="btn btn-primary btn-link btn-wd btn-lg">Login</button>
                 <a href="#pablo" class="btn btn-primary btn-link btn-wd btn-lg">Forgot Password?</a>
-                <a onclick="window.location = '<?php echo $loginURL ?>';"  name="google"  class="btn btn-primary btn-link btn-wd btn-lg">Login Using  Somaiya Mail</a>						
+                					
+								
+				<p><b>Login Using  Somaiya Mail</b></p>
+				  <div class="row">
+                        <div class="col-md-12">
+                        	<center><div id="my-signin1" data-onsuccess="onSignIn"></div></center>
+                        </div>
+                   </div>
 				
+				 </div>
 				
               </div>
             </form>
@@ -342,7 +322,7 @@
         </div>
       </div>
 	  
-	  -->
+	 
       <div class="section section-contacts">
         <div class="row">
           <div class="col-md-8 ml-auto mr-auto">
@@ -379,14 +359,14 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
   <footer class="footer footer-default">
     <div class="container">
       <nav class="float-left">
         <ul>
           <li>
             <a href="">
-              Creative Tim
+             Complain Box
             </a>
           </li>
           <li>
@@ -430,8 +410,8 @@
   <script src="assets/js/material-kit.js?v=2.0.5" type="text/javascript"></script>
   <script src="https://apis.google.com/js/platform.js" async defer></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
- <!--<script>
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+<script>
  
 	function onSuccess(googleUser) {
 	  var profile = googleUser.getBasicProfile();
@@ -443,11 +423,28 @@
       if(profile){
           $.ajax({
                 type: 'POST',
-                url: 'verifyuser.php',
+				url: 'verifyuser.php',
                 data: {id:profile.getId(), name:profile.getName(), email:profile.getEmail(),imgurl:profile.getImageUrl()}
-            }).done(function(data){
-                console.log(data);
-                window.location.href = 'dashboard.php';
+            }).done(function(usertype){
+                console.log(usertype);
+                //console.log("<?php echo $type ?>");
+			
+				
+				if(usertype=="Department"){
+				console.log("In dept");
+				window.location.href = 'depthome.php';
+				}
+				else if(usertype=="User"){
+					console.log("In user");
+					window.location.href = 'dashboard.php';
+					}
+					else if(usertype=="Firstuser"){
+						console.log("In first user");						
+						window.location.href = 'password.php';
+					}
+							
+					//window.location.href = 'dashboard.php';
+				
             }).fail(function() { 
                 alert( "Login with Somaiya mail" );
             });
@@ -477,7 +474,7 @@
         'onfailure': onFailure
       });
     }
-  </script>-->
+  </script>
 <script>
 $(document).ready(function(){
   // Add smooth scrolling to all links

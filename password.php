@@ -1,9 +1,6 @@
 <?php
 	session_start();
-	if (!isset($_SESSION['access_token'])) {
-		header('Location: index.php');
-		exit();
-	}
+	//display form to generate password and username
 ?>
 <!DOCTYPE html>
 <html lang="en">

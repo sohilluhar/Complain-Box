@@ -1,11 +1,13 @@
 <?php
+	//display complaint page
 	session_start();
-	//dashboard of normal user
+	$deptname=$_POST["dptname"];
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<title></title>
+
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -20,7 +22,7 @@
 
 		<nav>
 
-			<a href='' class="login_name">
+			<a href='#' class="login_name">
 				<?php echo $_SESSION['name'];  ?>
 			</a>
 
@@ -73,32 +75,22 @@
 
 
 	 	</div>
+		<center>
+			<p>Department Name:</p>
+			<?php		echo $deptname		?>
+			<p>Tell something about your complaint</p>
+			<form action="addcomplain.php" method="POST">
+				<textarea size=40 rows="10" cols="40" autofocus spellcheck="true" type="text" name="complaintDetail" placeholder="Enter your complaint here...." required ></textarea>
+				</br>
+				<input type='hidden' name='dptname' value="<?php echo $deptname?>">
+				<input type="checkbox" id="myCheck" name="test" required>I have read my complaint and I am sure to submit it.
+				</br>
+				</br>
+				<input type="submit" value="submit" style="width:100px" fontcolor="white" border="2" required>	
+			</form>
+		</center>
 
 <!-- *******************-->
-
-<div class="card_list">
-<div class="card-columns">
-	<?php
-	
-	$mysqli = new mysqli("localhost", "root", "", "complainbox");
-
-
-	$sql = "SELECT * FROM department ";
-	$result=mysqli_query($mysqli,$sql);
-		//display all department
-		while($row = mysqli_fetch_array($result)){ 
-			echo "<form method='POST' action='complain.php' id=".$row['id'].">"; 
-			echo " <input type='hidden' name='dptname' value=".$row['dname'].">";
-			echo '<div class="card">';
-			echo " <img src=".$row['deptimg']." class='card-img-top' alt='...'>";
-			echo ' <div class="card-body">';
-			echo "  <button class='card_button' type='Submit' form=".$row['id'].">";
-			echo "  ".$row['dname']."";
-			echo '   </button>'; 
-			echo '  </div>';
-			echo ' </div></form>';
-		}
-?>
 
  <!-- <div class="card">
     <img src="assets/pictures/welding.jpg" class="card-img-top" alt="...">
