@@ -436,6 +436,10 @@ Tell us about the complaints you have and we will look after it. Be it any depar
 				console.log("In dept");
 				window.location.href = 'depthome.php';
 				}
+				else if(usertype=="admin"){
+						console.log("Admin");						
+						window.location.href = 'admindashboard.php';
+					}
 				else if(usertype=="User"){
 					console.log("In user");
 					window.location.href = 'dashboard.php';

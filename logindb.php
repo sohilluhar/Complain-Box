@@ -32,6 +32,10 @@
 		    header('Location: depthome.php');
 			exit();
 		}
+		else if($type=="admin"){
+		 header('Location: admindashboard.php');
+			  exit();
+		}
 		else{
 			  header('Location: dashboard.php');
 			  exit();

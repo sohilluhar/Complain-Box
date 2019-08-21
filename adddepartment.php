@@ -11,7 +11,7 @@
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    Password
+   
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -44,16 +44,22 @@
               <p>Dashboard</p>
             </a>
           </li>
-          <li class="nav-item active ">
+          <li class="nav-item ">
             <a class="nav-link" href="#">
               <i class="material-icons">person</i>
-              <p>User Profile</p>
+              <p> Profile</p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="#">
               <i class="material-icons">content_paste</i>
-              <p>Complain History</p>
+              <p>View Complain</p>
+            </a>
+          </li>
+		    <li class="nav-item active">
+            <a class="nav-link" href="#">
+              <i class="material-icons">group_add</i>
+              <p>Add department</p>
             </a>
           </li><!--
           <li class="nav-item ">
@@ -168,11 +174,11 @@
             <div class="col-md-6">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title">Profile</h4>
-                  <p class="card-category">Create username and Password</p>
+                  <h4 class="card-title">Department</h4>
+                  <p class="card-category">Add new department</p>
                 </div>
                 <div class="card-body">
-                  <form  action="adduserdb.php" method="post">
+                  <form  action="adddeptdb.php" method="post">
                   <!--  <div class="row">
                       <div class="col-md-5">
                         <div class="form-group">
@@ -210,29 +216,31 @@
                     <div class="row">
                       <div class="col-md-12">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Username</label>
-                          <input type="text" name="username" class="form-control center" >
+                          <label class="bmd-label-floating">Department Name</label>
+                          <input type="text" name="departmentname" class="form-control center" >
                         </div>
                       </div>
                     </div>
                     <div class="row">
                      <div class="col-md-12">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Password</label>
+                          <label class="bmd-label-floating">Password for Department</label>
                           <input type="password" name="passwrd1" class="form-control" >
                         </div>
                       </div>
                    
                     </div>
 					  <div class="row">
+                   
+              
                      <div class="col-md-12">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Confirm Password</label>
-                          <input type="password" name="passwrd2" class="form-control" >
+                          <label class="bmd-label-floating">Mail Id of head</label>
+                          <input type="mail" name="headmail" class="form-control" >
                         </div>
                       </div>
-                   
                     </div>
+					<input type="hidden" name="deptimg"  value="assets/pictures/download.png" >
                    <!-- <div class="row">
                       <div class="col-md-12">
                         <div class="form-group">
@@ -244,8 +252,8 @@
                         </div>
                       </div>
                     </div>-->
-                    <button type="submit" class="btn btn-primary">Update Profile</button>
-					<a href="./dashboard.php" class="btn btn-primary">Skip</a>
+                    <button type="submit" class="btn btn-primary">Add Department</button>
+					
                     <div class="clearfix"></div>
                   </form>
                 </div>
@@ -353,25 +361,8 @@
                 <a href="https://www.creative-tim.com/product/material-dashboard-pro" target="_blank" class="btn btn-warning btn-block">
                   Get the pro version
                 </a>
-            </li> 
-        <li class="button-container">
-          <a href="https://demos.creative-tim.com/material-dashboard/docs/2.1/getting-started/introduction.html" target="_blank" class="btn btn-default btn-block">
-            View Documentation
-          </a>
-        </li>
-        <li class="button-container github-star">
-          <a class="github-button" href="https://github.com/creativetimofficial/material-dashboard" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star ntkme/github-buttons on GitHub">Star</a>
-        </li>
-        <li class="header-title">Thank you for 95 shares!</li>
-        <li class="button-container text-center">
-          <button id="twitter" class="btn btn-round btn-twitter"><i class="fa fa-twitter"></i> &middot; 45</button>
-          <button id="facebook" class="btn btn-round btn-facebook"><i class="fa fa-facebook-f"></i> &middot; 50</button>
-          <br>
-          <br>
-        </li>
-      </ul>
-    </div>
-  </div>-->
+            </li> -->
+    
   <!--   Core JS Files   -->
   <script src="assets/js/core/jquery.min.js"></script>
   <script src="assets/js/core/popper.min.js"></script>

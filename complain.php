@@ -95,7 +95,7 @@ a:link, a:visited{
 
     $update = mysqli_query($con,"UPDATE complain SET description='$body',Departmentname='$department' ,complainant='$name' WHERE id=$id");
       }else{    
-    $query =  mysqli_query($con,"INSERT INTO complain (description,complainantmail,status,Departmentname,complainant) values('','$body','$email','Pending','$department','$name')");
+    $query =  mysqli_query($con,"INSERT INTO complain (description,complainantmail,status,Departmentname,complainant) values('$body','$email','Pending','$department','$name')");
      }
 
       $var ='<script type="text/javascript">

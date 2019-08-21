@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 21, 2019 at 09:52 AM
+-- Generation Time: Aug 21, 2019 at 05:54 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.1.28
 
@@ -56,7 +56,8 @@ INSERT INTO `complain` (`id`, `description`, `complainimg`, `Departmentname`, `c
 (33, 'final test', 'assets/pictures/welding.jpg', 'Carpenter', '2019-08-20 20:02:03', 'Pending', 'Sohil Luhar', 'sohil.luhar@somaiya.edu'),
 (34, '', '', '', '2019-08-21 05:28:13', 'Pending', '', ''),
 (35, NULL, 'assets/img/f86b575e9964ccd84ad8e92c9349f967.jpg', NULL, '2019-08-21 06:37:02', 'Pending', '', 'sohil.luhar@somaiya.edu'),
-(36, 'test with img', 'assets/img/53f3d6639270ca99a946be94133dea22.jpg', 'Carpenter', '2019-08-21 06:39:50', 'Pending', 'Sohil Luhar', 'sohil.luhar@somaiya.edu');
+(36, 'test with img', 'assets/img/53f3d6639270ca99a946be94133dea22.jpg', 'Carpenter', '2019-08-21 06:39:50', 'Pending', 'Sohil Luhar', 'sohil.luhar@somaiya.edu'),
+(37, 'cleaning complain', 'assets/img/3521189c8b15ce2d41173cbe316106b3.jpg', 'cleaning', '2019-08-21 15:32:04', 'Pending', 'Sohil Luhar', 'sohil.luhar@somaiya.edu');
 
 -- --------------------------------------------------------
 
@@ -77,7 +78,9 @@ CREATE TABLE `department` (
 INSERT INTO `department` (`id`, `dname`, `deptimg`) VALUES
 (1, 'Carpenter', 'assets/pictures/carp.jpg'),
 (2, 'Networking', 'assets/pictures/network.png\r\n'),
-(3, 'Electrician', 'assets/pictures/ele.jpg\r\n\r\n');
+(3, 'Electrician', 'assets/pictures/ele.jpg\r\n\r\n'),
+(4, 'cleaning', 'assets/pictures/download.png'),
+(5, 'test', 'assets/pictures/download.png');
 
 -- --------------------------------------------------------
 
@@ -100,36 +103,11 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `username`, `email`, `password`, `usertype`, `Imgurl`) VALUES
-(1, 'Carpenter', 'Carpenter', 'sohil.l@somaiya.edu', '123', 'Department', 'https://lh3.googleusercontent.com/a-/AAuE7mAbhWd2Kit5xCUWw7FdrSthnhybZxIljFYj61idgQ=s96-c'),
-(5, 'Sohil Luhar', 'sohil123', 'sohil.luhar@somaiya.edu', '123', 'User', 'https://lh5.googleusercontent.com/-ubDLjzKoAfU/AAAAAAAAAAI/AAAAAAAAALU/dc5VBqy1sr8/s96-c/photo.jpg'),
-(6, 'Networking', 'Networking', 'saurabhkumar.t@somaiya.edu', '123', 'Department', 'https://lh4.googleusercontent.com/-JDkrAd_uw64/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rfRL_wdizFA_IXtyqPMDG3wlm0oNA/s96-c/photo.jpg');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
---
-
-CREATE TABLE `users` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `google_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `imgurl` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `username` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `name`, `email`, `password`, `remember_token`, `created_at`, `updated_at`, `google_id`, `imgurl`, `username`) VALUES
-(27, 'Sohil Luhar', 'sohilayubluhar@gmail.com', NULL, NULL, NULL, NULL, '114965396544333017127', 'https://lh4.googleusercontent.com/-UfjfgFUWAAA/AAAAAAAAAAI/AAAAAAAAAEk/WB_Gz-8ZW4s/s96-c/photo.jpg', ''),
-(32, 'SOHIL LUHAR', 'sohil.l@somaiya.edu', '123', NULL, NULL, NULL, '102495222712076956744', 'https://lh5.googleusercontent.com/-ioXFfgwKaSk/AAAAAAAAAAI/AAAAAAAAHpg/gU4l2tWq6E8/s96-c/photo.jpg', 'sohil');
+(1, 'Carpenter', 'Carpenter', 'sohil.l1@somaiya.edu', '123', 'Department', 'https://lh3.googleusercontent.com/a-/AAuE7mAbhWd2Kit5xCUWw7FdrSthnhybZxIljFYj61idgQ=s96-c'),
+(6, 'Networking', 'Networking', 'sohil.luhar@somaiya.edu', '123', 'Department', 'https://lh4.googleusercontent.com/-JDkrAd_uw64/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rfRL_wdizFA_IXtyqPMDG3wlm0oNA/s96-c/photo.jpg'),
+(7, 'cleaning', 'cleaning', 'saurabhkumar.t@somaiya.edu', '123', 'Department', ''),
+(8, 'admin', 'admin', 'sohil.l@somaiya.edu', '123', 'admin', 'https://lh3.googleusercontent.com/a-/AAuE7mAbhWd2Kit5xCUWw7FdrSthnhybZxIljFYj61idgQ=s96-c'),
+(9, 'test', 'test', 'test@somaiya.edu', '123', 'Department', '');
 
 --
 -- Indexes for dumped tables
@@ -154,12 +132,6 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -167,25 +139,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `complain`
 --
 ALTER TABLE `complain`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `department`
 --
 ALTER TABLE `department`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

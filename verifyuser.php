@@ -15,13 +15,22 @@
 	$row=$res->fetch_assoc();
 	
 	$result = $mysqli->query($sql);
-	if($row["usertype"]=="Department")
+		if($row["usertype"]=="admin")
+	{	
+		$sql2 = "UPDATE user SET imgurl='".$_POST["imgurl"]."' WHERE email='".$_POST["email"]."'";
+		$mysqli->query($sql2);		
+		$usertype="admin";
+		echo $usertype;//return value to ajax
+	}
+
+	else 	if($row["usertype"]=="Department")
 	{	
 		$sql2 = "UPDATE user SET imgurl='".$_POST["imgurl"]."' WHERE email='".$_POST["email"]."'";
 		$mysqli->query($sql2);		
 		$usertype="Department";
 		echo $usertype;//return value to ajax
 	}
+	
 	else{
 		if(!empty($result->fetch_assoc())){
 			$sql2 = "UPDATE user SET imgurl='".$_POST["imgurl"]."' WHERE email='".$_POST["email"]."'";

@@ -16,13 +16,13 @@ try {
     $mail->isSMTP();                                            // Set mailer to use SMTP
     $mail->Host       = 'smtp.gmail.com';  // Specify main and backup SMTP servers
     $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-    $mail->Username   = 'sagar.pv@somaiya.edu';                     // SMTP username
-    $mail->Password   = '112823484';                               // SMTP password
+    $mail->Username   = 'sohil.l@somaiya.edu';                     // SMTP username
+    $mail->Password   = 'Sky@76445';                               // SMTP password
     $mail->SMTPSecure = 'tls';                                  // Enable TLS encryption, `ssl` also accepted
     $mail->Port       = 587;                                    // TCP port to connect to
 
     //Recipients
-    $mail->setFrom('sagar.pv@somaiya.edu');
+    $mail->setFrom('sohil.l@somaiya.edu');
     $mail->addAddress('sohil.l@somaiya.edu');     // Add a recipient
    
 
@@ -32,7 +32,7 @@ try {
 
     // Content
     $var=$_POST['body'];
-    //$var='Test';//$_POST['body'];
+    $var='Test';//$_POST['body'];
     $mail->isHTML(true);                                  // Set email format to HTML
     $mail->Subject = 'New Complain';
     $mail->Body    = $var;
