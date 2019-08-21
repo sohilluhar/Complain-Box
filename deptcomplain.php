@@ -67,10 +67,10 @@
  		<div class="profile_info">
 	 		<strong class="my_name"><?php  echo $_SESSION['name'];  ?></strong>
 	 		<div class="profile_buttons">
+	 				<button onclick="window.location.href = '/ComplainBox/adddepartment.php';" class="profile_complain_button">Add Department</button>
+	 			<button class="profile_complain_button" onclick="window.location.href = '/ComplainBox/admindashboard.php';">Complain</button>
 	 			<button class="profile_complain_button">Option</button>
-	 			<button class="profile_complain_button">Option</button>
-	 			<button class="profile_complain_button">Option</button>
-	 			<button class="profile_complain_button">Option</button>
+	 			
 	 		</div>
  			
 
