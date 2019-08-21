@@ -1,17 +1,13 @@
 <?php
+	//display complaint page
 	session_start();
-	//dashboard of department
-	$mysqli = new mysqli("localhost", "root", "", "complainbox");
-	$sql = "SELECT name FROM user WHERE email='".$_SESSION["email"]."'";
-	$res=$res_u=mysqli_query($mysqli,$sql);
-	$row=$res->fetch_assoc();
-	$uname=$row["name"];//set name to department name instead of gmail account name
-	$_SESSION["name"] =$uname;
+	$deptname=$_POST["dptname"];
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<title></title>
+
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -26,7 +22,7 @@
 
 		<nav>
 
-			<a href='' class="login_name">
+			<a href='#' class="login_name">
 				<?php echo $_SESSION['name'];  ?>
 			</a>
 
@@ -46,7 +42,7 @@
 			<a href="#">
 				<i class="fa fa-cog fa-2x"></i>
 			</a>
-			<a href="/complainbox/index.php">
+			<a href="./logout.php">
 				<i class="fa fa-sign-out fa-2x"></i>
 			</a>
 			
@@ -79,25 +75,27 @@
 
 
 	 	</div>
+		<center>
+			<p>Department Name:</p>
+			<?php		echo $deptname		?>
+			<p>Tell something about your complaint</p>
+			<form action="addcomplain.php" method="POST">
+				<textarea size=40 rows="10" cols="40" autofocus spellcheck="true" type="text" name="complaintDetail" placeholder="Enter your complaint here...." required ></textarea>
+				</br>
+				<input type='hidden' name='dptname' value="<?php echo $deptname?>">
+				<!--<input type='file' name='complaintImagetest' value="assets/pictures/welding.jpg">-->
+				<input type='hidden' name='complaintImage' value="assets/pictures/welding.jpg">
+				</br>
+				<input type="checkbox" id="myCheck" name="test" required>I have read my complaint and I am sure to submit it.
+				</br>
+				</br>
+				<input type="submit" value="submit" style="width:100px" fontcolor="white" border="2" required>	
+			</form>
+		</center>
 
-<!-- *******************
+<!-- *******************-->
 
-<div class="card_list">
-	
-	<div class="card-columns">
-  
- 
-  <div class="card">
-    <img src="assets/pictures/carp.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-     <button class='card_button'>
-     	Carpentry
-     </button>
-    
-    </div>
-  </div>
-
-  <div class="card">
+ <!-- <div class="card">
     <img src="assets/pictures/welding.jpg" class="card-img-top" alt="...">
     <div class="card-body">
       <button class='card_button'>
@@ -145,7 +143,7 @@
      </button>
      
     </div>
-  </div>
+  </div>-->
   
   
  
@@ -160,41 +158,8 @@
 </div>
 
 </div>
--->
-   <?php 
-	$mysqli = new mysqli("localhost", "root", "", "complainbox");
 
-
-	$sql = "SELECT * FROM complain WHERE Departmentname='".$_SESSION['name']."'";
-	$result=mysqli_query($mysqli,$sql);
-	
-	echo '<table border="1" cellspacing="2" cellpadding="2"> 
-		  <tr> 
-			  <td> <font face="Arial">Id</font> </td> 
-			  <td> <font face="Arial">Details</font> </td> 
-			  <td> <font face="Arial">Image</font> </td> 
-			  <td> <font face="Arial">Date Time</font> </td> 
-			  <td> <font face="Arial">Status</font> </td> 
-			  <td> <font face="Arial">Complainant</font> </td> 
-			  <td> <font face="Arial">Mail</font> </td> 
-			  <td> <font face="Arial">Action</font> </td> 			
-		  </tr>';
-
-
-
-	while($row = mysqli_fetch_array($result)){  
-	//Creates a loop to dipslay all complain
-		echo "<tr><td>".$row['id']."</td>";
-		echo "<td>". $row['description']."</td>";
-		echo "<td><a target='_blank' href='" . $row['complainimg']."'>View Image</a></td>";
-		echo "<td>".$row['complaindate']."</td>";
-		echo "<td>".$row['status']."</td>"; 
-		echo "<td>".$row['complainant']."</td>"; 
-		echo "<td>".$row['complainantmail']."</td>"; 
-		echo '<td><button type="button" onclick="#">Take Action!</button></td></tr>'; 
-	}
-
-?>
+      
 </body>
 </html>
 

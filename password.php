@@ -53,9 +53,9 @@
           <li class="nav-item ">
             <a class="nav-link" href="#">
               <i class="material-icons">content_paste</i>
-              <p>Table List</p>
+              <p>Complain History</p>
             </a>
-          </li>
+          </li><!--
           <li class="nav-item ">
             <a class="nav-link" href="#">
               <i class="material-icons">library_books</i>
@@ -91,12 +91,12 @@
               <i class="material-icons">unarchive</i>
               <p>Upgrade to PRO</p>
             </a>
-          </li>
+          </li>-->
         </ul>
       </div>
     </div>
     <div class="main-panel">
-      <!-- Navbar -->
+      <!-- Navbar 
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
@@ -211,7 +211,7 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label-floating">Username</label>
-                          <input type="text" name="username" class="form-control center" required="true">
+                          <input type="text" name="username" class="form-control center" >
                         </div>
                       </div>
                     </div>
@@ -219,7 +219,7 @@
                      <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label-floating">Password</label>
-                          <input type="password" name="passwrd1" class="form-control" required="true">
+                          <input type="password" name="passwrd1" class="form-control" >
                         </div>
                       </div>
                    
@@ -228,7 +228,7 @@
                      <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label-floating">Confirm Password</label>
-                          <input type="password" name="passwrd2" class="form-control" required="true">
+                          <input type="password" name="passwrd2" class="form-control" >
                         </div>
                       </div>
                    
@@ -244,7 +244,8 @@
                         </div>
                       </div>
                     </div>-->
-                    <button type="submit" class="btn btn-primary center">Update Profile</button>
+                    <button type="submit" class="btn btn-primary">Update Profile</button>
+					<a href="./dashboard.php" class="btn btn-primary">Skip</a>
                     <div class="clearfix"></div>
                   </form>
                 </div>
@@ -275,25 +276,21 @@
           <nav class="float-left">
             <ul>
               <li>
-                <a href="https://www.creative-tim.com">
+                <a href="#">
                   Complain Box
                 </a>
               </li>
               <li>
-                <a href="https://creative-tim.com/presentation">
+                <a href="#">
                   About Us
                 </a>
               </li>
               <li>
-                <a href="http://blog.creative-tim.com">
+                <a href="#">
                   Blog
                 </a>
               </li>
-              <li>
-                <a href="https://www.creative-tim.com/license">
-                  Licenses
-                </a>
-              </li>
+             
             </ul>
           </nav>
           <div class="copyright float-right">
@@ -301,13 +298,13 @@
             <script>
               document.write(new Date().getFullYear())
             </script>, made with <i class="material-icons">favorite</i> by
-            <a href="https://www.creative-tim.com" target="_blank">Complain Box</a> for a better web.
+            <a href="#" target="_blank">Complain Box</a> for a betterment.
           </div>
         </div>
       </footer>
     </div>
   </div>
-  <div class="fixed-plugin">
+ <!-- <div class="fixed-plugin">
     <div class="dropdown show-dropdown">
       <a href="#" data-toggle="dropdown">
         <i class="fa fa-cog fa-2x"> </i>

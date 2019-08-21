@@ -1,5 +1,10 @@
 <?php
-include("header.php")
+include("header.php");
+    if(isset($_GET['department'])){
+    $department=$_GET['department'];
+    
+    $_SESSION["department"]=$department;
+    }
 ?>
 
 
@@ -41,6 +46,9 @@ include("header.php")
 </div>
 
 <?php 
+
+
+
 function uploadImageFile() { // Note: GD library is required for this function
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $iWidth = $iHeight = 200; // desired image result dimensions
@@ -97,13 +105,14 @@ function uploadImageFile() { // Note: GD library is required for this function
 }
 $sImage = uploadImageFile();
 	if(isset($_POST['sub_img'])){
-        if(isset($_GET['department']))
-         $department=$_GET['department'];
-
 
 	//$query=mysqli_query($con,"UPDATE  set profile_pic='$sImage' where username='$userLoggedIn'");
-     $query=mysqli_query($con,"INSERT INTO complain values('','none','$email','registered','none','$sImage')");
-	   header("Location:complain.php?set=true");
+   // insert into complain (description,complainimg,Departmentname,status,complainant,complainantmail)
+    mysqli_query($con,"INSERT INTO complain (complainantmail,status,complainimg) values('$email','Pending','$sImage')");
+    $id=mysqli_insert_id($con);
+    $department=$_SESSION["department"];
+	  //echo $department."vvv";
+     header("Location:complain.php?department=".$department."&set=true&id=$id");
 	}
  ?>
 

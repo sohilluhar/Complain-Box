@@ -1,6 +1,7 @@
 <?php
 	session_start();
 	//add complaint  to database
+	
 	$name=$_POST["dptname"];
 	$details=$_POST["complaintDetail"];
 	$cimg=$_POST["complaintImage"];
@@ -25,7 +26,7 @@
 	
 	//$dmail=$row["email"];
 	//echo $dmail;
-	header("Location: dashboard.php");
+	header('Location: dashboard.php');
 	exit();
 	
 ?>

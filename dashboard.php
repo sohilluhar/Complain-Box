@@ -64,7 +64,7 @@
 	 			<button class="profile_complain_button">Option</button>
 	 			<button class="profile_complain_button">Option</button>
 	 			<button class="profile_complain_button">Option</button>
-	 			<button class="profile_complain_button">Option</button>
+	 			<button class="profile_complain_button">Complain History</button>
 	 		</div>
  			
 
@@ -87,12 +87,13 @@
 	$result=mysqli_query($mysqli,$sql);
 		//display all department
 		while($row = mysqli_fetch_array($result)){ 
-			echo "<form method='POST' action='complain.php' id=".$row['id'].">"; 
-			echo " <input type='hidden' name='dptname' value=".$row['dname'].">";
+			$dptname=$row['dname'];
+			echo "<form method='GET' action='complain.php?department=$dptname' id=".$row['id'].">"; 
+			echo " <input type='hidden' name='department' value=".$row['dname'].">";
 			echo '<div class="card">';
 			echo " <img src=".$row['deptimg']." class='card-img-top' alt='...'>";
 			echo ' <div class="card-body">';
-			echo "  <button class='card_button' type='Submit' form=".$row['id'].">";
+			echo "  <button  class='card_button' type='Submit' form=".$row['id'].">";
 			echo "  ".$row['dname']."";
 			echo '   </button>'; 
 			echo '  </div>';

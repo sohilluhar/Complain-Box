@@ -1,14 +1,7 @@
 <?php
     session_start();
 	//landing page first page
-	if (isset($_SESSION['access_token'])) {
-		header('Location: dashboard.php');
-		exit();
-	}
-	$type='none';
-	if (isset($_SESSION['type'])) {
-		$type=$_SESSION['type'];
-	}
+	
 	
 ?>
 <!DOCTYPE html>
@@ -89,12 +82,12 @@
       </div>
     </div>
   </nav>-->
-  <div class="page-header header-filter" data-parallax="true" style="background-image: url('assets/img/profile_city.jpg')">
+  <div class="page-header header-filter" data-parallax="true" style="background-image: url('assets/img/slider1.jpg')">
     <div class="container">
       <div class="row">
         <div class="col-md-6">
-          <h1 class="title">Your Story Starts With Us.</h1>
-          <h4>Every landing page needs a small description after the big bold title, that&apos;s why we added this text here. Add here all the information that can make you or your product create the first impression.</h4>
+          <h1 class="title">One Step Solution</h1>
+          <h4>A portal for all your  complaints, Focus on complaining about the problem you have, rather than staying with the issue.</h4>
           <br>
           <a href = "#login"  class="btn btn-danger btn-raised btn-lg">
              Login Here
@@ -108,8 +101,12 @@
       <div class="section text-center">
         <div class="row">
           <div class="col-md-8 ml-auto mr-auto">
-            <h2 class="title">Let&apos;s talk product</h2>
-            <h5 class="description">This is the paragraph where you can write more details about your product. Keep you user engaged by providing meaningful information. Remember that by this time, the user is curious, otherwise he wouldn&apos;t scroll to get here. Add a button if you want the user to see more.</h5>
+            <h2 class="title">Untold Suffering is not wise.</h2>
+            <h5 class="description">
+			
+Tell us about the complaints you have and we will look after it. Be it any department , Be it any smallest to biggest complaint you have just tell us and sit back relaxed , we will resolve it as soon as possible.
+
+			</h5>
           </div>
         </div>
         <div class="features">
@@ -117,35 +114,41 @@
           <div class="row">
             <div class="col-md-4">
               <div class="info">
-                <div class="icon icon-info">
-                  <i class="material-icons">chat</i>
+                <div class="icon icon-danger">
+                  <i class="material-icons">domain</i>
                 </div>
-                <h4 class="info-title">Free Chat</h4>
-                <p>Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.</p>
+                <h4 class="info-title">Anyone can complaint</h4>
+                <p>
+				If you are in somaiya vidyavihar then just login into complain box using somaiya mail and register your complain online.
+				</p>
               </div>
             </div>
             <div class="col-md-4">
               <div class="info">
                 <div class="icon icon-success">
-                  <i class="material-icons">verified_user</i>
+                  <i class="material-icons">supervisor_account</i>
                 </div>
-                <h4 class="info-title">Verified Users</h4>
-                <p>Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.</p>
+                <h4 class="info-title">Connect to Supervisor </h4>
+                <p>
+				Submit your complain direct to supervisor, Just select Department we will submit your complain to respective supervisor
+				.</p>
               </div>
             </div>
             <div class="col-md-4">
               <div class="info">
-                <div class="icon icon-danger">
-                  <i class="material-icons">fingerprint</i>
+                <div class="icon icon-info">
+                  <i class="material-icons">schedule</i>
                 </div>
-                <h4 class="info-title">Fingerprint</h4>
-                <p>Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.</p>
+                <h4 class="info-title">Use at Any time</h4>
+                <p>
+				If you have any complain register your complain at any time any day no mater if it is holiday or evening we will forward your complain.
+				</p>
               </div>
             </div>
           </div>
         </div>
 		
-		<div class="page-header header-filter" style="background-image: url('assets/img/bg7.jpg'); background-size: cover; background-position: top center;">
+		<div class="page-header header-filter" style="background-image: url('assets/img/cam.jpg'); background-size: cover; background-position: top center;">
     <div class="container" >
     <div class="row" id="login">
       <!--    <div class="col-lg-4 col-md-6 ml-auto mr-auto">
@@ -427,7 +430,6 @@
                 data: {id:profile.getId(), name:profile.getName(), email:profile.getEmail(),imgurl:profile.getImageUrl()}
             }).done(function(usertype){
                 console.log(usertype);
-                //console.log("<?php echo $type ?>");
 			
 				
 				if(usertype=="Department"){

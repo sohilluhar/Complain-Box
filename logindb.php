@@ -1,12 +1,7 @@
 <?php
 	session_start();
 	//verify and login user from database by providing id and password
-	if (!isset($_SESSION['access_token'])) {
-		//Generate a random string for token.
-		$token = openssl_random_pseudo_bytes(16);
-		$token = bin2hex($token);
-		$_SESSION['access_token'] = $token;
-	}
+
 	
 	$name=$_POST["username"];
 	$pass=$_POST["password"];
@@ -16,10 +11,17 @@
 		if ($con->connect_error) 
 			die("Connection failed: " . $con->connect_error);
 	$sqlque="select * from user where username='$name' AND password='$pass'";
+
+	
 	$res_u=mysqli_query($con,$sqlque);
-	//echo mysqli_num_rows($res_u);
 	if (mysqli_num_rows($res_u) == 1 ) 
 	{
+			if (!isset($_SESSION['access_token'])) {
+				//Generate a random string for token.
+				$token = openssl_random_pseudo_bytes(16);
+				$token = bin2hex($token);
+				$_SESSION['access_token'] = $token;
+			}
 		$row=$res_u->fetch_assoc();
 		$_SESSION['id'] = $row["id"];
 		$_SESSION['name'] =$row["name"];
