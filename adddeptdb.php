@@ -25,7 +25,7 @@
 	
 	
 	}
-	header('Location: dashboard.php');
+	header('Location: admindashboard.php');
 	exit();
 	
 ?>

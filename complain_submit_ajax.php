@@ -16,23 +16,22 @@ try {
     $mail->isSMTP();                                            // Set mailer to use SMTP
     $mail->Host       = 'smtp.gmail.com';  // Specify main and backup SMTP servers
     $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-    $mail->Username   = 'sohil.l@somaiya.edu';                     // SMTP username
-    $mail->Password   = 'Sky@76445';                               // SMTP password
+    $mail->Username   = 'saurabhkumar.t@somaiya.edu';                     // SMTP username
+    $mail->Password   = 'saurabh@807';                               // SMTP password
     $mail->SMTPSecure = 'tls';                                  // Enable TLS encryption, `ssl` also accepted
     $mail->Port       = 587;                                    // TCP port to connect to
 
     //Recipients
-    $mail->setFrom('sohil.l@somaiya.edu');
-    $mail->addAddress('sohil.l@somaiya.edu');     // Add a recipient
+    $mail->setFrom('saurabhkumar.t@somaiya.edu');
+    $mail->addAddress($_POST['deptmail']);     // Add a recipient
    
-
     // Attachments
-   // $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
+    $mail->addAttachment($_POST['attachment']);         // Add attachments
     //$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
 
     // Content
     $var=$_POST['body'];
-    $var='Test';//$_POST['body'];
+    //$var='Test';//$_POST['body'];
     $mail->isHTML(true);                                  // Set email format to HTML
     $mail->Subject = 'New Complain';
     $mail->Body    = $var;

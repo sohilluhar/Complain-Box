@@ -1,179 +1,382 @@
 <?php
-	session_start();
-	//dashboard of normal user
-		$mysqli = new mysqli("localhost", "root", "", "complainbox");
+	include("config/config.php");
+	//dashboard of admin
+	if(!isset($_SESSION['name'])){
+   
+		header("Location: index.php");
+		exit();
+	}
+
 	$sql = "SELECT name FROM user WHERE email='".$_SESSION["email"]."'";
-	$res=$res_u=mysqli_query($mysqli,$sql);
+	$res=$res_u=mysqli_query($con,$sql);
 	$row=$res->fetch_assoc();
 	$uname=$row["name"];//set name to department name instead of gmail account name
 	$_SESSION["name"] =$uname;
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-	<title></title>
-	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-	<meta name="google-signin-client_id" content="1085777605069-2qss1bn1n04qpq0t8ip51o8ulkh1gdte.apps.googleusercontent.com">
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+	Admin Dashboard | Complain Box
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <!-- CSS Files -->
+  <link href="assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
+
+
 </head>
-<body>
 
-	<div class="top_bar">
-		<div class="logo">
-			<a href="index.php">COMPLAIN<strong>BOX</strong></a>
-		</div>
+<body class="">
+  <div class="wrapper ">
+    <div class="sidebar" data-color="purple" data-background-color="white" data-image="assets/img/sidebar-3.jpg">
+      <!--
+        Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
-		<nav>
+        Tip 2: you can also add an image using data-image tag
+    -->
+      <div class="logo">
+        <a href="#" class="simple-text logo-normal">
+          Complain Box
+        </a>
+      </div>
+	  
+	  
+      <div class="sidebar-wrapper">
+        <ul class="nav">
 
-			<a href='' class="login_name">
-				<?php echo $_SESSION['name'];  ?>
-			</a>
-
-			<a href="#">
-				<i class="fa fa-home fa-2x"></i>
-			</a>
-			<a href="#">
-				<i class="fa fa-envelope fa-2x"></i>
-			</a>
-			<a href="#">
-				<i class="fa fa-bell fa-2x"></i>
-			</a>
-			<a href="#">
-				<i class="fa fa-info-circle fa-2x"></i>
-				
-			</a>
-			<a href="#">
-				<i class="fa fa-cog fa-2x"></i>
-			</a>
-			<a href="./logout.php">
-				<i class="fa fa-sign-out fa-2x"></i>
-			</a>
-			
+		<li class="nav-item">
+			<br/>
+			<div class="card-profile">
+                <div class="card-avatar">
+                
+                    <img class="img" src="<?php  echo $_SESSION['imgurl'];  ?>" />
+                
+                </div>
+	<div class="card-body">
+                  <h5 class="card-title">	<?php echo $_SESSION['name'];  ?></h5>
+                 
+                </div>
+		</li>
 		
-
-		</nav>
-
-
-	</div>
-
-
-<!-- profile         -->
-
-
-
-<div class="profile_left">
- 		<img src="<?php  echo $_SESSION['imgurl'];  ?>">
- 		<div class="profile_info">
-	 		<strong class="my_name"><?php  echo $_SESSION['name'];  ?></strong>
-	 		<div class="profile_buttons">
-	 			<button onclick="window.location.href = '/ComplainBox/adddepartment.php';" class="profile_complain_button">Add Department</button>
-	 			<button class="profile_complain_button" onclick="window.location.href = '/ComplainBox/admindashboard.php';">Complain</button>
-	 			<button class="profile_complain_button">Option</button>
-	 			
-	 		</div>
- 			
-
-	 		
-	 	</div>
-
-
-	 	</div>
-
-<!-- *******************-->
-
-<div class="card_list">
-<div class="card-columns">
-	<?php
+		
+         <li class="nav-item active ">
+            <a class="nav-link" href="./admindashboard.php">
+              <i class="material-icons">dashboard</i>
+              <p>Dashboard</p>
+            </a>
+          </li>
+      <li class="nav-item ">
+            <a class="nav-link" href="#">
+              <i class="material-icons">person</i>
+              <p>My Profile</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="./allcomplain.php">
+              <i class="material-icons">content_paste</i>
+              <p>View All Complain</p>
+            </a>
+          </li>
+		    <li class="nav-item ">
+            <a class="nav-link" href="./adddepartment.php">
+              <i class="material-icons">group_add</i>
+              <p>Add department</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="./logout.php">
+              <i class="material-icons">arrow_back</i>
+              <p>Logout</p>
+            </a>
+          </li>
+     
+        </ul>
+      </div>
+    </div>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+            <a class="navbar-brand" href="#pablo">Dashboard</a>
+          </div>
+         
+                <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+          </button>
+		  
+         </div>
+      </nav>
+      <!-- End Navbar -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+			
+				<?php
 	
-	$mysqli = new mysqli("localhost", "root", "", "complainbox");
-
 
 	$sql = "SELECT * FROM department ";
-	$result=mysqli_query($mysqli,$sql);
+	$result=mysqli_query($con,$sql);
 		//display all department
 		while($row = mysqli_fetch_array($result)){ 
-			$dptname=$row['dname'];
+				$dptname=$row['dname'];
+		
+		  echo '     <div class="col-lg-3 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                <div class="card-header ">';
+		
 			echo "<form method='GET' action='deptcomplain.php?department=$dptname' id=".$row['id'].">"; 
-			echo " <input type='hidden' name='department' value=".$row['dname'].">";
-			echo '<div class="card">';
-			echo " <img src=".$row['deptimg']." class='card-img-top' alt='...'>";
-			echo ' <div class="card-body">';
-			echo "  <button  class='card_button' type='Submit' form=".$row['id'].">";
-			echo "  ".$row['dname']."";
-			echo '   </button>'; 
-			echo '  </div>';
-			echo ' </div></form>';
+			echo " <input type='hidden' name='department' value=".$row['dname'].">";		
+		echo '		</br>
+                  <h3 class="card-title text-center" name="'.$row["dname"].'">'.$row["dname"].'</h3>									  
+				</br>
+				<button type="Submit" class="btn btn-primary btn-block" onclick=';
+				;
+			echo "	' ";
+				
+			echo '	doSomething("'.$row["dname"].'")';
+				
+			echo "	'";
+				
+			echo "	>Click to view Complain</button>	
+				</form>
+				</div>
+              </div>
+            </div>";
 		}
 ?>
 
- <!-- <div class="card">
-    <img src="assets/pictures/welding.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-      <button class='card_button'>
-     	Carpentry
-     </button>
-     
+        
+			<div id='testing' style="display: none">
+     		<h1 id="test" value="he">He</h1>
+			</div>
+     </div>
+	 
+      </div>
+<?php
+include("footer.php");
+?>
     </div>
   </div>
-
-  <div class="card">
-    <img src="assets/pictures/carp.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-      <button class='card_button'>
-     	Carpentry
-     </button>
-      
-    </div>
-  </div>
-
-  <div class="card">
-    <img src="assets/pictures/carp.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-     <button class='card_button'>
-     	Carpentry
-     </button>
-      
-    </div>
-  </div>
-
-  <div class="card">
-    <img src="assets/pictures/carp.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-      <button class='card_button'>
-     	Carpentry
-     </button>
-      
-    </div>
-  </div>
-
-  <div class="card">
-    <img src="assets/pictures/welding.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-     <button class='card_button'>
-     	Carpentry
-     </button>
-     
-    </div>
-  </div>-->
-  
-  
+  <!--   Core JS Files   -->
+  <script src="assets/js/core/jquery.min.js"></script>
+  <script src="assets/js/core/popper.min.js"></script>
+  <script src="assets/js/core/bootstrap-material-design.min.js"></script>
+  <script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <!-- Plugin for the momentJs  -->
+  <script src="assets/js/plugins/moment.min.js"></script>
+  <!--  Plugin for Sweet Alert -->
+  <script src="assets/js/plugins/sweetalert2.js"></script>
+  <!-- Forms Validations Plugin -->
+  <script src="assets/js/plugins/jquery.validate.min.js"></script>
  
- 
+ <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support SweetAlert -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+
+  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
+
+  <script>
   
+  function doSomething(a) {
+    var x = document.getElementById("testing");
+    var y = document.getElementById("test");
+  //if (x.style.display === "none") {
+	y.innerHTML  = a;
+    //x.style.display = "block";
+	console.log(a);
+   // alert('Form submitted!'+a);
+    return false;
+}
+  
+    $(document).ready(function() {
+      $().ready(function() {
+        $sidebar = $('.sidebar');
+
+        $sidebar_img_container = $sidebar.find('.sidebar-background');
+
+        $full_page = $('.full-page');
+
+        $sidebar_responsive = $('body > .navbar-collapse');
+
+        window_width = $(window).width();
+
+        fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
+
+        if (window_width > 767 && fixed_plugin_open == 'Dashboard') {
+          if ($('.fixed-plugin .dropdown').hasClass('show-dropdown')) {
+            $('.fixed-plugin .dropdown').addClass('open');
+          }
+
+        }
+
+        $('.fixed-plugin a').click(function(event) {
+          // Alex if we click on switch, stop propagation of the event, so the dropdown will not be hide, otherwise we set the  section active
+          if ($(this).hasClass('switch-trigger')) {
+            if (event.stopPropagation) {
+              event.stopPropagation();
+            } else if (window.event) {
+              window.event.cancelBubble = true;
+            }
+          }
+        });
+
+        $('.fixed-plugin .active-color span').click(function() {
+          $full_page_background = $('.full-page-background');
+
+          $(this).siblings().removeClass('active');
+          $(this).addClass('active');
+
+          var new_color = $(this).data('color');
+
+          if ($sidebar.length != 0) {
+            $sidebar.attr('data-color', new_color);
+          }
+
+          if ($full_page.length != 0) {
+            $full_page.attr('filter-color', new_color);
+          }
+
+          if ($sidebar_responsive.length != 0) {
+            $sidebar_responsive.attr('data-color', new_color);
+          }
+        });
+
+        $('.fixed-plugin .background-color .badge').click(function() {
+          $(this).siblings().removeClass('active');
+          $(this).addClass('active');
+
+          var new_color = $(this).data('background-color');
+
+          if ($sidebar.length != 0) {
+            $sidebar.attr('data-background-color', new_color);
+          }
+        });
+
+        $('.fixed-plugin .img-holder').click(function() {
+          $full_page_background = $('.full-page-background');
+
+          $(this).parent('li').siblings().removeClass('active');
+          $(this).parent('li').addClass('active');
 
 
+          var new_image = $(this).find("img").attr('src');
 
+          if ($sidebar_img_container.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
+            $sidebar_img_container.fadeOut('fast', function() {
+              $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
+              $sidebar_img_container.fadeIn('fast');
+            });
+          }
 
+          if ($full_page_background.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
+            var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
 
+            $full_page_background.fadeOut('fast', function() {
+              $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
+              $full_page_background.fadeIn('fast');
+            });
+          }
 
-</div>
+          if ($('.switch-sidebar-image input:checked').length == 0) {
+            var new_image = $('.fixed-plugin li.active .img-holder').find("img").attr('src');
+            var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
 
-</div>
+            $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
+            $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
+          }
 
-      
+          if ($sidebar_responsive.length != 0) {
+            $sidebar_responsive.css('background-image', 'url("' + new_image + '")');
+          }
+        });
+
+        $('.switch-sidebar-image input').change(function() {
+          $full_page_background = $('.full-page-background');
+
+          $input = $(this);
+
+          if ($input.is(':checked')) {
+            if ($sidebar_img_container.length != 0) {
+              $sidebar_img_container.fadeIn('fast');
+              $sidebar.attr('data-image', '#');
+            }
+
+            if ($full_page_background.length != 0) {
+              $full_page_background.fadeIn('fast');
+              $full_page.attr('data-image', '#');
+            }
+
+            background_image = true;
+          } else {
+            if ($sidebar_img_container.length != 0) {
+              $sidebar.removeAttr('data-image');
+              $sidebar_img_container.fadeOut('fast');
+            }
+
+            if ($full_page_background.length != 0) {
+              $full_page.removeAttr('data-image', '#');
+              $full_page_background.fadeOut('fast');
+            }
+
+            background_image = false;
+          }
+        });
+
+        $('.switch-sidebar-mini input').change(function() {
+          $body = $('body');
+
+          $input = $(this);
+
+          if (md.misc.sidebar_mini_active == true) {
+            $('body').removeClass('sidebar-mini');
+            md.misc.sidebar_mini_active = false;
+
+            $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
+
+          } else {
+
+            $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar('destroy');
+
+            setTimeout(function() {
+              $('body').addClass('sidebar-mini');
+
+              md.misc.sidebar_mini_active = true;
+            }, 300);
+          }
+
+          // we simulate the window Resize so the charts will get updated in realtime.
+          var simulateWindowResize = setInterval(function() {
+            window.dispatchEvent(new Event('resize'));
+          }, 180);
+
+          // we stop the simulation of Window Resize after the animations are completed
+          setTimeout(function() {
+            clearInterval(simulateWindowResize);
+          }, 1000);
+
+        });
+      });
+    });
+  </script>
+  <script>
+    $(document).ready(function() {
+      // Javascript method's body can be found in assets/js/demos.js
+      md.initDashboardPageCharts();
+
+    });
+  </script>
 </body>
+
 </html>
-
-
-	

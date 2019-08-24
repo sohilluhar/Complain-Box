@@ -1,6 +1,5 @@
 <?php
-    session_start();
-	//landing page first page
+   include("config/config.php");
 	
 	
 ?>
@@ -12,76 +11,23 @@
   <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <!--Change api key here-->
   <meta name="google-signin-client_id" content="1085777605069-2qss1bn1n04qpq0t8ip51o8ulkh1gdte.apps.googleusercontent.com">
 
-  <title>
-    Complain Box
-  </title>
+  <title> Home | Complain Box   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <!-- CSS Files -->
-  <link href="assets/css/material-kit.css?v=2.0.5" rel="stylesheet" />
-  <!-- CSS Just for demo purpose, don't include it in your project -->
-  <link href="assets/demo/demo.css" rel="stylesheet" />
+  <link href="assets/css/material-kit.css" rel="stylesheet" />
+
 </head>
 
 <body class="landing-page sidebar-collapse">
 
         
 
-  <!--<nav class="navbar navbar-transparent navbar-color-on-scroll fixed-top navbar-expand-lg" color-on-scroll="100" id="sectionsNav">
-    <div class="container">
-      <div class="navbar-translate">
-        <a class="navbar-brand" href="#">
-          Complain Box </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="navbar-toggler-icon"></span>
-          <span class="navbar-toggler-icon"></span>
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      </div>
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav ml-auto">
-          <li class="dropdown nav-item">
-            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-              <i class="material-icons">apps</i> Components
-            </a>
-            <div class="dropdown-menu dropdown-with-icons">
-              <a href="index.html" class="dropdown-item">
-                <i class="material-icons">layers</i> All Components
-              </a>
-              <a href="https://demos.creative-tim.com/material-kit/docs/2.1/getting-started/introduction.html" class="dropdown-item">
-                <i class="material-icons">content_paste</i> Documentation
-              </a>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0)" onclick="scrollToDownload()">
-              <i class="material-icons">cloud_download</i> Download
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" rel="tooltip" title="" data-placement="bottom" href="#" target="_blank" data-original-title="Follow us on Twitter">
-              <i class="fa fa-twitter"></i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" rel="tooltip" title="" data-placement="bottom" href="#" target="_blank" data-original-title="Like us on Facebook">
-              <i class="fa fa-facebook-square"></i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" rel="tooltip" title="" data-placement="bottom" href="#" target="_blank" data-original-title="Follow us on Instagram">
-              <i class="fa fa-instagram"></i>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>-->
   <div class="page-header header-filter" data-parallax="true" style="background-image: url('assets/img/slider1.jpg')">
     <div class="container">
       <div class="row">
@@ -90,7 +36,7 @@
           <h4>A portal for all your  complaints, Focus on complaining about the problem you have, rather than staying with the issue.</h4>
           <br>
           <a href = "#login"  class="btn btn-danger btn-raised btn-lg">
-             Login Here
+            Click Here to Login
           </a>
         </div>
       </div>
@@ -104,7 +50,7 @@
             <h2 class="title">Untold Suffering is not wise.</h2>
             <h5 class="description">
 			
-Tell us about the complaints you have and we will look after it. Be it any department , Be it any smallest to biggest complaint you have just tell us and sit back relaxed , we will resolve it as soon as possible.
+				Tell us about the complaints you have and we will look after it. Be it any department , Be it any smallest to biggest complaint you have just tell us and sit back relaxed , we will resolve it as soon as possible.
 
 			</h5>
           </div>
@@ -119,7 +65,7 @@ Tell us about the complaints you have and we will look after it. Be it any depar
                 </div>
                 <h4 class="info-title">Anyone can complaint</h4>
                 <p>
-				If you are in somaiya vidyavihar then just login into complain box using somaiya mail and register your complain online.
+					If you are in somaiya vidyavihar then just login into complain box using somaiya mail and register your complain online.
 				</p>
               </div>
             </div>
@@ -151,47 +97,6 @@ Tell us about the complaints you have and we will look after it. Be it any depar
 		<div class="page-header header-filter" style="background-image: url('assets/img/cam.jpg'); background-size: cover; background-position: top center;">
     <div class="container" >
     <div class="row" id="login">
-      <!--    <div class="col-lg-4 col-md-6 ml-auto mr-auto">
-          <div class="card card-login">
-            <form class="form" method="" action="">
-              <div class="card-header card-header-primary text-center">
-                <h4 class="card-title">Department Login</h4>
-                <div class="social-line">
-				 
-              </div>
-			    
-			  </div>
-              <p class="description text-center">To view Complain login here </p>
-              <div class="card-body">
-             
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="material-icons">perm_identity</i>
-                    </span>
-                  </div>
-                  <input type="text" class="form-control" placeholder="Username..." required="true">
-                </div>
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="material-icons">lock_outline</i>
-                    </span>
-                  </div>
-                  <input type="password" class="form-control" placeholder="Password..." required="true">
-                </div>
-              </div>
-              <div class="footer text-center">
-			  
-                <button type="submit" class="btn btn-primary btn-link btn-wd btn-lg">Login</button>
-                <a href="#pablo" class="btn btn-primary btn-link btn-wd btn-lg">Forgot Password?</a>
-				 <a onclick="window.location = '<?php echo $loginURL ?>';"  name="google"  class="btn btn-primary btn-link btn-wd btn-lg">Login Using  Somaiya Mail</a>	
-			
-               </div>
-            </form>
-          </div>
-        </div>-->
-
 		<div class="col-lg-4 col-md-6 ml-auto mr-auto">
           <div class="card card-login">
             <form class="form" method="post" action="logindb.php">
@@ -229,9 +134,8 @@ Tell us about the complaints you have and we will look after it. Be it any depar
 			  
               <div class="footer text-center">
                 <button type="submit" class="btn btn-primary btn-link btn-wd btn-lg">Login</button>
-                <a href="#pablo" class="btn btn-primary btn-link btn-wd btn-lg">Forgot Password?</a>
-                					
-								
+                <a href="./forgotpassword.php" class="btn btn-primary btn-link btn-wd btn-lg">Forgot Password?</a>
+				
 				<p><b>Login Using  Somaiya Mail</b></p>
 				  <div class="row">
                         <div class="col-md-12">
@@ -239,6 +143,7 @@ Tell us about the complaints you have and we will look after it. Be it any depar
                         </div>
                    </div>
 				
+                <a href="./help.php" class="btn btn-primary btn-link btn-wd btn-lg">Can't Sign In?</a>
 				 </div>
 				
               </div>
@@ -250,167 +155,21 @@ Tell us about the complaints you have and we will look after it. Be it any depar
       </div>
 	  
 	  
-  
-	  <!--
-      <div class="section text-center">
-        <h2 class="title">Here is our team</h2>
-        <div class="team">
-          <div class="row">
-            <div class="col-md-4">
-              <div class="team-player">
-                <div class="card card-plain">
-                  <div class="col-md-6 ml-auto mr-auto">
-                    <img src="assets/img/faces/avatar.jpg" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
-                  </div>
-                  <h4 class="card-title">Gigi Hadid
-                    <br>
-                    <small class="card-description text-muted">Model</small>
-                  </h4>
-                  <div class="card-body">
-                    <p class="card-description">You can write here details about one of your team members. You can give more details about what they do. Feel free to add some
-                      <a href="#">links</a> for people to be able to follow them outside the site.</p>
-                  </div>
-                  <div class="card-footer justify-content-center">
-                    <a href="#pablo" class="btn btn-link btn-just-icon"><i class="fa fa-twitter"></i></a>
-                    <a href="#pablo" class="btn btn-link btn-just-icon"><i class="fa fa-instagram"></i></a>
-                    <a href="#pablo" class="btn btn-link btn-just-icon"><i class="fa fa-facebook-square"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="team-player">
-                <div class="card card-plain">
-                  <div class="col-md-6 ml-auto mr-auto">
-                    <img src="assets/img/faces/christian.jpg" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
-                  </div>
-                  <h4 class="card-title">Christian Louboutin
-                    <br>
-                    <small class="card-description text-muted">Designer</small>
-                  </h4>
-                  <div class="card-body">
-                    <p class="card-description">You can write here details about one of your team members. You can give more details about what they do. Feel free to add some
-                      <a href="#">links</a> for people to be able to follow them outside the site.</p>
-                  </div>
-                  <div class="card-footer justify-content-center">
-                    <a href="#pablo" class="btn btn-link btn-just-icon"><i class="fa fa-twitter"></i></a>
-                    <a href="#pablo" class="btn btn-link btn-just-icon"><i class="fa fa-linkedin"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="team-player">
-                <div class="card card-plain">
-                  <div class="col-md-6 ml-auto mr-auto">
-                    <img src="assets/img/faces/kendall.jpg" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
-                  </div>
-                  <h4 class="card-title">Kendall Jenner
-                    <br>
-                    <small class="card-description text-muted">Model</small>
-                  </h4>
-                  <div class="card-body">
-                    <p class="card-description">You can write here details about one of your team members. You can give more details about what they do. Feel free to add some
-                      <a href="#">links</a> for people to be able to follow them outside the site.</p>
-                  </div>
-                  <div class="card-footer justify-content-center">
-                    <a href="#pablo" class="btn btn-link btn-just-icon"><i class="fa fa-twitter"></i></a>
-                    <a href="#pablo" class="btn btn-link btn-just-icon"><i class="fa fa-instagram"></i></a>
-                    <a href="#pablo" class="btn btn-link btn-just-icon"><i class="fa fa-facebook-square"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-	  
-	 
-      <div class="section section-contacts">
-        <div class="row">
-          <div class="col-md-8 ml-auto mr-auto">
-            <h2 class="text-center title">Work with us</h2>
-            <h4 class="text-center description">Divide details about your product or agency work into parts. Write a few lines about each one and contact us about any further collaboration. We will responde get back to you in a couple of hours.</h4>
-            <form class="contact-form">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="bmd-label-floating">Your Name</label>
-                    <input type="email" class="form-control">
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="bmd-label-floating">Your Email</label>
-                    <input type="email" class="form-control">
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="exampleMessage" class="bmd-label-floating">Your Message</label>
-                <textarea type="email" class="form-control" rows="4" id="exampleMessage"></textarea>
-              </div>
-              <div class="row">
-                <div class="col-md-4 ml-auto mr-auto text-center">
-                  <button class="btn btn-primary btn-raised">
-                    Send Message
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
-  <footer class="footer footer-default">
-    <div class="container">
-      <nav class="float-left">
-        <ul>
-          <li>
-            <a href="">
-             Complain Box
-            </a>
-          </li>
-          <li>
-            <a href="">
-              About Us
-            </a>
-          </li>
-          <li>
-            <a href="">
-              Blog
-            </a>
-          </li>
-          <li>
-            <a href="">
-              Licenses
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <div class="copyright float-right">
-        &copy;
-        <script>
-          document.write(new Date().getFullYear())
-        </script>, made with <i class="material-icons">favorite</i> by
-        <a href="">Somaiya</a>.
-      </div>
-    </div>
-  </footer>
+ <?php 
+    include("footer.php");
+ ?>
   <!--   Core JS Files   -->
   <script src="assets/js/core/jquery.min.js" type="text/javascript"></script>
   <script src="assets/js/core/popper.min.js" type="text/javascript"></script>
   <script src="assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
   <script src="assets/js/plugins/moment.min.js"></script>
-  <!--	Plugin for the Datepicker, full documentation here: https://github.com/Eonasdan/bootstrap-datetimepicker -->
-  <script src="assets/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
+  
+  
   <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
   <script src="assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
-  <!--  Google Maps Plugin    -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+
   <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
-  <script src="assets/js/material-kit.js?v=2.0.5" type="text/javascript"></script>
+  <script src="assets/js/material-kit.js" type="text/javascript"></script>
   <script src="https://apis.google.com/js/platform.js" async defer></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
@@ -448,28 +207,21 @@ Tell us about the complaints you have and we will look after it. Be it any depar
 						console.log("In first user");						
 						window.location.href = 'password.php';
 					}
-							
+						
 					//window.location.href = 'dashboard.php';
 				
             }).fail(function() { 
-                alert( "Login with Somaiya mail" );
+                alert( "Error occur. Try again later" );
             });
       }
 	}
 	
     function onFailure(error) {
       console.log(error);
+
     }
     function renderButton() {
-      gapi.signin2.render('my-signin2', {
-        'scope': 'profile email',
-        'width': 240,
-        'height': 50,
-        'longtitle': false,
-        'theme': 'dark',
-        'onsuccess': onSuccess,
-        'onfailure': onFailure
-      });
+      
 	  gapi.signin2.render('my-signin1', {
         'scope': 'profile email',
         'width': 240,

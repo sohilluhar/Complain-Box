@@ -38,24 +38,49 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="nav-item  ">
-            <a class="nav-link" href="#">
+		
+		<li class="nav-item">
+		<br/>
+			<div class="card-profile">
+                <div class="card-avatar">
+                
+                    <img class="img" src="<?php  echo $_SESSION['imgurl'];  ?>" />
+                
+                </div>
+	<div class="card-body">
+                  <h5 class="card-title">	<?php echo $_SESSION['name'];  ?></h5>
+                 
+                </div>
+		</li>
+		
+		
+         <li class="nav-item  ">
+            <a class="nav-link" href="./dashboard.php">
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
             </a>
           </li>
-          <li class="nav-item active ">
+          <li class="nav-item active">
             <a class="nav-link" href="#">
               <i class="material-icons">person</i>
-              <p>User Profile</p>
+              <p>User Profile </p>
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="./complain.php">
               <i class="material-icons">content_paste</i>
-              <p>Complain History</p>
+              <p>Complain</p>
             </a>
-          </li><!--
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="./logout.php">
+              <i class="material-icons">arrow_back</i>
+              <p>Logout</p>
+            </a>
+          </li>
+     
+		
+          <!--
           <li class="nav-item ">
             <a class="nav-link" href="#">
               <i class="material-icons">library_books</i>
@@ -100,7 +125,7 @@
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="#pablo">User Profile</a>
+            <a class="navbar-brand" href="#pablo">Set Password</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
@@ -271,7 +296,7 @@
           </div>
         </div>
       </div>
-      <footer class="footer">
+      <!--<footer class="footer">
         <div class="container-fluid">
           <nav class="float-left">
             <ul>
@@ -302,7 +327,7 @@
           </div>
         </div>
       </footer>
-    </div>
+   --> </div>
   </div>
  <!-- <div class="fixed-plugin">
     <div class="dropdown show-dropdown">
