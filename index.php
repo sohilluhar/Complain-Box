@@ -228,6 +228,7 @@
         'height': 50,
         'longtitle': false,
         'theme': 'dark',
+        'prompt': 'select_account',
         'onsuccess': onSuccess,
         'onfailure': onFailure
       });

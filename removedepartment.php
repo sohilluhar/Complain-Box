@@ -1,36 +1,7 @@
 <?php
-	include("config/config.php");
-	if(!isset($_SESSION['name'])){
-   
-        header("Location: index.php");
-        exit();
-    }
-	else{
-		 $sql = "SELECT usertype FROM user WHERE email='".$_SESSION["email"]."'";
-    $res=mysqli_query($con,$sql);
-	$row=$res->fetch_assoc();
 	
-	if( $row['usertype']!='admin' )
-    {
-		if($row['usertype']=='User'){
-		header("Location: dashboard.php");
-        exit();
-		}
-		else if($row['usertype']=='Department'){
-		header("Location: depthome.php");
-        exit();
-
-			
-		}
-	}
-	
-	}
-    $sql = "SELECT name FROM user WHERE email='".$_SESSION["email"]."'";
-    $res=$res_u=mysqli_query($con,$sql);
-    $row=$res->fetch_assoc();
-    $uname=$row["name"];//set name to department name instead of gmail account name
-    $_SESSION["name"] =$uname;
-	
+  include("config/config.php");
+	//display form to generate password and username
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +12,7 @@
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-   Add Department | Complain Box
+   Remove Department | Complain Box
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -105,7 +76,7 @@
               <p>Reports</p>
             </a>
           </li>
-            <li class="nav-item active">
+            <li class="nav-item ">
             <a class="nav-link" href="./adddepartment.php">
               <i class="material-icons">group_add</i>
               <p>Add department</p>
@@ -119,8 +90,7 @@
             </a>
           </li>
 		  
-		  
-            <li class="nav-item ">
+            <li class="nav-item  active">
             <a class="nav-link" href="./removedepartment.php">
               <i class="material-icons">clear</i>
               <p>Remove department</p>
@@ -133,44 +103,7 @@
               <p>Logout</p>
             </a>
           </li>
-		 <!--
-          <li class="nav-item ">
-            <a class="nav-link" href="#">
-              <i class="material-icons">library_books</i>
-              <p>Typography</p>
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="#">
-              <i class="material-icons">bubble_chart</i>
-              <p>Icons</p>
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="#">
-              <i class="material-icons">location_ons</i>
-              <p>Maps</p>
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href=".#">
-              <i class="material-icons">notifications</i>
-              <p>Notifications</p>
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="#">
-              <i class="material-icons">language</i>
-              <p>RTL Support</p>
-            </a>
-          </li>
-          <li class="nav-item active-pro ">
-            <a class="nav-link" href="#">
-              <i class="material-icons">unarchive</i>
-              <p>Upgrade to PRO</p>
-            </a>
-          </li>-->
-        </ul>
+		</ul>
       </div>
     </div>
     <div class="main-panel">
@@ -178,7 +111,7 @@
        <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="#pablo">Add Department</a>
+            <a class="navbar-brand" href="#pablo">Edit Department</a>
           </div>
          
                 <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -193,87 +126,50 @@
      <!-- End Navbar -->
       <div class="content">
         <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-6 offset-md-3">
-              <div class="card">
+			  <div class="col-md-12">
+              <div class="card card-plain">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title">Department</h4>
-                  <p class="card-category">Add new department</p>
+                  <h4 class="card-title mt-0"><b>Select Department to Remove </b></h4>
                 </div>
-                <div class="card-body">
-                  <form  action="adddeptdb.php" method="post">
-             
-                    <div class="row">
+                </div>
+                </div>
+		<div class="row">
+						<?php
+
+	$sql = "SELECT * FROM department ";
+	$result=mysqli_query($con,$sql);
+		//display all department
+		while($row = mysqli_fetch_array($result)){ 
+				$dptname=$row['dname'];
+		
+		  echo '     <div class="col-lg-3 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                <div class="card-header ">';
+		
+			echo "<form method='POST' action='updatedept.php' id=".$row['id'].">"; 
+			echo " <input type='hidden' name='department' value=".$row['dname'].">";		
+		echo '		</br>
+                  <h3 class="card-title text-center" name="'.$row["dname"].'"><b>'.$row["dname"].'</b></h3>									  
+				</br>
 				
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Department Name</label>
-                          <input type="text" name="departmentname" autocomplete="off" class="form-control center" >
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                     <div class="col-md-12">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Password for Department</label>
-                          <input type="password" name="passwrd1" autocomplete="off" class="form-control" >
-                        </div>
-                      </div>
-                   
-                    </div>
-					  <div class="row">
-                   
-              
-                     <div class="col-md-12">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Mail Id of head</label>
-                          <input type="mail" name="headmail" autocomplete="off" class="form-control" >
-                        </div>
-                      </div>
-                    </div>
-					<input type="hidden" name="deptimg"  value="assets/pictures/download.png" >
-                   <!-- <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label>About Me</label>
-                          <div class="form-group">
-                            <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</label>
-                            <textarea class="form-control" rows="5"></textarea>
-                          </div>
-                        </div>
-                      </div>
-                    </div>-->
-                    <button type="submit" class="btn btn-primary btn-block">Add Department</button>
-					
-                    <div class="clearfix"></div>
-                  </form>
-                </div>
+				<a herf="#" class="btn btn-danger btn-block" style="color: white"  name="'.$row["dname"].'" onClick="scrollToBottom(event)">Delete Department</a>
+				</form>
+				</div>
               </div>
-            </div>
-         <!--   <div class="col-md-4">
-              <div class="card card-profile">
-                <div class="card-avatar">
-                  <a href="#pablo">
-                    <img class="img" src="assets/img/faces/marc.jpg" />
-                  </a>
-                </div>
-                <div class="card-body">
-                  <h6 class="card-category text-gray">CEO / Co-Founder</h6>
-                  <h4 class="card-title">Alec Thompson</h4>
-                  <p class="card-description">
-                    Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
-                  </p>
-                  <a href="#pablo" class="btn btn-primary btn-round">Follow</a>
-                </div>
-              </div>
-            </div>-->
-          </div>
-        </div>
-      </div>
-  <?php
-include("footer.php");
+            </div>';
+		}
 ?>
-  </div>
+		</div>
+		
+		<br/>
+		
+          </div>
+      </div>
+     
+<?php 
+include("footer.php");?>
+
+	 </div>
   </div>
  <!-- <div class="fixed-plugin">
     <div class="dropdown show-dropdown">
@@ -370,6 +266,43 @@ include("footer.php");
   <!-- Material Dashboard DEMO methods, don't include it in your project! -->
   <script src="assets/demo/demo.js"></script>
   <script>
+      function scrollToBottom(event){
+       
+       var dname=event.target.name;
+	   
+	
+Swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  type: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+  if (result.value) {
+	  
+	     $.ajax({
+                type: 'POST',
+				url: 'removedeptdb.php',
+                data: {deptname:dname}
+            }).done(function(data){
+			console.log(data);
+			if(data=="error"){
+				swal("Error!", "Erro occur try again!", "error");
+			}
+			else{
+				swal("Deleted!", "Department Successfully deleted!", "success");
+									
+				window.location.href = './removedepartment.php';
+			}
+            }).fail(function() { 
+                alert( "Error occur. Try again later" );
+            });
+	  
+  }
+})
+	  }
     $(document).ready(function() {
       $().ready(function() {
         $sidebar = $('.sidebar');

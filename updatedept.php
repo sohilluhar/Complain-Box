@@ -1,36 +1,27 @@
 <?php
-	include("config/config.php");
-	if(!isset($_SESSION['name'])){
-   
-        header("Location: index.php");
-        exit();
-    }
-	else{
-		 $sql = "SELECT usertype FROM user WHERE email='".$_SESSION["email"]."'";
-    $res=mysqli_query($con,$sql);
-	$row=$res->fetch_assoc();
+  include("config/config.php");
+  if(isset($_POST['department'])){
+	$deptname=$_POST['department'];
 	
-	if( $row['usertype']!='admin' )
-    {
-		if($row['usertype']=='User'){
-		header("Location: dashboard.php");
-        exit();
-		}
-		else if($row['usertype']=='Department'){
-		header("Location: depthome.php");
-        exit();
-
-			
-		}
-	}
 	
-	}
-    $sql = "SELECT name FROM user WHERE email='".$_SESSION["email"]."'";
-    $res=$res_u=mysqli_query($con,$sql);
-    $row=$res->fetch_assoc();
-    $uname=$row["name"];//set name to department name instead of gmail account name
-    $_SESSION["name"] =$uname;
+	$sql = "SELECT * FROM user WHERE username='".$deptname."' ";
+	$result=mysqli_query($con,$sql);
+	$row = mysqli_fetch_array($result);
 	
+	$deptpasswd=$row['password'];
+	$deptmail=$row['email'];
+	$deptid=$row['id'];
+	
+		
+	$sql = "SELECT * FROM department WHERE dname='".$deptname."' ";
+	$result=mysqli_query($con,$sql);
+	$row = mysqli_fetch_array($result);
+	$deptdid=$row['id'];
+  }
+  else{
+	header("Location: index.php");
+	exit();
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +32,7 @@
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-   Add Department | Complain Box
+   
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -105,22 +96,21 @@
               <p>Reports</p>
             </a>
           </li>
-            <li class="nav-item active">
+            <li class="nav-item ">
             <a class="nav-link" href="./adddepartment.php">
               <i class="material-icons">group_add</i>
               <p>Add department</p>
             </a>
           </li>
 		  
-            <li class="nav-item  ">
+            <li class="nav-item  active">
             <a class="nav-link" href="./editdepartment.php">
               <i class="material-icons">create</i>
               <p>Edit department</p>
             </a>
           </li>
 		  
-		  
-            <li class="nav-item ">
+		   <li class="nav-item ">
             <a class="nav-link" href="./removedepartment.php">
               <i class="material-icons">clear</i>
               <p>Remove department</p>
@@ -133,44 +123,7 @@
               <p>Logout</p>
             </a>
           </li>
-		 <!--
-          <li class="nav-item ">
-            <a class="nav-link" href="#">
-              <i class="material-icons">library_books</i>
-              <p>Typography</p>
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="#">
-              <i class="material-icons">bubble_chart</i>
-              <p>Icons</p>
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="#">
-              <i class="material-icons">location_ons</i>
-              <p>Maps</p>
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href=".#">
-              <i class="material-icons">notifications</i>
-              <p>Notifications</p>
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="#">
-              <i class="material-icons">language</i>
-              <p>RTL Support</p>
-            </a>
-          </li>
-          <li class="nav-item active-pro ">
-            <a class="nav-link" href="#">
-              <i class="material-icons">unarchive</i>
-              <p>Upgrade to PRO</p>
-            </a>
-          </li>-->
-        </ul>
+		</ul>
       </div>
     </div>
     <div class="main-panel">
@@ -178,7 +131,7 @@
        <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="#pablo">Add Department</a>
+            <a class="navbar-brand" href="#pablo">Edit Department</a>
           </div>
          
                 <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -192,31 +145,36 @@
       </nav>
      <!-- End Navbar -->
       <div class="content">
-        <div class="container-fluid">
-          <div class="row">
+    
+		
+		
+          <div class="row" id="department">
+		  
+		  	  <div class="col-md-12">
+              
+				
             <div class="col-md-6 offset-md-3">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title">Department</h4>
-                  <p class="card-category">Add new department</p>
+                  <h4 class="card-title" id="department_card">Department</h4>
+                  <p class="card-category">Edit department</p>
                 </div>
                 <div class="card-body">
-                  <form  action="adddeptdb.php" method="post">
-             
+                  <form  action="updatedeptdb.php" method="post">
                     <div class="row">
 				
                       <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label-floating">Department Name</label>
-                          <input type="text" name="departmentname" autocomplete="off" class="form-control center" >
+                          <input type="text" id="edeptname" name="departmentname" autocomplete="off" value="<?php  echo $deptname;  ?>" class="form-control center" >
                         </div>
                       </div>
                     </div>
                     <div class="row">
                      <div class="col-md-12">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Password for Department</label>
-                          <input type="password" name="passwrd1" autocomplete="off" class="form-control" >
+                          <label class="bmd-label-floating">Password of Department</label>
+                          <input type="text" id="edeptpass" name="passwrd" value="<?php  echo $deptpasswd;  ?>" class="form-control" >
                         </div>
                       </div>
                    
@@ -227,23 +185,16 @@
                      <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label-floating">Mail Id of head</label>
-                          <input type="mail" name="headmail" autocomplete="off" class="form-control" >
+                          <input type="mail" id="edept" name="heademail"  value="<?php  echo $deptmail;  ?>" class="form-control" >
                         </div>
                       </div>
                     </div>
-					<input type="hidden" name="deptimg"  value="assets/pictures/download.png" >
-                   <!-- <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label>About Me</label>
-                          <div class="form-group">
-                            <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</label>
-                            <textarea class="form-control" rows="5"></textarea>
-                          </div>
-                        </div>
-                      </div>
-                    </div>-->
-                    <button type="submit" class="btn btn-primary btn-block">Add Department</button>
+					<input type="hidden" name="deptid"  value="<?php  echo $deptid;  ?>" >
+					<input type="hidden" name="deptdid"  value="<?php  echo $deptdid;  ?>" >
+					<input type="hidden" name="oldname"  value="<?php  echo $deptname;  ?>" >
+                
+                    <button type="submit" class="btn btn-primary">Update Department</button>
+                    <a href="./editdepartment.php" class="btn btn-primary">Back</a>
 					
                     <div class="clearfix"></div>
                   </form>
@@ -270,10 +221,11 @@
           </div>
         </div>
       </div>
-  <?php
-include("footer.php");
-?>
-  </div>
+     
+<?php 
+include("footer.php");?>
+
+	 </div>
   </div>
  <!-- <div class="fixed-plugin">
     <div class="dropdown show-dropdown">
@@ -370,6 +322,7 @@ include("footer.php");
   <!-- Material Dashboard DEMO methods, don't include it in your project! -->
   <script src="assets/demo/demo.js"></script>
   <script>
+  
     $(document).ready(function() {
       $().ready(function() {
         $sidebar = $('.sidebar');

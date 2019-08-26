@@ -1,14 +1,4 @@
-<?php
-  include("config/config.php");
-	
-	//dashboard of department
-	$mysqli = new mysqli("localhost", "root", "", "complainbox");
-	$sql = "SELECT name FROM user WHERE email='".$_SESSION["email"]."'";
-	$res=$res_u=mysqli_query($mysqli,$sql);
-	$row=$res->fetch_assoc();
-	$uname=$row["name"];//set name to department name instead of gmail account name
-	$_SESSION["name"] =$uname;
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -105,279 +95,24 @@
 	  <!-- End Navbar -->
 
 
-      <?php
-      if(!isset($_GET['id'])){
-
-      echo '
-      <div class="content" id="complainDetail">
-        <div class="container-fluid">
-          <div class="row">
-			
-				<div class="col-md-12">
-              <div class="card">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title ">List of Complains</h4>
-                  <p class="card-category">  </p>
-                </div>
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <table class="table">
-                      <thead class=" text-primary">
-                        <th>
-                          ID
-                        </th>
-                        <th>
-                          Detail
-                        </th>
-                       
-                        <th>
-                          Date Time
-                        </th>
-                        <th>
-                          Status
-                        </th>
-						
-						<th>
-                          Action
-                        </th>
-                      </thead>
-                      <tbody>';
-					   
-
-
-						$sql = "SELECT * FROM complain WHERE Departmentname='".$_SESSION['name']."' ORDER BY id DESC";
-						$result=mysqli_query($con,$sql);
-            while($row = mysqli_fetch_array($result)){  
-	//Creates a loop to dipslay all complain
-		echo "<tr><td>".$row['id']."</td>";
-		echo "<td>". $row['description']."</td>";
-		echo "<td>".$row['complaindate']."</td>";
-		echo "<td>".$row['status']."</td>";  
-		echo '<td><button type="button" class="btn btn-primary btn-round" name="'.$row['id'].'" onclick="takeAction(event)">Take Action!</button></td></tr>'; 
-	   }
-					
-                     echo '</tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-     </div>
-	 
-      </div>';
- 
-  include("footer.php");
-echo'  </div>';
-
-}
-?>
-    <!----     action form   ---->
-
-
-<?php 
-
-  if(isset($_GET['id'])){
-
-    $id = $_GET['id'];
-    $query=mysqli_query($con, "SELECT * FROM complain WHERE id='$id'");
-    $fetch = mysqli_fetch_array($query);
-    $building = $fetch['building'];
-    $location = $fetch['location'];
-    $description = $fetch['description'];
-    $upload_img  = $fetch['complainimg'];
-    $cname  = $fetch['complainant'];
-    $cmail  = $fetch['complainantmail'];
-    $dtym  = $fetch['complaindate'];
-    $cstatus  = $fetch['status'];
-
-    if(empty($upload_img)){
-      $upload="";
-    }else{
-        
-	$upload="
-	<div class='form-group'>
-	<a class='btn btn-primary' target='_blank' href='" .$upload_img."'>View Document</a>
-	</div>";
-	}
-      
-      //echo $a;
-
-      echo '
-	  <div class="content" >
-        <div class="container-fluid">
-	  <div class="row" id="complain">  
-
-              
-      <div class="col-md-8 offset-md-2">
-              <div class="card" id="dept_card">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title" id="complain_card">Complain Id : '.$id.'</h4>
-                  <p class="card-category">Complain By '.$cname.'</p>
-                  <p class="card-category">Mail id : '.$cmail.'</p>
-                  <p class="card-category">Date Time : '.$dtym.'</p>
-                </div>
-                <div class="card-body">
-                  <form action="" enctype="multipart/form-data" method="POST">
-				  
-				  <input type="hidden" id="cid" value="'.$id.'"  >
-					<div class="form-group" id="building_input" style="">
-                      <h6><u><b>Current Status</b></u></h6>
-					  <input type="text" class="form-control " value="'.$cstatus.'"  disabled>
-					  
-                    </div>    
-                    <div class="form-group" id="building_input" style="">
-                      <h6><u><b>Building</b></u></h6>
-					  <input type="text" class="form-control " value="'.$building.'" id="Building" disabled>
-                    </div>    
-                    <div class="form-group" >
-                      <h6><u><b>location</b></u></h6>
-					  <input type="text" class="form-control"  value="'.$location.'" id="location"  disabled>
-                    </div>
-
-                     <div class="form-group">
-                      
-					<h6><u><b>Description</b></u></h6>
-					<textarea class="form-control" name="complain_body" rows="5" id="complain_message" disabled>'.$description.'</textarea>
-            
-                      </div>';
-
-                       
-                          echo $upload;
-
-                          $date=date("m-d-Y");
-
-                         
-                          $parts = explode('-', $date);
-                          $date=$parts[2]. '-' . $parts[0] . '-' . $parts[1]  ;
-                          
-
-                          echo '
-                    <form action="" method="POST">
-                                     				                     
-              
-                      
-                     
-
-						<div class="form-group">
-						<div class="col-lg-12 col-md-12 col-sm-12">
-						<h3 class="text-center"><u><b>PERFOME ACTION</b></u><h3>
-						</div>
-						</div>
-												<div class="row">
-
-                      <div class="col-md-12 col-sd-12">
-                          <div class="dropdown" >
-                      <a class="btn btn-primary btn-block dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        SELECT STATUS
-                      </a>
-					  
-                      <ul class="dropdown-menu btn-block" aria-labelledby="dropdownMenuLink" >
-                        <li class="dropdown-item" id="item1" name="pending" href="#">Pending</li>
-                        <li class="dropdown-item" id="item2" name="inprogress" href="#">In-Progress</li>
-                        <li class="dropdown-item" id="item3" name="resolved" href="#">Resolved</li>
-                      </ul>
-                    </div>
-                    </div>
-					</div>
-					
-					<br/>
-						<div class="row">
-					  <div class="col-md-12 col-sd-12">
-                 
-						<h6><u><b>Enter number of dasy required to solve problem</b></u></h6>
-                      <input type="number" id="start" name="timer"
-                              required>
-
-                              </div>
-                     </div>		
-
-					 
-					 <br/>
-
-							  
-					<div class="row">
-					<div class="col-md-4 col-sd-12">
-					
-					<a href="./depthome.php" class="btn btn-primary btn-block">GO BACK</a>
-					</div>
-					
-					<div class="col-md-4 col-sd-12">
-					
-					<input type="submit" name="reg_complain" class="btn btn-primary btn-block" value="Update Status">
-					</div>
-					<div class="col-md-4 col-sd-12">
-					
-					
-					<input type="submit" class="btn btn-primary btn-block"  name="forward_admin"  value="Forward to Admin">
-					</div>
-					</div>
-                    </form>';
-                        
-
-                      echo '<div class="clearfix"></div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          
-      
-          </div>
-          </div>';
-		  
-  include("footer.php");
-          echo '</div>
-		  
-		  
-		  
-		  ';
-    
-
-
-
-    }
-
-
-
-
-  
-  
-  
-if(isset($_POST['reg_complain'])){
-
-  if(isset($_COOKIE['status'])){
-    $status=$_COOKIE['status'];
-  }else{
-    $status="Pending";
-  }
-
-  $timer = $_POST['timer'];
-$sql7="UPDATE complain SET status='".$status."' , time_constraint=".$timer." WHERE id=".$id.";";
-//echo $sql7;
-  $query= mysqli_query($con,$sql7);
-
-   
- header("Location:depthome.php");
-
-  }
-
-
-?>
 
 
 
 
 
 
-<?php 
-
-/*if(isset($_POST['pending'])){
-  header("Location: dashboard.php");
-}*/
-
- ?>
 
 
-<!----end of complain-->
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -648,11 +383,6 @@ margin-top: 34px;
     });
   </script>
 
-  <?php 
-  
-
-
-   ?>
 
 
 
@@ -691,26 +421,12 @@ margin-top: 34px;
       <?php 
 
       if (isset($_POST['forward_admin'])) {
-		  
-		    if(isset($_COOKIE['status'])){
-    $status=$_COOKIE['status'];
-  }else{
-    $status="Pending";
-  }
-  
-
-  $remark = "Cant solve";//$_POST['remark'];
-$sql7="INSERT INTO admincomplain (`ogid`, `remark`) values ($id,'".$remark."')";
-//echo $sql7;
-  $query= mysqli_query($con,$sql7);
-
          $query = mysqli_query($con,"SELECT email from user WHERE usertype='admin'");
         $row = mysqli_fetch_array($query);
         $mail_to = $row['email'];
 
         echo  '<script>
-                
-		        $.ajax({              
+        $.ajax({              
                 url:"complain_submit_ajax.php",
                 type:"POST",
                
@@ -725,9 +441,8 @@ $sql7="INSERT INTO admincomplain (`ogid`, `remark`) values ($id,'".$remark."')";
             }).fail(function() { 
                 alert( "Login with Somaiya mail" );
             });
-
             </script>';
-            header("Location: depthome.php");
+            //header("Location: depthome.php");
       }
 
        

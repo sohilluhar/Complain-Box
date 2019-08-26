@@ -8,15 +8,11 @@
 	$dimg=$_POST["deptimg"];
 
 	
-	$con = new mysqli('localhost', 'root','' ,'complainbox');
-		if ($con->connect_error) 
-			die("Connection failed: " . $con->connect_error);
-	$sqlque="select * from user where username='".$name."'";
+	$sqlque="select * from user where username='".$name."' AND usertype='Department'";
 	$res_u=mysqli_query($con,$sqlque);
-	echo mysqli_num_rows($res_u);
+	
 	if (mysqli_num_rows($res_u) == 0) 
 	{
-		echo "updating..";
 		$sql="insert into department (dname,deptimg) values('$name','$dimg')";
 		mysqli_query($con,$sql);
 		
@@ -24,8 +20,40 @@
 		mysqli_query($con,$sql);
 	
 	
+		echo'
+		
+		<html>
+<body>
+
+  <script src="assets/js/plugins/sweetalert2.js"></script>
+<script>
+swal("Department Added","","success");
+
+setTimeout(function(){
+
+	window.location.href = "./admindashboard.php";
+
+},1000);			
+</script>
+</body>
+</html>
+
+		';
+		
+	
+	}else{
+echo'		<html>
+<body>
+<script>alert( "Already exists" );
+window.location ="adddepartment.php";
+</script>
+
+</body>
+</html>
+';
 	}
-	header('Location: admindashboard.php');
-	exit();
+	
+	
+	
 	
 ?>

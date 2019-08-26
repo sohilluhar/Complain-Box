@@ -12,28 +12,28 @@
 	exit();
   }
 	//dashboard of normal user
+	
 	$totcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE complainantmail='".$email."'"));
 	
 	$totpendingcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE status='Pending' AND complainantmail='".$email."'"));
 					
-	$totsolvedcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE  status='Resolved' AND complainantmail='".$email."'"));
+	$totsolvedcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE  status='Solved' AND complainantmail='".$email."'"));
 					
-	$totinprogresscomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE status='In-Progress'AND complainantmail='".$email."'"));
+	$totinprogresscomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE status='Inprogress'AND complainantmail='".$email."'"));
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
-
-
-
+ <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+   <script type="text/javascript" src="assets/js/dropdown.js"></script> 																	 
   <meta charset="utf-8" />
   <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>Dashboard | Complain Box </title>
-   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
@@ -69,8 +69,6 @@
 					<div class="card-body">
 						<h5 class="card-title">	<?php echo $_SESSION['name'];  ?></h5>
 					</div>
-
-			</div>
 		</li>
 		
 		
@@ -121,7 +119,7 @@
       <!-- End Navbar -->
       <div class="content" >
         <div class="container-fluid">
-		  <div class="col-md-12">
+			  <div class="col-md-12">
               <div class="card card-plain">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title mt-0"><b>Complains Status</b></h4>
@@ -213,11 +211,12 @@
 				
              
 			  
-						  
+			 
           <div class="row">
 			
 				<?php
 	
+	$con = new mysqli("localhost", "root", "", "complainbox");
 
 
 	$sql = "SELECT * FROM department ";
@@ -247,48 +246,34 @@
              </div>
 	 
 	 <br/>
+	 
+	 
 	 <div class="row" style="display: none" id="complain">	 
             	
-							  <div class="col-md-12">
+				  <div class="col-md-12">
               <div class="card card-plain">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title mt-0"><b>Fill Complain Form</b></h4>
                 </div>
                 </div>
                 </div>
-				 <br/>																		 
+				 <br/>
+                
 			<div class="col-md-8 offset-md-2">
               <div class="card">
-                <div class="card-header card-header-primary">
+                <div class="card-header card-header-info">
                   <h4 class="card-title" id="complain_card"></h4>
                   <p class="card-category">Complain Form</p>
                 </div>
                 <div class="card-body">
-                  <form action="" enctype="multipart/form-data" style="margin-top: -40px;" method="POST">
-					<br/>
-					<br/>
-
-                    <div class="dropdown">
-                      <a class="btn btn-primary dropdown-toggle " href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choose Building</a>
-
-                      <ul class="dropdown-menu" style="cursor:pointer;" aria-labelledby="dropdownMenuLink" name="ul" required>
-                        <li class="dropdown-item" id="item1" value="j" href="#">KJ SOMAIYA SCIENCE AND COMMERCE BUILDING</li>
-                        <li class="dropdown-item" id="item2" value="k" href="#">ARYABHATTA ENGINEERING BUILDING</li>
-                        <li class="dropdown-item" id="item3" href="#">BHASKARACHARYA</li>
-                      </ul>
-                    </div>
-                    <div class="form-group" style="margin-top: 35px;">
-                      <label for="exampleFormControlInput1" style="margin-bottom: 5px">Location:</label>
-					  
-                      <input type="text" class="form-control" id="exampleFormControlInput1" name="location" placeholder="Eg: Room no,Lab name,Campus area..." required>
-                    </div>
+                  <form action="" enctype="multipart/form-data" method="POST">
 
                      <div class="form-group">
                       
 						
 						
                             <label class="bmd-label-floating"> Enter your complain here</label>
-						 <textarea class="form-control" name="complain_body" rows="5" required><?php
+						 <textarea class="form-control" name="complain_body" rows="10" required><?php
                           if(isset($_SESSION['complain_body'])){
                               echo $_SESSION['complain_body'];
                           }
@@ -302,10 +287,10 @@
 						 
                             <label for="upload"
                                 style="margin: 0px 70px 10px 228px;
-                                    border: 3px solid #9c27b0;
+                                    border: 3px solid #17a2b8;
                                     border-radius: 13px;
                                     padding: 5px;
-                                    background-color: #9c27b0;
+                                    background-color: #17a2b8;
                                     color: white;
                                     cursor: pointer;">Upload File</label>
                                     <input id='upload' name="upload" type="file" >
@@ -313,7 +298,7 @@
                              <!-- <input type="file" class="form-control-file" id="exampleFormControlFile1">-->
                           </div>
                        
-                          <script type="text/css">
+                          <script>
                             input[type="file"] { 
                                 z-index: -1;
                                 position: absolute;
@@ -355,7 +340,7 @@
 
 
 
-                    	<input type="submit" name="com_submit" class="btn btn-primary btn-block" value="Submit Complain">
+                    	<input type="submit" name="com_submit" class="btn btn-info btn-block" value="Submit Complain">
 						
                     <div class="clearfix"></div>
                   </form>
@@ -389,7 +374,6 @@ include("footer.php");
 
 
   </div>
-  </div>
   
   
   <script src="assets/js/core/jquery.min.js"></script>
@@ -411,11 +395,11 @@ include("footer.php");
   <script>
 
     function scrollToBottom(event){
-        var build="";
+
        var y = document.getElementById("complain_card");
        
        var dname=event.target.name;
-       y.innerHTML  = "Department: "+ dname;;
+       y.innerHTML  ="Department: "+ dname;
 	   
 
       window.scrollTo(0,document.querySelector("#complain").scrollHeight);
@@ -433,25 +417,16 @@ include("footer.php");
 
 
 
+
+
+
+
+</body>
+
 <?php
  if(isset($_POST['com_submit'])){
 
 
-   /* echo '<script>
-  alert(document.getElementById("dropdownMenuLink").textContent);
-   var build= $("#dropdownMenuLink").text();
-  </script>';*/
-  /*echo '<script>
-    if( typeof build == "undefined"){
-    }
-  </script>';*/
-  $location = $_POST['location'];
-  if (isset($_COOKIE['building'])) {
-    $building = $_COOKIE['building'];
-  }else{
-    $building='none';
-  }
-  
 
   $complain_body = $_POST['complain_body'];
 
@@ -459,7 +434,6 @@ include("footer.php");
     $body = mysqli_real_escape_string($con,$complain_body);
 
     $_SESSION['complain_body']=$body;
-
 
 
 
@@ -544,15 +518,10 @@ include("footer.php");
 
 
      if($uploadOk==1){
-
-      $datetime = date("Y-m-d H:i:s");
-      mysqli_query($con,"INSERT into complain(description,complainimg,Departmentname,status,complainant,complainantmail,building,location,complaindate) values('$body','$file_path','$department','Pending','$name','$email','$building','$location','$datetime')");
-
-     $id=mysqli_insert_id($con);
+     $query = mysqli_query($con,"INSERT into complain(description,complainimg,Departmentname,status,complainant,complainantmail) values('$body','$file_path','$department','pending','$name','$email')");
 		
 		echo '<script>	swal("Your complain successfully submitted"); </script>';
      unset($_SESSION['complain_body']);
-     unset($_COOKIE['building']);
 	 
 	 	$con = new mysqli("localhost", "root", "", "complainbox");
 
@@ -560,19 +529,14 @@ include("footer.php");
 	$sql = "SELECT email FROM user where name='$department' ";
 	$result=mysqli_query($con,$sql);
 	$row = mysqli_fetch_array($result);
-	$mail_to=$row['email'];
-
-  
-
+	$dptmail=$row['email'];
 
       $var ='<script type="text/javascript">
-
-
         
       $.ajax({              
                 url:"complain_submit_ajax.php",
                 type:"POST",
-                data:"id='.$id.'&mail_to='.$mail_to.'",
+                data:"body='.$body.'&attachment='.$file_path.'&deptmail='.$dptmail.'",
                 cache:false,
 
               
@@ -602,23 +566,13 @@ include("footer.php");
 
 ?>
 
-
+</div>
 <!--/form-->
+</pre>
 
-<script >
-  $("li").click(function(){
 
-    var se = document.getElementById('dropdownMenuLink');
-    se.innerHTML = $(this).text();
-     document.cookie = "building=" + $(this).text(); 
-   // $("#dropdownMenuLink").innerHTML=$(this).text();
-   // build = $(this).text();
-  
-  })
-</script>
-
- 
 
 </body>
 </html>
 
+</html>

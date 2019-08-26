@@ -1,402 +1,374 @@
 <?php
-  include("config/config.php");
 	
-	//dashboard of department
-	$mysqli = new mysqli("localhost", "root", "", "complainbox");
-	$sql = "SELECT name FROM user WHERE email='".$_SESSION["email"]."'";
-	$res=$res_u=mysqli_query($mysqli,$sql);
+  include("config/config.php");
+	    if(!isset($_SESSION['name'])){
+   
+        header("Location: index.php");
+        exit();
+    }
+	else{
+		 $sql = "SELECT usertype FROM user WHERE email='".$_SESSION["email"]."'";
+    $res=mysqli_query($con,$sql);
 	$row=$res->fetch_assoc();
-	$uname=$row["name"];//set name to department name instead of gmail account name
-	$_SESSION["name"] =$uname;
+	
+	if( $row['usertype']!='admin' )
+    {
+		if($row['usertype']=='User'){
+		header("Location: dashboard.php");
+        exit();
+		}
+		else if($row['usertype']=='Department'){
+		header("Location: depthome.php");
+        exit();
+
+			
+		}
+	}
+	
+	}
+    $sql = "SELECT name FROM user WHERE email='".$_SESSION["email"]."'";
+    $res=$res_u=mysqli_query($con,$sql);
+    $row=$res->fetch_assoc();
+    $uname=$row["name"];//set name to department name instead of gmail account name
+    $_SESSION["name"] =$uname;
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
- 
-
-
   <meta charset="utf-8" />
   <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <title>Dashboard | Complain Box </title>
-   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+  <title>
+   Edit Department | Complain Box
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <!-- CSS Files -->
   <link href="assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link href="assets/demo/demo.css" rel="stylesheet" />
 </head>
 
 <body class="">
   <div class="wrapper ">
-    <div class="sidebar" data-color="purple" data-background-color="white" data-image="assets/img/sidebar-1.jpg">
+    <div class="sidebar" data-color="purple" data-background-color="white" data-image="assets/img/sidebar-3.jpg">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
         Tip 2: you can also add an image using data-image tag
     -->
+ 
       <div class="logo">
         <a href="#" class="simple-text logo-normal">
           Complain Box
         </a>
       </div>
-	  
-	  
+      
+      
       <div class="sidebar-wrapper">
         <ul class="nav">
 
-		<li class="nav-item">
-			<br/>
-			<div class="card-profile">
+        <li class="nav-item">
+            <br/>
+            <div class="card-profile">
                 <div class="card-avatar">
                 
                     <img class="img" src="<?php  echo $_SESSION['imgurl'];  ?>" />
                 
                 </div>
-	               <div class="card-body">
-                  <h5 class="card-title">	<?php echo $_SESSION['name'];  ?></h5>
+    <div class="card-body">
+                  <h5 class="card-title">   <?php echo $_SESSION['name'];  ?></h5>
                  
                 </div>
-		</li>
-		
-		
-         <li class="nav-item active ">
-            <a class="nav-link" href="#">
+        </li>
+        
+        
+         <li class="nav-item ">
+            <a class="nav-link" href="./admindashboard.php">
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
             </a>
           </li>
-     
+      <li class="nav-item ">
+            <a class="nav-link" href="#">
+              <i class="material-icons">person</i>
+              <p>My Profile</p>
+            </a>
+          </li>
           <li class="nav-item ">
             <a class="nav-link" href="#">
               <i class="material-icons">content_paste</i>
-              <p>View Complain</p>
+              <p>Reports</p>
             </a>
           </li>
-		
+            <li class="nav-item ">
+            <a class="nav-link" href="./adddepartment.php">
+              <i class="material-icons">group_add</i>
+              <p>Add department</p>
+            </a>
+          </li>
+		  
+            <li class="nav-item  active">
+            <a class="nav-link" href="./editdepartment.php">
+              <i class="material-icons">create</i>
+              <p>Edit department</p>
+            </a>
+          </li>
+		  
+		   <li class="nav-item ">
+            <a class="nav-link" href="./removedepartment.php">
+              <i class="material-icons">clear</i>
+              <p>Remove department</p>
+            </a>
+          </li>
+		  
           <li class="nav-item ">
             <a class="nav-link" href="./logout.php">
               <i class="material-icons">arrow_back</i>
               <p>Logout</p>
             </a>
           </li>
-     
-        </ul>
+		</ul>
       </div>
     </div>
     <div class="main-panel">
       <!-- Navbar -->
-          <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="#"><b>Dashboard</b></a>
+            <a class="navbar-brand" href="#pablo">Edit Department</a>
           </div>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+         
+                <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
             <span class="navbar-toggler-icon icon-bar"></span>
             <span class="navbar-toggler-icon icon-bar"></span>
             <span class="navbar-toggler-icon icon-bar"></span>
           </button>
-
-        </div>
+          
+         </div>
       </nav>
-	  <!-- End Navbar -->
-
-
-      <?php
-      if(!isset($_GET['id'])){
-
-      echo '
-      <div class="content" id="complainDetail">
+     <!-- End Navbar -->
+      <div class="content">
         <div class="container-fluid">
-          <div class="row">
-			
-				<div class="col-md-12">
-              <div class="card">
+			  <div class="col-md-12">
+              <div class="card card-plain">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">List of Complains</h4>
-                  <p class="card-category">  </p>
+                  <h4 class="card-title mt-0"><b>Select Department to edit </b></h4>
                 </div>
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <table class="table">
-                      <thead class=" text-primary">
-                        <th>
-                          ID
-                        </th>
-                        <th>
-                          Detail
-                        </th>
-                       
-                        <th>
-                          Date Time
-                        </th>
-                        <th>
-                          Status
-                        </th>
-						
-						<th>
-                          Action
-                        </th>
-                      </thead>
-                      <tbody>';
-					   
-
-
-						$sql = "SELECT * FROM complain WHERE Departmentname='".$_SESSION['name']."' ORDER BY id DESC";
-						$result=mysqli_query($con,$sql);
-            while($row = mysqli_fetch_array($result)){  
-	//Creates a loop to dipslay all complain
-		echo "<tr><td>".$row['id']."</td>";
-		echo "<td>". $row['description']."</td>";
-		echo "<td>".$row['complaindate']."</td>";
-		echo "<td>".$row['status']."</td>";  
-		echo '<td><button type="button" class="btn btn-primary btn-round" name="'.$row['id'].'" onclick="takeAction(event)">Take Action!</button></td></tr>'; 
-	   }
-					
-                     echo '</tbody>
-                    </table>
-                  </div>
                 </div>
+                </div>
+		<div class="row">
+						<?php
+
+	$sql = "SELECT * FROM department ";
+	$result=mysqli_query($con,$sql);
+		//display all department
+		while($row = mysqli_fetch_array($result)){ 
+				$dptname=$row['dname'];
+		
+		  echo '     <div class="col-lg-3 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                <div class="card-header ">';
+		
+			echo "<form method='POST' action='updatedept.php' id=".$row['id'].">"; 
+			echo " <input type='hidden' name='department' value=".$row['dname'].">";		
+		echo '		</br>
+                  <h3 class="card-title text-center" name="'.$row["dname"].'"><b>'.$row["dname"].'</b></h3>									  
+				</br>
+				
+				<button type="submit" class="btn btn-info btn-block" name="'.$row["dname"].'">Edit department</button>
+				</form>
+				</div>
               </div>
-            </div>
-     </div>
-	 
-      </div>';
- 
-  include("footer.php");
-echo'  </div>';
-
-}
+            </div>';
+		}
 ?>
-    <!----     action form   ---->
-
-
-<?php 
-
-  if(isset($_GET['id'])){
-
-    $id = $_GET['id'];
-    $query=mysqli_query($con, "SELECT * FROM complain WHERE id='$id'");
-    $fetch = mysqli_fetch_array($query);
-    $building = $fetch['building'];
-    $location = $fetch['location'];
-    $description = $fetch['description'];
-    $upload_img  = $fetch['complainimg'];
-    $cname  = $fetch['complainant'];
-    $cmail  = $fetch['complainantmail'];
-    $dtym  = $fetch['complaindate'];
-    $cstatus  = $fetch['status'];
-
-    if(empty($upload_img)){
-      $upload="";
-    }else{
-        
-	$upload="
-	<div class='form-group'>
-	<a class='btn btn-primary' target='_blank' href='" .$upload_img."'>View Document</a>
-	</div>";
-	}
-      
-      //echo $a;
-
-      echo '
-	  <div class="content" >
-        <div class="container-fluid">
-	  <div class="row" id="complain">  
-
-              
-      <div class="col-md-8 offset-md-2">
-              <div class="card" id="dept_card">
+		</div>
+		
+		<br/>
+		
+          <div class="row" style="display: none" id="department">
+		  
+		  	  <div class="col-md-12">
+              <div class="card card-plain">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title" id="complain_card">Complain Id : '.$id.'</h4>
-                  <p class="card-category">Complain By '.$cname.'</p>
-                  <p class="card-category">Mail id : '.$cmail.'</p>
-                  <p class="card-category">Date Time : '.$dtym.'</p>
+                  <h4 class="card-title mt-0"><b>Edit Department</b></h4>
+                </div>
+                </div>
+                </div>
+				 <br/>
+            <div class="col-md-6 offset-md-3">
+              <div class="card">
+                <div class="card-header card-header-info">
+                  <h4 class="card-title" id="department_card">Department</h4>
+                  <p class="card-category">Edit department</p>
                 </div>
                 <div class="card-body">
-                  <form action="" enctype="multipart/form-data" method="POST">
-				  
-				  <input type="hidden" id="cid" value="'.$id.'"  >
-					<div class="form-group" id="building_input" style="">
-                      <h6><u><b>Current Status</b></u></h6>
-					  <input type="text" class="form-control " value="'.$cstatus.'"  disabled>
-					  
-                    </div>    
-                    <div class="form-group" id="building_input" style="">
-                      <h6><u><b>Building</b></u></h6>
-					  <input type="text" class="form-control " value="'.$building.'" id="Building" disabled>
-                    </div>    
-                    <div class="form-group" >
-                      <h6><u><b>location</b></u></h6>
-					  <input type="text" class="form-control"  value="'.$location.'" id="location"  disabled>
+                  <form  action="updatedept.php" method="post">
+                  <!--  <div class="row">
+                      <div class="col-md-5">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Company (disabled)</label>
+                          <input type="text" class="form-control" disabled>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Username</label>
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Email address</label>
+                          <input type="email" class="form-control">
+                        </div>
+                      </div>
                     </div>
-
-                     <div class="form-group">
-                      
-					<h6><u><b>Description</b></u></h6>
-					<textarea class="form-control" name="complain_body" rows="5" id="complain_message" disabled>'.$description.'</textarea>
-            
-                      </div>';
-
-                       
-                          echo $upload;
-
-                          $date=date("m-d-Y");
-
-                         
-                          $parts = explode('-', $date);
-                          $date=$parts[2]. '-' . $parts[0] . '-' . $parts[1]  ;
-                          
-
-                          echo '
-                    <form action="" method="POST">
-                                     				                     
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Fist Name</label>
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Last Name</label>
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                    </div>-->
+                    <div class="row">
+				
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Department Name</label>
+                          <input type="text" id="edeptname" name="departmentname" class="form-control center" >
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                     <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Password for Department</label>
+                          <input type="password" id="edeptpass" name="passwrd1" class="form-control" >
+                        </div>
+                      </div>
+                   
+                    </div>
+					  <div class="row">
+                   
               
-                      
-                     
-
-						<div class="form-group">
-						<div class="col-lg-12 col-md-12 col-sm-12">
-						<h3 class="text-center"><u><b>PERFOME ACTION</b></u><h3>
-						</div>
-						</div>
-												<div class="row">
-
-                      <div class="col-md-12 col-sd-12">
-                          <div class="dropdown" >
-                      <a class="btn btn-primary btn-block dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        SELECT STATUS
-                      </a>
-					  
-                      <ul class="dropdown-menu btn-block" aria-labelledby="dropdownMenuLink" >
-                        <li class="dropdown-item" id="item1" name="pending" href="#">Pending</li>
-                        <li class="dropdown-item" id="item2" name="inprogress" href="#">In-Progress</li>
-                        <li class="dropdown-item" id="item3" name="resolved" href="#">Resolved</li>
-                      </ul>
+                     <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Mail Id of head</label>
+                          <input type="mail" id="edept" name="headmail" class="form-control" >
+                        </div>
+                      </div>
                     </div>
-                    </div>
-					</div>
+					<input type="hidden" name="deptimg"  value="assets/pictures/download.png" >
+                   <!-- <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label>About Me</label>
+                          <div class="form-group">
+                            <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</label>
+                            <textarea class="form-control" rows="5"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                    </div>-->
+                    <button type="submit" class="btn btn-info btn-block">Update Department</button>
 					
-					<br/>
-						<div class="row">
-					  <div class="col-md-12 col-sd-12">
-                 
-						<h6><u><b>Enter number of dasy required to solve problem</b></u></h6>
-                      <input type="number" id="start" name="timer"
-                              required>
-
-                              </div>
-                     </div>		
-
-					 
-					 <br/>
-
-							  
-					<div class="row">
-					<div class="col-md-4 col-sd-12">
-					
-					<a href="./depthome.php" class="btn btn-primary btn-block">GO BACK</a>
-					</div>
-					
-					<div class="col-md-4 col-sd-12">
-					
-					<input type="submit" name="reg_complain" class="btn btn-primary btn-block" value="Update Status">
-					</div>
-					<div class="col-md-4 col-sd-12">
-					
-					
-					<input type="submit" class="btn btn-primary btn-block"  name="forward_admin"  value="Forward to Admin">
-					</div>
-					</div>
-                    </form>';
-                        
-
-                      echo '<div class="clearfix"></div>
+                    <div class="clearfix"></div>
                   </form>
                 </div>
               </div>
             </div>
-          
-      
+         <!--   <div class="col-md-4">
+              <div class="card card-profile">
+                <div class="card-avatar">
+                  <a href="#pablo">
+                    <img class="img" src="assets/img/faces/marc.jpg" />
+                  </a>
+                </div>
+                <div class="card-body">
+                  <h6 class="card-category text-gray">CEO / Co-Founder</h6>
+                  <h4 class="card-title">Alec Thompson</h4>
+                  <p class="card-description">
+                    Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
+                  </p>
+                  <a href="#pablo" class="btn btn-primary btn-round">Follow</a>
+                </div>
+              </div>
+            </div>-->
           </div>
-          </div>';
-		  
-  include("footer.php");
-          echo '</div>
-		  
-		  
-		  
-		  ';
-    
-
-
-
-    }
-
-
-
-
-  
-  
-  
-if(isset($_POST['reg_complain'])){
-
-  if(isset($_COOKIE['status'])){
-    $status=$_COOKIE['status'];
-  }else{
-    $status="Pending";
-  }
-
-  $timer = $_POST['timer'];
-$sql7="UPDATE complain SET status='".$status."' , time_constraint=".$timer." WHERE id=".$id.";";
-//echo $sql7;
-  $query= mysqli_query($con,$sql7);
-
-   
- header("Location:depthome.php");
-
-  }
-
-
-?>
-
-
-
-
-
-
+        </div>
+      </div>
+     
 <?php 
+include("footer.php");?>
 
-/*if(isset($_POST['pending'])){
-  header("Location: dashboard.php");
-}*/
-
- ?>
-
-
-<!----end of complain-->
-
-
-
-
+	 </div>
   </div>
-  <!--   Core JS Files 
-
-margin-top: 34px;
-    left: -119px;
-    color: #fff;
-    background: #9c27b0;
-
-
-    -->
-
-
-
-
-
+ <!-- <div class="fixed-plugin">
+    <div class="dropdown show-dropdown">
+      <a href="#" data-toggle="dropdown">
+        <i class="fa fa-cog fa-2x"> </i>
+      </a>
+      <ul class="dropdown-menu">
+        <li class="header-title"> Sidebar Filters</li>
+        <li class="adjustments-line">
+          <a href="javascript:void(0)" class="switch-trigger active-color">
+            <div class="badge-colors ml-auto mr-auto">
+              <span class="badge filter badge-purple" data-color="purple"></span>
+              <span class="badge filter badge-azure" data-color="azure"></span>
+              <span class="badge filter badge-green" data-color="green"></span>
+              <span class="badge filter badge-warning" data-color="orange"></span>
+              <span class="badge filter badge-danger" data-color="danger"></span>
+              <span class="badge filter badge-rose active" data-color="rose"></span>
+            </div>
+            <div class="clearfix"></div>
+          </a>
+        </li>
+        <li class="header-title">Images</li>
+        <li class="active">
+          <a class="img-holder switch-trigger" href="javascript:void(0)">
+            <img src="assets/img/sidebar-1.jpg" alt="">
+          </a>
+        </li>
+        <li>
+          <a class="img-holder switch-trigger" href="javascript:void(0)">
+            <img src="assets/img/sidebar-2.jpg" alt="">
+          </a>
+        </li>
+        <li>
+          <a class="img-holder switch-trigger" href="javascript:void(0)">
+            <img src="assets/img/sidebar-3.jpg" alt="">
+          </a>
+        </li>
+        <li>
+          <a class="img-holder switch-trigger" href="javascript:void(0)">
+            <img src="assets/img/sidebar-4.jpg" alt="">
+          </a>
+        </li>
+        <li class="button-container">
+          <a href="https://www.creative-tim.com/product/material-dashboard" target="_blank" class="btn btn-primary btn-block">Free Download</a>
+        </li>
+        <!-- <li class="header-title">Want more components?</li>
+            <li class="button-container">
+                <a href="https://www.creative-tim.com/product/material-dashboard-pro" target="_blank" class="btn btn-warning btn-block">
+                  Get the pro version
+                </a>
+            </li> -->
+    
+  <!--   Core JS Files   -->
   <script src="assets/js/core/jquery.min.js"></script>
   <script src="assets/js/core/popper.min.js"></script>
   <script src="assets/js/core/bootstrap-material-design.min.js"></script>
@@ -439,43 +411,7 @@ margin-top: 34px;
   <script src="assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
   <!-- Material Dashboard DEMO methods, don't include it in your project! -->
   <script src="assets/demo/demo.js"></script>
-
-
-    <script>
-/*  $("li").click(function(){
-    alert("j");
-    var val=$(this).text();
-    $("#dropdownMenuLink").text("STATUS: "+$(this).text());
-    $.ajax(function(){
-      type:"POST",
-      url:"status_update.php",
-      data:"status="+val+"&id=<?php //echo $_GET['id']?>"
-    }).done(function(){
-      window.open("depthome.php?id="+<?php //echo $_GET['id']?>,"_self");
-    });
-
-
-
-    });
-  */
-
-</script>
-
-
-
-
   <script>
-  
-  function doSomething(a) {
-    var x = document.getElementById("testing");
-    var y = document.getElementById("test");
-  //if (x.style.display === "none") {
-	y.innerHTML  = a;
-    //x.style.display = "block";
-	console.log(a);
-   // alert('Form submitted!'+a);
-    return false;
-}
   
     $(document).ready(function() {
       $().ready(function() {
@@ -647,125 +583,6 @@ margin-top: 34px;
       });
     });
   </script>
-
-  <?php 
-  
-
-
-   ?>
-
-
-
-  <script>
-
-    function takeAction(event){
-
-       // var building = document.getElementById('building');
-       // var location = document.getElementById('location');
-       // var msg = document.getElementById('complain_message');
-        var id= event.target.name;
-
-        window.open("depthome.php?id="+id,"_self");
-
-
-
-
-
-    }
-
-
-    $(document).ready(function() {
-      // Javascript method's body can be found in assets/js/demos.js
-      md.initDashboardPageCharts();
-
-    });
-  </script>
-
-
-
-
-
-
-
-
-      <?php 
-
-      if (isset($_POST['forward_admin'])) {
-		  
-		    if(isset($_COOKIE['status'])){
-    $status=$_COOKIE['status'];
-  }else{
-    $status="Pending";
-  }
-  
-
-  $remark = "Cant solve";//$_POST['remark'];
-$sql7="INSERT INTO admincomplain (`ogid`, `remark`) values ($id,'".$remark."')";
-//echo $sql7;
-  $query= mysqli_query($con,$sql7);
-
-         $query = mysqli_query($con,"SELECT email from user WHERE usertype='admin'");
-        $row = mysqli_fetch_array($query);
-        $mail_to = $row['email'];
-
-        echo  '<script>
-                
-		        $.ajax({              
-                url:"complain_submit_ajax.php",
-                type:"POST",
-               
-                data:"id='.$id.'&mail_to='.$mail_to.'",
-                cache:false,
-
-              
-            }).done(function(data){
-                console.log(data);
-                window.location.href = "depthome.php";
-
-            }).fail(function() { 
-                alert( "Login with Somaiya mail" );
-            });
-
-            </script>';
-            header("Location: depthome.php");
-      }
-
-       
-
-       ?>
-
-      
-      
-
-    
-
-  <script>
-
-  $("li").click(function(){
-    
-    var val=$(this).text();
-    $("#dropdownMenuLink").text("STATUS: "+$(this).text());
-   
-    document.cookie = "status=" + $(this).text();
-   /* $.ajax({
-      type: "POST",
-      url: "status_update.php",
-      data:"status="+val+"&id=<?php //echo $_GET['id']?>"
-    }).done(function(){
-      window.open("depthome.php","_self");
-    });
-
-*/
-
-    });
-  
-  
-</script>
-
-
-
-
-
 </body>
 
 </html>

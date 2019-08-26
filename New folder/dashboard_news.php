@@ -12,13 +12,6 @@
 	exit();
   }
 	//dashboard of normal user
-	$totcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE complainantmail='".$email."'"));
-	
-	$totpendingcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE status='Pending' AND complainantmail='".$email."'"));
-					
-	$totsolvedcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE  status='Resolved' AND complainantmail='".$email."'"));
-					
-	$totinprogresscomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE status='In-Progress'AND complainantmail='".$email."'"));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,18 +21,23 @@
 
 
 
+
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+   <script type="text/javascript" src="assets/js/dropdown.js"></script> 
   <meta charset="utf-8" />
   <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>Dashboard | Complain Box </title>
-   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <!-- CSS Files -->
   <link href="assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
 
+<noscript><link rel="stylesheet" type="text/css" href="assets/css/noJS.css" /></noscript>
 </head>
 
 <body class="">
@@ -69,8 +67,6 @@
 					<div class="card-body">
 						<h5 class="card-title">	<?php echo $_SESSION['name'];  ?></h5>
 					</div>
-
-			</div>
 		</li>
 		
 		
@@ -121,103 +117,11 @@
       <!-- End Navbar -->
       <div class="content" >
         <div class="container-fluid">
-		  <div class="col-md-12">
-              <div class="card card-plain">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title mt-0"><b>Complains Status</b></h4>
-                </div>
-                </div>
-                </div>
-                <br/>
-		         <div class="row">
-            <div class="col-lg-3 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                <div class="card-header card-header-danger card-header-icon">
-                  <div class="card-icon">
-                    <i class="material-icons">format_list_bulleted</i>
-                  </div>
-                  <p class="card-category">Complains</p>
-                  <h3 class="card-title"><?php echo $totcomp?>
-                  </h3>
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
-				  
-                    <i class="material-icons">content_paste</i>Total applied complain
-
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                <div class="card-header card-header-warning card-header-icon">
-                  <div class="card-icon">
-                    <i class="fa fa-clock-o"></i>
-
-                  </div>
-                  <p class="card-category">Pending</p>
-                  <h3 class="card-title"><?php echo $totpendingcomp?></h3>
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons">error_outline</i>To pending complains
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                <div class="card-header card-header-info card-header-icon">
-                  <div class="card-icon">
-				  <i class="fa fa-refresh"></i>
-                  </div>
-                  <p class="card-category">In Progress</p>
-                  <h3 class="card-title"><?php echo $totinprogresscomp?></h3>
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons">refresh</i> Total In-Progress Complains
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                <div class="card-header card-header-success card-header-icon">
-                  <div class="card-icon">
-					<i class="fa fa-check-square-o"></i>
-
-                  </div>
-                  <p class="card-category">Solved</p>
-                  <h3 class="card-title"><?php echo $totsolvedcomp?></h3>
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons">check</i> Total complain solved 
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-		  
-		  <br/>
-		  <div class="col-md-12">
-              <div class="card card-plain">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title mt-0"><b>Select Department </b></h4>
-                </div>
-                </div>
-                </div>
-                
-				
-             
-			  
-						  
           <div class="row">
 			
 				<?php
 	
+	$con = new mysqli("localhost", "root", "", "complainbox");
 
 
 	$sql = "SELECT * FROM department ";
@@ -233,10 +137,10 @@
 			echo "<form method='POST' action='' id=".$row['id'].">"; 
 			echo " <input type='hidden' name='department' value=".$row['dname'].">";		
 		echo '		</br>
-                  <h3 class="card-title text-center" name="'.$row["dname"].'"><b>'.$row["dname"].'</b></h3>									  
+                  <h3 class="card-title text-center" name="'.$row["dname"].'">'.$row["dname"].'</h3>									  
 				</br>
 				
-				<a href="#complain" class="btn btn-info btn-block" name="'.$row["dname"].'" onClick="scrollToBottom(event)">Click to Complain</a>
+				<a href="#complain" class="btn btn-primary btn-block" name="'.$row["dname"].'" onClick="scrollToBottom(event)">Click to Complain</a>
 				</form>
 				</div>
               </div>
@@ -247,16 +151,10 @@
              </div>
 	 
 	 <br/>
+	 <br/>
+	 <br/>
 	 <div class="row" style="display: none" id="complain">	 
             	
-							  <div class="col-md-12">
-              <div class="card card-plain">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title mt-0"><b>Fill Complain Form</b></h4>
-                </div>
-                </div>
-                </div>
-				 <br/>																		 
 			<div class="col-md-8 offset-md-2">
               <div class="card">
                 <div class="card-header card-header-primary">
@@ -265,13 +163,12 @@
                 </div>
                 <div class="card-body">
                   <form action="" enctype="multipart/form-data" style="margin-top: -40px;" method="POST">
-					<br/>
-					<br/>
+
 
                     <div class="dropdown">
-                      <a class="btn btn-primary dropdown-toggle " href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choose Building</a>
+                      <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Building</a>
 
-                      <ul class="dropdown-menu" style="cursor:pointer;" aria-labelledby="dropdownMenuLink" name="ul" required>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" name="ul" required>
                         <li class="dropdown-item" id="item1" value="j" href="#">KJ SOMAIYA SCIENCE AND COMMERCE BUILDING</li>
                         <li class="dropdown-item" id="item2" value="k" href="#">ARYABHATTA ENGINEERING BUILDING</li>
                         <li class="dropdown-item" id="item3" href="#">BHASKARACHARYA</li>
@@ -279,8 +176,7 @@
                     </div>
                     <div class="form-group" style="margin-top: 35px;">
                       <label for="exampleFormControlInput1" style="margin-bottom: 5px">Location:</label>
-					  
-                      <input type="text" class="form-control" id="exampleFormControlInput1" name="location" placeholder="Eg: Room no,Lab name,Campus area..." required>
+                      <input type="text" class="form-control" id="exampleFormControlInput1" name="location" placeholder="near by" required>
                     </div>
 
                      <div class="form-group">
@@ -389,7 +285,6 @@ include("footer.php");
 
 
   </div>
-  </div>
   
   
   <script src="assets/js/core/jquery.min.js"></script>
@@ -415,7 +310,7 @@ include("footer.php");
        var y = document.getElementById("complain_card");
        
        var dname=event.target.name;
-       y.innerHTML  = "Department: "+ dname;;
+       y.innerHTML  = dname;
 	   
 
       window.scrollTo(0,document.querySelector("#complain").scrollHeight);
@@ -429,6 +324,17 @@ include("footer.php");
 
   
    </script>
+
+
+
+
+
+
+
+
+</body>
+
+
 
 
 
@@ -546,7 +452,7 @@ include("footer.php");
      if($uploadOk==1){
 
       $datetime = date("Y-m-d H:i:s");
-      mysqli_query($con,"INSERT into complain(description,complainimg,Departmentname,status,complainant,complainantmail,building,location,complaindate) values('$body','$file_path','$department','Pending','$name','$email','$building','$location','$datetime')");
+      mysqli_query($con,"INSERT into complain(description,complainimg,Departmentname,status,complainant,complainantmail,building,location,complaindate) values('$body','$file_path','$department','pending','$name','$email','$building','$location','$datetime')");
 
      $id=mysqli_insert_id($con);
 		
@@ -602,8 +508,9 @@ include("footer.php");
 
 ?>
 
-
+</div>
 <!--/form-->
+</pre>
 
 <script >
   $("li").click(function(){
@@ -622,3 +529,4 @@ include("footer.php");
 </body>
 </html>
 
+</html>
