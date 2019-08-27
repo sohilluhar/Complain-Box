@@ -1,5 +1,6 @@
 <?php
-	session_start();
+	
+  include("config/config.php");
 	//set  password and username for new user (first time user) to database
 	
 	$name=$_POST["departmentname"];

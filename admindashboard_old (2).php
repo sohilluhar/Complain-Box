@@ -5,7 +5,7 @@
    
         header("Location: index.php");
         exit();
-    }
+	}
 	else{
 		 $sql = "SELECT usertype FROM user WHERE email='".$_SESSION["email"]."'";
     $res=mysqli_query($con,$sql);
@@ -34,11 +34,11 @@
 	
 	$totcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain "));
 	
-	$totpendingcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE status='Pending' OR status='Pending#'"));
+	$totpendingcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE status='Pending'"));
 					
-	$totsolvedcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE  status='Resolved' OR status='Resolved#'"));
+	$totsolvedcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE  status='Resolved'"));
 					
-	$totinprogresscomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE status='In-Progress' OR status='In-Progress#'" ));
+	$totinprogresscomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE status='In-Progress'"));
 	
 ?>
 <!DOCTYPE html>
@@ -54,9 +54,14 @@
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+ <link rel="stylesheet" type="text/css" href="
+  https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
-  <!-- CSS Files -->
+  
+ <!-- CSS Files -->
+  
+  <link href='https://fonts.googleapis.com/css?family=Montserrat' type="text/css" rel='stylesheet'>
   <link href="assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
 
 
@@ -239,7 +244,7 @@
 		  	  <?php 
 			  //NOTE: chage status to pending
 		$checkcomp=mysqli_num_rows(mysqli_query($con,"SELECT * from complain where id IN (SELECT ogid from admincomplain)
-		AND (status='In-Progress' OR status='Pending' OR status='In-Progress#' OR status='Pending#')"));
+		AND (status='In-Progress' OR status='Pending')"));
 			  if($checkcomp>0){
 		echo'  <div class="row">
 		    <div class="col-lg-12 col-md-12">
@@ -284,30 +289,22 @@
                         	while($row = mysqli_fetch_array($result)){  
 	//Creates a loop to dipslay all complain
 		echo "<tr><td>".$row['id']."</td>";
-		if(strlen($row['description'])>50)
-							{
-								echo "<td >".substr($row['description'],0,50) ." ...</td>";
-							}
-							else{
-								$tmpd= $row['description'];
-								$tmplen=54-strlen($row['description']);
-
-								echo "<td >".$tmpd.str_repeat('&nbsp;',$tmplen);"</td>";
-							}
+		echo "<td>". $row['description']."</td>";
 		echo "<td>".$row['complaindate']."</td>";
-echo "<td class='";
-		if($row['status']=='Pending' || $row['status']=='Pending#'){
+			echo "<td class='";
+		if($row['status']=='Pending'){
 			echo 'text-danger';
-		}else if($row['status']=='In-Progress'|| $row['status']=='In-Progress#'){
+		}else if($row['status']=='In-Progress'){
 			echo 'text-warning';	
 		}
-		else if($row['status']=='Resolved'|| $row['status']=='Resolved#'){
+		else if($row['status']=='Resolved'){
 			echo 'text-success';
 		}
 		echo "'  style='    font-weight: 500;'>".$row['status']."</td>";  
+	
 		echo "<td>".$row['Departmentname']."</td>"; 
 		echo "<td>".$row['remark']."</td>"; 
-		echo '<td><button type="button" class="btn btn-danger" name="'.$row['id'].'" onclick="redirectme(event)">Take Action!</button></td></tr>'; 
+		echo '<td><button type="button" class="btn btn-danger" onclick="#">Take Action</button></td></tr>'; 
 	}
 						
           echo'            </tbody>
@@ -378,20 +375,12 @@ echo "<td class='";
                                 
                   $sql1 = "SELECT * FROM complain WHERE Departmentname='".$row['dname']."' ORDER BY id DESC ";
                     $result1=mysqli_query($con,$sql1);
-					$uname=$row['dname'];/*
-					$pendingcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE Departmentname='".."' AND status='Pending'"));
+					
+					$pendingcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE Departmentname='".$row['dname']."' AND status='Pending'"));
 					
 					$solvedcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE Departmentname='".$row['dname']."' AND status='Resolved'"));
 					
-					$inprogresscomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE Departmentname='".$row['dname']."' AND status='In-Progress'"));*/
-					
-					//$totcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE Departmentname='".$uname."'"));
-	
-	$pendingcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE (status='Pending' OR status='Pending#' ) AND Departmentname='".$uname."'"));
-					
-	$solvedcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE  (status='Resolved' OR status='Resolved#' ) AND Departmentname='".$uname."'"));
-					
-	$inprogresscomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE (status='In-Progress' OR status='In-Progress#' ) AND Departmentname='".$uname."'"));
+					$inprogresscomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE Departmentname='".$row['dname']."' AND status='In-Progress'"));
 					
 					
                echo  "<div class='tab-pane";
@@ -480,6 +469,7 @@ echo "<td class='";
                     <thead class="text-primary">
                         <th>ID</th>               
 						<th>Detail</th>
+						<th>Document</th>  
 						<th>Date Time</th>                        
 						<th>Status</th>                    
 					<!--	<th>Complainant</th>  
@@ -492,29 +482,27 @@ echo "<td class='";
 						while($row = mysqli_fetch_array($result1)){  
 							//Creates a loop to dipslay all complain
 							echo "<tr><td>".$row['id']."</td>";
+							echo "<td>". $row['description']."</td>";
+							echo "<td><a class='text-primary text-center'";
+							if($row['complainimg'])
+								echo "target='_blank' href='".$row['complainimg']."'>View";
+							else
+								echo " >---";
 							
-							if(strlen($row['description'])>50)
-							{
-								echo "<td >".substr($row['description'],0,50) ." ...</td>";
-							}
-							else{
-								$tmpd= $row['description'];
-								$tmplen=54-strlen($row['description']);
-
-								echo "<td >".$tmpd.str_repeat('&nbsp;',$tmplen);"</td>";
-							}
+							echo "</a></td>";
 							echo "<td>".$row['complaindate']."</td>";
-					
-	   	echo "<td class='";
-		if($row['status']=='Pending' || $row['status']=='Pending#'){
+							echo "<td class='";
+		if($row['status']=='Pending'){
 			echo 'text-danger';
-		}else if($row['status']=='In-Progress'|| $row['status']=='In-Progress#'){
+		}else if($row['status']=='In-Progress'){
 			echo 'text-warning';	
 		}
-		else if($row['status']=='Resolved'|| $row['status']=='Resolved#'){
+		else if($row['status']=='Resolved'){
 			echo 'text-success';
 		}
 		echo "'  style='    font-weight: 500;'>".$row['status']."</td>";  
+	
+							
 							//echo "<td>".$row['complainant']."</td>"; 
 							//echo "<td>".$row['complainantmail']."</td>"; 
 							echo '<td><button type="button" class="btn btn-primary" onclick="#">View Detail</button></td>'; 
@@ -757,16 +745,6 @@ include("footer.php");
     });
   </script>
   <script>
-
-    function redirectme(){
-
-        var id= event.target.name;
-        window.open("admin_action.php?id="+id,"_self");
-     // window.location.href = "./admin_action.php";
-    }
-
-
-
     $(document).ready(function() {
       // Javascript method's body can be found in assets/js/demos.js
       md.initDashboardPageCharts();

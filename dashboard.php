@@ -14,11 +14,11 @@
 	//dashboard of normal user
 	$totcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE complainantmail='".$email."'"));
 	
-	$totpendingcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE status='Pending' AND complainantmail='".$email."'"));
+	$totpendingcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE (status='Pending' OR status='Pending#') AND complainantmail='".$email."'"));
 					
-	$totsolvedcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE  status='Resolved' AND complainantmail='".$email."'"));
+	$totsolvedcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE  (status='Resolved' OR status='Resolved#')  AND complainantmail='".$email."'"));
 					
-	$totinprogresscomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE status='In-Progress'AND complainantmail='".$email."'"));
+	$totinprogresscomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE (status='In-Progress' OR status='In-Progress#') AND complainantmail='".$email."'"));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -121,6 +121,7 @@
       <!-- End Navbar -->
       <div class="content" >
         <div class="container-fluid">
+		<div class="row">
 		  <div class="col-md-12">
               <div class="card card-plain">
                 <div class="card-header card-header-primary">
@@ -128,7 +129,8 @@
                 </div>
                 </div>
                 </div>
-                <br/>
+</div>            
+			<br/>
 		         <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-6">
               <div class="card card-stats">

@@ -101,7 +101,7 @@
           <div class="card card-login">
             <form class="form" method="post" action="logindb.php">
               <div class="card-header card-header-primary text-center">
-                <h4 class="card-title">Login </h4>
+                <h4 class="card-title" style="font-size:">Login </h4>
                 <div class="social-line">
               
                 </div>

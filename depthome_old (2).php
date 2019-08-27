@@ -9,13 +9,13 @@
 	$uname=$row["name"];//set name to department name instead of gmail account name
 	$_SESSION["name"] =$uname;
 	
- 	$totcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE Departmentname='".$uname."'"));
+	$totcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE Departmentname='".$uname."'"));
 	
-	$totpendingcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE (status='Pending' OR status='Pending#' ) AND Departmentname='".$uname."'"));
+	$totpendingcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE status='Pending' AND Departmentname='".$uname."'"));
 					
-	$totsolvedcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE  (status='Resolved' OR status='Resolved#' ) AND Departmentname='".$uname."'"));
+	$totsolvedcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE  status='Resolved' AND Departmentname='".$uname."'"));
 					
-	$totinprogresscomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE (status='In-Progress' OR status='In-Progress#' ) AND Departmentname='".$uname."'"));
+	$totinprogresscomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE status='In-Progress'AND Departmentname='".$uname."'"));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -119,7 +119,8 @@
       echo '
       <div class="content" id="complainDetail">
         <div class="container-fluid">
-		<div class="row">
+		
+			<div class="row">
 		  <div class="col-md-12">
               <div class="card card-plain">
                 <div class="card-header card-header-primary">
@@ -200,7 +201,8 @@
               </div>
             </div>
           </div>
-	<br/>																
+	<br/>
+		
           <div class="row">
 			
 				<div class="col-md-12">
@@ -240,29 +242,21 @@
             while($row = mysqli_fetch_array($result)){  
 	//Creates a loop to dipslay all complain
 		echo "<tr><td>".$row['id']."</td>";
-	if(strlen($row['description'])>50)
-							{
-								echo "<td >".substr($row['description'],0,50) ." ...</td>";
-							}
-							else{
-								$tmpd= $row['description'];
-								$tmplen=54-strlen($row['description']);
-
-								echo "<td >".$tmpd.str_repeat('&nbsp;',$tmplen);"</td>";
-							}
-							
+		echo "<td>". $row['description']."</td>";
 		echo "<td>".$row['complaindate']."</td>";
-   echo "<td class='";
-		if($row['status']=='Pending' || $row['status']=='Pending#'){
+		echo "<td class='";
+		if($row['status']=='Pending'){
 			echo 'text-danger';
-		}else if($row['status']=='In-Progress'||$row['status']=='In-Progress#'){
+		}else if($row['status']=='In-Progress'){
 			echo 'text-warning';	
 		}
-		else if($row['status']=='Resolved'||$row['status']=='Resolved#'){
+		else if($row['status']=='Resolved'){
 			echo 'text-success';
 		}
-		echo "'  style='    font-weight: 500;'>".$row['status']."</td>"; 
-		echo '<td><button type="button" class="btn btn-primary" name="'.$row['id'].'" onclick="takeAction(event)">Take Action</button></td></tr>'; 
+		echo "'  style='    font-weight: 500;'>".$row['status']."</td>";  
+		echo '<td><button
+		style=""
+		type="button" class="btn btn-primary " name="'.$row['id'].'" onclick="takeAction(event)">Take Action</button></td></tr>'; 
 	   }
 					
                      echo '</tbody>
@@ -303,34 +297,10 @@ echo'  </div>';
       $upload="";
     }else{
         
-	/*$upload="
+	$upload="
 	<div class='form-group'>
 	<a class='btn btn-primary' target='_blank' href='" .$upload_img."'>View Document</a>
-	</div>";*/
-
-  $upload='<div class="col-lg-4 col-md-6 col-sm-6">
-
-                <div class="card card-stats">
-                <br>
-                <div class="card-header card-header-warning card-header-icon">
-                  
-                  <p class="card-category text-left text-primary">Uploaded Document :</p>
-                  
-                </div>
-                <div class="card-footer" style="margin-top:0px;">
-                  <div class="stats">
-                    <a class="btn btn-primary"  target="_blank" href="' .$upload_img.'">View Document</a>
-                   
-                  </h4>
-                  </div>
-                </div>
-              </div>
-
-                </div>';
-
-
-
-
+	</div>";
 	}
       
       //echo $a;
@@ -345,132 +315,14 @@ echo'  </div>';
               <div class="card" id="dept_card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title" id="complain_card">Complain Id : '.$id.'</h4>
-                  <!--
                   <p class="card-category">Complain By '.$cname.'</p>
                   <p class="card-category">Mail id : '.$cmail.'</p>
                   <p class="card-category">Date Time : '.$dtym.'</p>
-                  -->
                 </div>
                 <div class="card-body">
-
-
-                <div class="row">
-               
-                <div class="col-lg-4 col-md-6 col-sm-6">
-
-                <div class="card card-stats">
-                <br>
-                <div class="card-header card-header-warning card-header-icon">
-                  
-                  <p class="card-category text-left text-primary">Complain By :</p>
-                  
-                </div>
-                <div class="card-footer" style="margin-top: 0px;">
-                  <div class="stats"  style="word-break: break-word">
-                    <h4 class="card-title" style="font-weight:400">'.$cname.'
-                   
-                  </h4>
-                  </div>
-                </div>
-              </div>
-
-                </div>
-
-                <div class="col-lg-4 col-md-6 col-sm-6">
-
-                <div class="card card-stats">
-                <br>
-                <div class="card-header card-header-warning card-header-icon">
-                  
-                  <p class="card-category text-left text-primary">Mail id :</p>
-                  
-                </div>
-                <div class="card-footer" style="margin-top: 0px;">
-                  <div class="stats" style="word-break: break-word">
-                    <h4 class="card-title" style="font-weight:400 ">'.$cmail.'
-                   
-                  </h4>
-                  </div>
-                </div>
-              </div>
-
-                </div>
-
-             <div class="col-lg-4 col-md-6 col-sm-6">
-
-                <div class="card card-stats">
-                <br>
-                <div class="card-header card-header-warning card-header-icon">
-                  
-                  <p class="card-category text-left text-primary">Date Time :</p>
-                  
-                </div>
-                <div class="card-footer" style="margin-top: 0px;">
-                  <div class="stats" style="word-break: break-word">
-                    <h4 class="card-title" style="font-weight:400">'.$dtym.'
-                   
-                  </h4>
-                  </div>
-                </div>
-              </div>
-
-                </div>
-</div>
-
-
-
-                
-                <div class="row">
-               
-                <div class="col-lg-4 col-md-6 col-sm-6">
-
-                <div class="card card-stats">
-                <br>
-                <div class="card-header card-header-warning card-header-icon">
-                  
-                  <p class="card-category text-left text-primary">Building :</p>
-                  
-                </div>
-                <div class="card-footer" style="margin-top: 0px;">
-                  <div class="stats" style="word-break: break-word">
-                    <h4 class="card-title" style="font-weight:400">'.$building.'
-                   
-                  </h4>
-                  </div>
-                </div>
-              </div>
-
-                </div>
-
-               <div class="col-lg-4 col-md-6 col-sm-6">
-
-                <div class="card card-stats">
-                <br>
-                <div class="card-header card-header-warning card-header-icon">
-                  
-                  <p class="card-category text-left text-primary">Location :</p>
-                  
-                </div>
-                <div class="card-footer" style="margin-top: 0px;">
-                  <div class="stats" style="word-break: break-word">
-                    <h4 class="card-title" style="font-weight:400">'.$location.'
-                   
-                  </h4>
-                  </div>
-                </div>
-              </div>
-
-                </div>'.$upload.'
-
-  </div>
-
-
-
-                 
+                  <form action="" enctype="multipart/form-data" method="POST">
 				  
-				 <!--
-          <form action="" enctype="multipart/form-data" method="POST">
-          <input type="hidden" id="cid" value="'.$id.'"  >
+				  <input type="hidden" id="cid" value="'.$id.'"  >
 					<div class="form-group" id="building_input" style="">
                       <h6><u><b>Current Status</b></u></h6>
 					  <input type="text" class="form-control " value="'.$cstatus.'"  disabled>
@@ -485,18 +337,15 @@ echo'  </div>';
 					  <input type="text" class="form-control"  value="'.$location.'" id="location"  disabled>
                     </div>
 
-                    -->
-
                      <div class="form-group">
                       
-					<p class="card-category text-left text-primary" style="font-size:18px">Description :</p>
-					<textarea class="form-control" name="complain_body" rows="5" id="complain_message" style="border: 1px solid #cacaca;
-    padding: 10px;cursor: auto; " disabled>'.$description.'</textarea>
+					<h6><u><b>Description</b></u></h6>
+					<textarea class="form-control" name="complain_body" rows="5" id="complain_message" disabled>'.$description.'</textarea>
             
                       </div>';
 
                        
-                         // echo $upload;
+                          echo $upload;
 
                           $date=date("m-d-Y");
 
@@ -511,122 +360,13 @@ echo'  </div>';
               
                       
                      
-                    <hr>
+
 						<div class="form-group">
 						<div class="col-lg-12 col-md-12 col-sm-12">
-						<h3 class="text-center text-primary" style="font-family: monoton; font-weight: 600;border: 1px solid #9c27b0;"><b>TAKE ACTION</b><h3>
+						<h3 class="text-center"><u><b>PERFOME ACTION</b></u><h3>
 						</div>
 						</div>
-
-
-              <div class="row">
-
-
-              <div class="col-lg-4 col-md-6 col-sm-6">
-
-                <div class="card card-stats">
-                <br>
-                <div class="card-header card-header-warning card-header-icon">
-                  
-                  <p class="card-category text-left text-primary">CHANGE STATUS :</p>
-                  
-                </div>
-                <div class="card-footer" style="margin-top:0px;">
-                  <div class="stats">
-                    <div class="dropdown" >
-                      <a class="btn btn-primary btn-block dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        SELECT STATUS
-                      </a>
-            
-                      <ul class="dropdown-menu btn-block" aria-labelledby="dropdownMenuLink" >
-                        <li class="dropdown-item" id="item1" name="pending" href="#">Pending</li>
-                        <li class="dropdown-item" id="item2" name="inprogress" href="#">In-Progress</li>
-                        <li class="dropdown-item" id="item3" name="resolved" href="#">Resolved</li>
-                      </ul>
-                    </div>
-                   
-                  </h4>
-                  </div>
-                </div>
-              </div>
-
-                </div>
-
-
-                <div class="col-lg-4 col-md-6 col-sm-6">
-
-                <div class="card card-stats" id="start">
-                <br>
-                <div class="card-header card-header-warning card-header-icon">
-                  
-                  <p class="card-category text-left text-primary">Time Require(In Days) :</p>
-                  
-                </div>
-                <div class="card-footer" style="margin-top:0px;">
-                  <div class="stats">
-                  <div class="form-group">
-                     
-                       <input type="number"  name="timer" class="form-control" style="">
-                    </div>
-                   
-                   
-                  </h4>
-                  </div>
-                </div>
-              </div>
-
-
-
-
-               <div class="card card-stats" id="expense" style="display:none">
-                <br>
-                <div class="card-header card-header-warning card-header-icon">
-                  
-                  <p class="card-category text-left text-primary">Total Expenditure(In Rs.):</p>
-                  
-                </div>
-                <div class="card-footer" style="margin-top:0px;">
-                  <div class="stats">
-                  <div class="form-group">
-                     
-                       <input type="number" name="cost" class="form-control" >
-                    </div>
-                   
-                   
-                  </h4>
-                  </div>
-                </div>
-              </div>
-
-
-
-                </div>
-                  <div class="col-lg-4 col-md-6 col-sm-6">
-
-                <div class="card card-stats">
-                <br>
-                <div class="card-header card-header-warning card-header-icon">
-                  
-                  <p class="card-category text-left text-primary">Unable To Resolve:</p>
-                    <input type="text"  name="remark" class="form-control" placeholder="Enter remark">
-                    
-                </div>
-                <div class="card-footer" style="margin-top: 0px;">
-                  <div class="stats" style="word-break: break-word">
-					
-                     <input type="submit" class="btn btn-primary btn-block"  name="forward_admin"  value="Forward Admin">
-                  
-                  </div>
-                </div>
-              </div>
-
-                </div>
-
-</div>
-
-    <input type="submit" name="reg_complain" class="btn btn-primary btn-block" value="Update Status">
-
-									<!--			<div class="row">
+												<div class="row">
 
                       <div class="col-md-12 col-sd-12">
                           <div class="dropdown" >
@@ -648,7 +388,8 @@ echo'  </div>';
 					  <div class="col-md-12 col-sd-12">
                  
 						<h6><u><b>Enter number of dasy required to solve problem</b></u></h6>
-                      <input type="number" id="start" name="timer" style="display:none;">
+                      <input type="number" id="start" name="timer"
+                              required>
 
                               </div>
                      </div>		
@@ -672,13 +413,12 @@ echo'  </div>';
 					
 					<input type="submit" class="btn btn-primary btn-block"  name="forward_admin"  value="Forward to Admin">
 					</div>
-					</div>-->
-
+					</div>
                     </form>';
                         
 
                       echo '<div class="clearfix"></div>
-                 <!-- </form>-->
+                  </form>
                 </div>
               </div>
             </div>
@@ -714,11 +454,9 @@ if(isset($_POST['reg_complain'])){
   }
 
   $timer = $_POST['timer'];
-  $cost  = $_POST['cost'];
-
-//$sql7="UPDATE complain SET status='".$status."' , time_constraint=".$timer." ,cost=".$cost." WHERE id=".$id.";";
+$sql7="UPDATE complain SET status='".$status."' , time_constraint=".$timer." WHERE id=".$id.";";
 //echo $sql7;
-  $query= mysqli_query($con,"UPDATE complain SET status='$status' , time_constraint='$timer' , cost='$cost' WHERE id='$id'");
+  $query= mysqli_query($con,$sql7);
 
    
  header("Location:depthome.php");
@@ -1063,10 +801,8 @@ margin-top: 34px;
     $status="Pending";
   }
   
-$query= mysqli_query($con,"UPDATE complain SET status='$status#' WHERE id='$id'");
 
-   
-  $remark = $_POST['remark'];
+  $remark = "Cant solve";//$_POST['remark'];
 $sql7="INSERT INTO admincomplain (`ogid`, `remark`) values ($id,'".$remark."')";
 //echo $sql7;
   $query= mysqli_query($con,$sql7);
@@ -1111,20 +847,9 @@ $sql7="INSERT INTO admincomplain (`ogid`, `remark`) values ($id,'".$remark."')";
   $("li").click(function(){
     
     var val=$(this).text();
-    $("#dropdownMenuLink").text($(this).text());
+    $("#dropdownMenuLink").text("STATUS: "+$(this).text());
    
     document.cookie = "status=" + $(this).text();
-    
-    if($(this).text()=='In-Progress'){
-      $('#expense').hide();
-      $("#start").show();
-    }else if($(this).text()=='Resolved'){
-      $("#start").hide();
-      $('#expense').show();
-    }else{
-       $('#expense').hide();
-      $("#start").show();
-    }
    /* $.ajax({
       type: "POST",
       url: "status_update.php",
