@@ -87,7 +87,7 @@
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="./usercomplain.php">
               <i class="material-icons">content_paste</i>
               <p>My Complains</p>
             </a>
@@ -269,7 +269,6 @@
                   <form action="" enctype="multipart/form-data" style="margin-top: -40px;" method="POST">
 					<br/>
 					<br/>
-
                     <div class="dropdown">
                       <a class="btn btn-primary dropdown-toggle " href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choose Building</a>
 

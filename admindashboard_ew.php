@@ -480,31 +480,50 @@ echo "<td class='";
                     <thead class="text-primary">
                         <th>ID</th>               
 						<th>Detail</th>
+						<th>Document</th>
 						<th>Date Time</th>                        
 						<th>Status</th>                    
-					<!--	<th>Complainant</th>  
-						<th>Mail</th>-->
-						<th>View</th>
-                    </thead> <tbody>';
+						<th>Complainant</th>  
+						<th>ComplainantMail</th>  
+						<th>Building</th>
+						<th>Location</th>
+						<th>Days</th>
+						<th>Cost</th>
+                    </thead> 
+					<tbody>';
 					
                     
-                        
-						while($row = mysqli_fetch_array($result1)){  
-							//Creates a loop to dipslay all complain
-							echo "<tr><td>".$row['id']."</td>";
-							
-							if(strlen($row['description'])>50)
+	
+	while($row = mysqli_fetch_array($result1)){  
+		//Creates a loop to dipslay all complain
+		echo "<tr><td>".$row['id']."</td>";
+		
+			//Creates a loop to dipslay all complain
+
+	if(strlen($row['description'])>30)
 							{
-								echo "<td >".substr($row['description'],0,50) ." ...</td>";
+								echo "<td >".substr($row['description'],0,30) ." <span id='dots'>...</span><span id='more' style='display: none;'>.".
+								substr($row['description'],30,strlen($row['description']))."</span><button onclick='myFunction()' id='myBtn'>Read more</button></td>";
+								
 							}
 							else{
 								$tmpd= $row['description'];
-								$tmplen=54-strlen($row['description']);
+								$tmplen=34-strlen($row['description']);
 
 								echo "<td >".$tmpd.str_repeat('&nbsp;',$tmplen);"</td>";
 							}
-							echo "<td>".$row['complaindate']."</td>";
+			
+		echo "<td><a class='text-primary text-center'";
+
+		if($row['complainimg'])
+			echo "target='_blank' href='".$row['complainimg']."'>View";
+		else
+			echo " >---";
+			echo "</a></td>";
 					
+						
+		echo "<td>".$row['complaindate']."</td>";
+													
 	   	echo "<td class='";
 		if($row['status']=='Pending' || $row['status']=='Pending#'){
 			echo 'text-danger';
@@ -515,9 +534,13 @@ echo "<td class='";
 			echo 'text-success';
 		}
 		echo "'  style='    font-weight: 500;'>".$row['status']."</td>";  
-							//echo "<td>".$row['complainant']."</td>"; 
-							//echo "<td>".$row['complainantmail']."</td>"; 
-							echo '<td><button type="button" class="btn btn-primary" name="'.$row['id'].'" onclick="viewDetails()">View Details</button></td>'; 
+		echo "<td>".$row['complainant']."</td>"; 
+		echo "<td>".$row['complainantmail']."</td>"; 
+		echo "<td>".$row['building']."</td>"; 
+		echo "<td>".$row['location']."</td>"; 
+		echo "<td>".$row['time_constraint']."</td>"; 
+		echo "<td>".$row['cost']."</td>"; 
+						//	echo '<td><button type="button" class="btn btn-primary" name="'.$row['id'].'" onclick="viewDetails()">View Details</button></td>'; 
 	
 						}
                    
@@ -574,6 +597,22 @@ include("footer.php");
   <script src="assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
 
   <script>
+  
+  function myFunction() {
+  var dots = document.getElementById("dots");
+  var moreText = document.getElementById("more");
+  var btnText = document.getElementById("myBtn");
+
+  if (dots.style.display === "none") {
+    dots.style.display = "inline";
+    btnText.innerHTML = "Read more"; 
+    moreText.style.display = "none";
+  } else {
+    dots.style.display = "none";
+    btnText.innerHTML = "Read less"; 
+    moreText.style.display = "inline";
+  }
+}
   
   function doSomething(a) {
     var x = document.getElementById("testing");
