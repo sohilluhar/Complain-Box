@@ -9,13 +9,13 @@
 	$uname=$row["name"];//set name to department name instead of gmail account name
 	$_SESSION["name"] =$uname;
 	
- 	$totcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE Departmentname='".$uname."'"));
+ 	$totcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE Departmentname like'%".$uname."%'"));
 	
-	$totpendingcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE (status='Pending' OR status='Pending#' ) AND Departmentname='".$uname."'"));
+	$totpendingcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE (status='Pending' OR status='Pending#' ) AND Departmentname like'%".$uname."%'"));
 					
-	$totsolvedcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE  (status='Resolved' OR status='Resolved#' ) AND Departmentname='".$uname."'"));
+	$totsolvedcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE  (status='Resolved' OR status='Resolved#' ) AND Departmentname like'%".$uname."%'"));
 					
-	$totinprogresscomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE (status='In-Progress' OR status='In-Progress#' ) AND Departmentname='".$uname."'"));
+	$totinprogresscomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE (status='In-Progress' OR status='In-Progress#' ) AND Departmentname like'%".$uname."%'"));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -216,7 +216,11 @@
                         <th>
                           ID
                         </th>
+						
                         <th>
+                          Dept
+                        </th>
+						<th>
                           Detail
                         </th>
                        
@@ -235,11 +239,12 @@
 					   
 
 
-						$sql = "SELECT * FROM complain WHERE Departmentname='".$_SESSION['name']."' ORDER BY id DESC";
+						$sql = "SELECT * FROM complain WHERE Departmentname like'%".$_SESSION['name']."%' ORDER BY id DESC";
 						$result=mysqli_query($con,$sql);
             while($row = mysqli_fetch_array($result)){  
 	//Creates a loop to dipslay all complain
 		echo "<tr><td>".$row['id']."</td>";
+		echo "<td>".$row['Departmentname']."</td>";
 	if(strlen($row['description'])>50)
 							{
 								echo "<td >".substr($row['description'],0,50) ." ...</td>";

@@ -491,11 +491,49 @@
 
 
                 </div>
+				              <div class="col-lg-4 col-md-6 col-sm-6">
+
+                <div class="card card-stats">
+                <br>
+                <div class="card-header card-header-warning card-header-icon">
+                  
+                  <p class="card-category text-left text-primary">Forward to Department :</p>
+                  
+                </div>
+                <div class="card-footer" style="margin-top:0px;">
+                  <div class="stats">
+                    <div class="dropdown" >
+                      <a class="btn btn-primary btn-block dropdown-toggle" href="#" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        SELECT Dept
+                      </a>
+            
+                      <ul class="dropdown-menu btn-block" aria-labelledby="dropdownMenuLink" >
+					  
+					  <?php
+							$sql = "SELECT * FROM department";
+						$result=mysqli_query($con,$sql);
+                        	while($row = mysqli_fetch_array($result)){  
+								
+								echo'<li class="dropdown-item" id="item'.$row['id'].'" name="'.$row['dname'].'" href="#">'.$row['dname'].'</li>';
+							
+							}
+					  ?>
+                      </ul>
+                    </div>
+                   
+                  </h4>
+                  </div>
+                </div>
+              </div>
+
+                </div>
                   
 
 </div>
 
     <input type="submit" name="reg_complain" class="btn btn-primary btn-block" value="Update Status">
+	
+   
 
                   <!--      <div class="row">
 
@@ -609,14 +647,23 @@ if(isset($_POST['reg_complain'])){
   }else{
     $status="Pending";
   }
+ if(isset($_COOKIE['Department'])){
+    $deptn=$_COOKIE['Department'];
+  }else{
+    $deptn="Pending";
+  }
+	
 
   $timer = $_POST['timer'];
   $cost  = $_POST['cost'];
 
 //$sql7="UPDATE complain SET status='".$status."' , time_constraint=".$timer." ,cost=".$cost." WHERE id=".$id.";";
 //echo $sql7;
+/*if(isset($_POST['timer'])|| isset($_POST['cost']))
   $query= mysqli_query($con,"UPDATE complain SET status='$status#' , time_constraint='$timer' , cost='$cost' WHERE id='$id'");
-
+else{*/
+	 $query= mysqli_query($con,"UPDATE complain SET Departmentname=concat( '$deptn ,',Departmentname)  WHERE id='$id'");
+//}
    
  header("Location:admindashboard.php");
 
@@ -825,8 +872,11 @@ if(isset($_POST['reg_complain'])){
     
     var val=$(this).text();
     $("#dropdownMenuLink").text($(this).text());
+	
+    $("#dropdownMenuLink1").text($(this).text());
    
     document.cookie = "status=" + $(this).text();
+    document.cookie = "Department=" + $(this).text();
     
     if($(this).text()=='In-Progress'){
       $('#expense').hide();
