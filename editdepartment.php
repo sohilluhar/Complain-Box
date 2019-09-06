@@ -11,6 +11,26 @@
     $res=mysqli_query($con,$sql);
 	$row=$res->fetch_assoc();
 	
+	if($row['usertype']=='admin'){
+	  $sidebar='
+	  <li class="nav-item ">
+            <a class="nav-link" href="./adddepartment.php">
+              <i class="material-icons">group_add</i>
+              <p>Add department</p>
+            </a>
+          </li>
+            <li class="nav-item ">
+            <a class="nav-link" href="./removedepartment.php">
+              <i class="material-icons">clear</i>
+              <p>Remove department</p>
+            </a>
+          </li>
+	  '
+	  ;
+  }else{
+	  $sidebar='';
+  }
+	
 	if( $row['usertype']!='admin' )
     {
 		if($row['usertype']=='User'){
@@ -55,7 +75,7 @@
 
 <body class="">
   <div class="wrapper ">
-    <div class="sidebar" data-color="purple" data-background-color="white" data-image="assets/img/sidebar-3.jpg">
+    <div class="sidebar" data-color="purple" data-background-color="white" data-image="assets/img/sidebar.jpg">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
@@ -63,7 +83,7 @@
     -->
  
       <div class="logo">
-        <a href="#" class="simple-text logo-normal">
+        <a  class="simple-text logo-normal">
           Complain Box
         </a>
       </div>
@@ -88,44 +108,33 @@
         
         
          <li class="nav-item ">
-            <a class="nav-link" href="./admindashboard.php">
+            <a class="nav-link" href="./admindashboard.php" >
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
             </a>
           </li>
       <li class="nav-item ">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="./adminprofile.php">
               <i class="material-icons">person</i>
               <p>My Profile</p>
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="test_report.php">
               <i class="material-icons">content_paste</i>
               <p>Reports</p>
             </a>
           </li>
-            <li class="nav-item ">
-            <a class="nav-link" href="./adddepartment.php">
-              <i class="material-icons">group_add</i>
-              <p>Add department</p>
-            </a>
-          </li>
+        
 		  
-            <li class="nav-item  active">
-            <a class="nav-link" href="./editdepartment.php">
+            <li class="nav-item active">
+            <a class="nav-link" >
               <i class="material-icons">create</i>
               <p>Edit department</p>
             </a>
-          </li>
+          </li>	  
 		  
-		   <li class="nav-item ">
-            <a class="nav-link" href="./removedepartment.php">
-              <i class="material-icons">clear</i>
-              <p>Remove department</p>
-            </a>
-          </li>
-		  
+          <?php echo $sidebar;?>
           <li class="nav-item ">
             <a class="nav-link" href="./logout.php">
               <i class="material-icons">arrow_back</i>
@@ -140,7 +149,7 @@
        <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="#pablo">Edit Department</a>
+            <a class="navbar-brand">Edit Department</a>
           </div>
          
                 <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -155,13 +164,7 @@
      <!-- End Navbar -->
       <div class="content">
         <div class="container-fluid">
-			  <div class="col-md-12">
-              <div class="card card-plain">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title mt-0"><b>Select Department to edit </b></h4>
-                </div>
-                </div>
-                </div>
+			  
 		<div class="row">
 						<?php
 
@@ -190,125 +193,7 @@
 ?>
 		</div>
 		
-		<br/>
 		
-          <div class="row" style="display: none" id="department">
-		  
-		  	  <div class="col-md-12">
-              <div class="card card-plain">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title mt-0"><b>Edit Department</b></h4>
-                </div>
-                </div>
-                </div>
-				 <br/>
-            <div class="col-md-6 offset-md-3">
-              <div class="card">
-                <div class="card-header card-header-info">
-                  <h4 class="card-title" id="department_card">Department</h4>
-                  <p class="card-category">Edit department</p>
-                </div>
-                <div class="card-body">
-                  <form  action="updatedept.php" method="post">
-                  <!--  <div class="row">
-                      <div class="col-md-5">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Company (disabled)</label>
-                          <input type="text" class="form-control" disabled>
-                        </div>
-                      </div>
-                      <div class="col-md-3">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Username</label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Email address</label>
-                          <input type="email" class="form-control">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Fist Name</label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Last Name</label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                    </div>-->
-                    <div class="row">
-				
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Department Name</label>
-                          <input type="text" id="edeptname" name="departmentname" class="form-control center" >
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                     <div class="col-md-12">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Password for Department</label>
-                          <input type="password" id="edeptpass" name="passwrd1" class="form-control" >
-                        </div>
-                      </div>
-                   
-                    </div>
-					  <div class="row">
-                   
-              
-                     <div class="col-md-12">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Mail Id of head</label>
-                          <input type="mail" id="edept" name="headmail" class="form-control" >
-                        </div>
-                      </div>
-                    </div>
-					<input type="hidden" name="deptimg"  value="assets/pictures/download.png" >
-                   <!-- <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label>About Me</label>
-                          <div class="form-group">
-                            <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</label>
-                            <textarea class="form-control" rows="5"></textarea>
-                          </div>
-                        </div>
-                      </div>
-                    </div>-->
-                    <button type="submit" class="btn btn-info btn-block">Update Department</button>
-					
-                    <div class="clearfix"></div>
-                  </form>
-                </div>
-              </div>
-            </div>
-         <!--   <div class="col-md-4">
-              <div class="card card-profile">
-                <div class="card-avatar">
-                  <a href="#pablo">
-                    <img class="img" src="assets/img/faces/marc.jpg" />
-                  </a>
-                </div>
-                <div class="card-body">
-                  <h6 class="card-category text-gray">CEO / Co-Founder</h6>
-                  <h4 class="card-title">Alec Thompson</h4>
-                  <p class="card-description">
-                    Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
-                  </p>
-                  <a href="#pablo" class="btn btn-primary btn-round">Follow</a>
-                </div>
-              </div>
-            </div>-->
-          </div>
         </div>
       </div>
      

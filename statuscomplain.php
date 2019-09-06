@@ -1,18 +1,17 @@
 <?php
-  include("config/config.php");
-  
-  
-  if(!isset($_SESSION['name'])){
+     include("config/config.php");
+    //dashboard of admin
+    if(!isset($_SESSION['name'])){
    
         header("Location: index.php");
         exit();
     }
-  else{
-     $sql = "SELECT usertype FROM user WHERE email='".$_SESSION["email"]."'";
+	else{
+		 $sql = "SELECT usertype FROM user WHERE email='".$_SESSION["email"]."'";
     $res=mysqli_query($con,$sql);
-  $row=$res->fetch_assoc();
-  
-  if($row['usertype']=='admin'){
+	$row=$res->fetch_assoc();
+	
+	if($row['usertype']=='admin'){
 	  $sidebar='
 	  <li class="nav-item ">
             <a class="nav-link" href="./adddepartment.php">
@@ -31,50 +30,52 @@
   }else{
 	  $sidebar='';
   }
-  }
   
-  if(isset($_POST['department'])){
-	$deptname=$_POST['department'];
+	if( $row['usertype']!='admin' )
+    {
+		if($row['usertype']=='User'){
+		header("Location: dashboard.php");
+        exit();
+		}
+		else if($row['usertype']=='Department'){
+		header("Location: depthome.php");
+        exit();
+
+			
+		}
+	}
 	
+	}
+    $sql = "SELECT name FROM user WHERE email='".$_SESSION["email"]."'";
+    $res=$res_u=mysqli_query($con,$sql);
+    $row=$res->fetch_assoc();
+    $uname=$row["name"];//set name to department name instead of gmail account name
+    $_SESSION["name"] =$uname;
 	
-	$sql = "SELECT * FROM user WHERE username='".$deptname."' ";
-	$result=mysqli_query($con,$sql);
-	$row = mysqli_fetch_array($result);
+	$totcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain "));
 	
-	$deptpasswd=$row['password'];
-	$deptmail=$row['email'];
-	$deptid=$row['id'];
-	
-		
-	$sql = "SELECT * FROM department WHERE dname='".$deptname."' ";
-	$result=mysqli_query($con,$sql);
-	$row = mysqli_fetch_array($result);
-	$deptdid=$row['id'];
-  }
-  else{
-	header("Location: index.php");
-	exit();
-  }
+	$totpendingcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE status='Pending' OR status='Pending#'"));
+					
+	$totsolvedcomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE  status='Resolved' OR status='Resolved#'"));
+					
+	$totinprogresscomp=mysqli_num_rows(mysqli_query($con,"SELECT * FROM complain WHERE status='In-Progress' OR status='In-Progress#'" ));
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
   <meta charset="utf-8" />
   <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <title>
-   
-  </title>
-  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+  <title>Complains | Complain Box </title>
+   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <!-- CSS Files -->
   <link href="assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
-  <!-- CSS Just for demo purpose, don't include it in your project -->
-  <link href="assets/demo/demo.css" rel="stylesheet" />
 </head>
 
 <body class="">
@@ -85,35 +86,33 @@
 
         Tip 2: you can also add an image using data-image tag
     -->
- 
       <div class="logo">
         <a href="#" class="simple-text logo-normal">
           Complain Box
         </a>
       </div>
-      
-      
+	  
+	  
       <div class="sidebar-wrapper">
         <ul class="nav">
 
-        <li class="nav-item">
-            <br/>
-            <div class="card-profile">
+			<li class="nav-item">
+			<br/>
+			<div class="card-profile">
                 <div class="card-avatar">
-                
                     <img class="img" src="<?php  echo $_SESSION['imgurl'];  ?>" />
-                
                 </div>
-    <div class="card-body">
-                  <h5 class="card-title">   <?php echo $_SESSION['name'];  ?></h5>
-                 
-                </div>
-        </li>
-        
-        
-        
-         <li class="nav-item ">
-            <a class="nav-link" href="./admindashboard.php" >
+					<div class="card-body">
+						<h5 class="card-title">	<?php echo $_SESSION['name'];  ?></h5>
+					</div>
+
+			</div>
+		</li>
+		
+		
+         
+         <li class="nav-item  active">
+            <a class="nav-link" href="./admindashboard.php">
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
             </a>
@@ -125,180 +124,239 @@
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="test_report.php">
+            <a class="nav-link" href="./test_report.php">
               <i class="material-icons">content_paste</i>
               <p>Reports</p>
             </a>
           </li>
-    
 		  
-            <li class="nav-item active">
-            <a class="nav-link" >
+            <li class="nav-item ">
+            <a class="nav-link" href="./editdepartment.php">
               <i class="material-icons">create</i>
               <p>Edit department</p>
             </a>
           </li>	  
-		
+		  <?php echo $sidebar;?>
+            
           <li class="nav-item ">
             <a class="nav-link" href="./logout.php">
               <i class="material-icons">arrow_back</i>
               <p>Logout</p>
             </a>
           </li>
-		</ul>
+     
+     
+        </ul>
       </div>
     </div>
     <div class="main-panel">
       <!-- Navbar -->
-       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+          <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand">Edit Department</a>
+            <a class="navbar-brand" href="#"><b>Complains</b></a>
           </div>
-         
-                <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
             <span class="navbar-toggler-icon icon-bar"></span>
             <span class="navbar-toggler-icon icon-bar"></span>
             <span class="navbar-toggler-icon icon-bar"></span>
           </button>
-          
-         </div>
-      </nav>
-     <!-- End Navbar -->
-      <div class="content">
-    
-		
-		
-          <div class="row" id="department">
-		  
-		  	  <div class="col-md-12">
-              
-				
-            <div class="col-md-6 offset-md-3">
-              <div class="card">
-                <div class="card-header card-header-primary" style="margin:0;">
-                  <h4 class="card-title" id="department_card">Department: <?php  echo $deptname;  ?></h4>
-                </div>
-                <div class="card-body">
-                  <form  action="updatedeptdb.php" method="post">
-                    <div class="row">
-				
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Department Name</label>
-                          <input type="text" id="edeptname" name="departmentname" autocomplete="off" value="<?php  echo $deptname;  ?>" class="form-control center" >
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                     <div class="col-md-12">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Password of Department</label>
-                          <input type="text" id="edeptpass" name="passwrd" value="<?php  echo $deptpasswd;  ?>" class="form-control" >
-                        </div>
-                      </div>
-                   
-                    </div>
-					  <div class="row">
-                   
-              
-                     <div class="col-md-12">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Mail Id of head</label>
-                          <input type="mail" id="edept" name="heademail"  value="<?php  echo $deptmail;  ?>" class="form-control" >
-                        </div>
-                      </div>
-                    </div>
-					<input type="hidden" name="deptid"  value="<?php  echo $deptid;  ?>" >
-					<input type="hidden" name="deptdid"  value="<?php  echo $deptdid;  ?>" >
-					<input type="hidden" name="oldname"  value="<?php  echo $deptname;  ?>" >
-                
-                    <button type="submit" class="btn btn-primary">Update</button>
-					
-                    <div class="clearfix"></div>
-                  </form>
-                </div>
-              </div>
-            </div>
-         <!--   <div class="col-md-4">
-              <div class="card card-profile">
-                <div class="card-avatar">
-                  <a href="#pablo">
-                    <img class="img" src="assets/img/faces/marc.jpg" />
-                  </a>
-                </div>
-                <div class="card-body">
-                  <h6 class="card-category text-gray">CEO / Co-Founder</h6>
-                  <h4 class="card-title">Alec Thompson</h4>
-                  <p class="card-description">
-                    Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
-                  </p>
-                  <a href="#pablo" class="btn btn-primary btn-round">Follow</a>
-                </div>
-              </div>
-            </div>-->
-          </div>
-        </div>
-      </div>
-     
-<?php 
-include("footer.php");?>
 
-	 </div>
-  </div>
- <!-- <div class="fixed-plugin">
-    <div class="dropdown show-dropdown">
-      <a href="#" data-toggle="dropdown">
-        <i class="fa fa-cog fa-2x"> </i>
-      </a>
-      <ul class="dropdown-menu">
-        <li class="header-title"> Sidebar Filters</li>
-        <li class="adjustments-line">
-          <a href="javascript:void(0)" class="switch-trigger active-color">
-            <div class="badge-colors ml-auto mr-auto">
-              <span class="badge filter badge-purple" data-color="purple"></span>
-              <span class="badge filter badge-azure" data-color="azure"></span>
-              <span class="badge filter badge-green" data-color="green"></span>
-              <span class="badge filter badge-warning" data-color="orange"></span>
-              <span class="badge filter badge-danger" data-color="danger"></span>
-              <span class="badge filter badge-rose active" data-color="rose"></span>
-            </div>
-            <div class="clearfix"></div>
-          </a>
-        </li>
-        <li class="header-title">Images</li>
-        <li class="active">
-          <a class="img-holder switch-trigger" href="javascript:void(0)">
-            <img src="assets/img/sidebar-1.jpg" alt="">
-          </a>
-        </li>
-        <li>
-          <a class="img-holder switch-trigger" href="javascript:void(0)">
-            <img src="assets/img/sidebar-2.jpg" alt="">
-          </a>
-        </li>
-        <li>
-          <a class="img-holder switch-trigger" href="javascript:void(0)">
-            <img src="assets/img/sidebar-3.jpg" alt="">
-          </a>
-        </li>
-        <li>
-          <a class="img-holder switch-trigger" href="javascript:void(0)">
-            <img src="assets/img/sidebar-4.jpg" alt="">
-          </a>
-        </li>
-        <li class="button-container">
-          <a href="https://www.creative-tim.com/product/material-dashboard" target="_blank" class="btn btn-primary btn-block">Free Download</a>
-        </li>
-        <!-- <li class="header-title">Want more components?</li>
-            <li class="button-container">
-                <a href="https://www.creative-tim.com/product/material-dashboard-pro" target="_blank" class="btn btn-warning btn-block">
-                  Get the pro version
-                </a>
-            </li> -->
+        </div>
+      </nav>
+	  <!-- End Navbar -->
+
+
+      <?php
     
-  <!--   Core JS Files   -->
+
+				if(!isset($_GET['department']))
+						$dptn='';
+				else
+					$dptn=$_GET['department'].' : ';
+      echo '
+      <div class="content" id="complainDetail">
+        <div class="container-fluid">
+         
+		         <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                <div class="card-header card-header-primary card-header-icon">
+                  <div class="card-icon">
+                    <i class="material-icons">format_list_bulleted</i>
+                  </div>
+                  <p class="card-category">Complains</p>
+                  <h3 class="card-title">'.$totcomp.'
+                  </h3>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+				  
+                    <i class="material-icons">content_paste</i><a href="./statuscomplain.php?status=">View Details</a>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                <div class="card-header card-header-warning card-header-icon">
+                  <div class="card-icon">
+                    <i class="fa fa-clock-o"></i>
+
+                  </div>
+                  <p class="card-category">Pending</p>
+                  <h3 class="card-title">'.$totpendingcomp.'</h3>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="material-icons">error_outline</i><a href="./statuscomplain.php?status=Pending">View Details</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                <div class="card-header card-header-info card-header-icon">
+                  <div class="card-icon">
+				  <i class="fa fa-refresh"></i>
+                  </div>
+                  <p class="card-category">In Progress</p>
+                  <h3 class="card-title">'.$totinprogresscomp.'</h3>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="material-icons">refresh</i><a href="./statuscomplain.php?status=In-Progress">View Details</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                <div class="card-header card-header-success card-header-icon">
+                  <div class="card-icon">
+					<i class="fa fa-check-square-o"></i>
+
+                  </div>
+                  <p class="card-category">Solved</p>
+                  <h3 class="card-title">'.$totsolvedcomp.'</h3>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="material-icons">check</i><a href="./statuscomplain.php?status=Solved">View Details</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+	<br/>																
+          <div class="row">
+			
+				<div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">'.$dptn.$_GET["status"].' Complains</h4>
+                  <p class="card-category">  </p>
+                </div>';
+				
+				
+				
+				echo '   <div class="card-body table-responsive">
+                  <table class="table table-hover">
+                    <thead class="text-primary">
+                        <th>ID</th>               
+                        <th>Department</th>               
+						<th>Detail</th>
+						<th>Date Time</th>                        
+						<th>Status</th>                    
+					<!--	<th>Complainant</th>  
+						<th>Mail</th>-->
+						<th>View</th>
+                    </thead> <tbody>';
+				
+						$sql = "SELECT * FROM complain WHERE status like '%".$_GET['status']."%' AND Departmentname like '%".$dptn."%' ORDER BY id DESC";
+						$result=mysqli_query($con,$sql);
+while($row = mysqli_fetch_array($result)){  
+							//Creates a loop to dipslay all complain
+							echo "<tr><td>".$row['id']."</td>";
+							echo "<td>".$row['Departmentname']."</td>";
+							
+							if(strlen($row['description'])>50)
+							{
+								echo "<td >".substr($row['description'],0,50) ." ...</td>";
+							}
+							else{
+								$tmpd= $row['description'];
+								$tmplen=54-strlen($row['description']);
+
+								echo "<td >".$tmpd.str_repeat('&nbsp;',$tmplen);"</td>";
+							}
+							echo "<td>".$row['complaindate']."</td>";
+					
+	   	echo "<td class='";
+		if($row['status']=='Pending' || $row['status']=='Pending#'){
+			echo 'text-danger';
+		}else if($row['status']=='In-Progress'|| $row['status']=='In-Progress#'){
+			echo 'text-warning';	
+		}
+		else if($row['status']=='Resolved'|| $row['status']=='Resolved#'){
+			echo 'text-success';
+		}
+		echo "'  style='    font-weight: 500;'>".$row['status']."</td>";  
+							//echo "<td>".$row['complainant']."</td>"; 
+							//echo "<td>".$row['complainantmail']."</td>"; 
+							echo '<td><button type="button" class="btn btn-primary" name="'.$row['id'].'" onclick="viewDetails()">View Details</button></td>'; 
+	
+						}
+                   
+      
+					
+                     echo '</tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+     </div>
+	 
+      </div>';
+ 
+  include("footer.php");
+echo'  </div>';
+
+
+?>
+    <!----     action form   ---->
+
+
+
+
+
+
+
+
+
+<!----end of complain-->
+
+
+
+
+  </div>
+  <!--   Core JS Files 
+
+margin-top: 34px;
+    left: -119px;
+    color: #fff;
+    background: #9c27b0;
+
+
+    -->
+
+
+
+
+
   <script src="assets/js/core/jquery.min.js"></script>
   <script src="assets/js/core/popper.min.js"></script>
   <script src="assets/js/core/bootstrap-material-design.min.js"></script>
@@ -341,7 +399,43 @@ include("footer.php");?>
   <script src="assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
   <!-- Material Dashboard DEMO methods, don't include it in your project! -->
   <script src="assets/demo/demo.js"></script>
+
+
+    <script>
+/*  $("li").click(function(){
+    alert("j");
+    var val=$(this).text();
+    $("#dropdownMenuLink").text("STATUS: "+$(this).text());
+    $.ajax(function(){
+      type:"POST",
+      url:"status_update.php",
+      data:"status="+val+"&id=<?php //echo $_GET['id']?>"
+    }).done(function(){
+      window.open("depthome.php?id="+<?php //echo $_GET['id']?>,"_self");
+    });
+
+
+
+    });
+  */
+
+</script>
+
+
+
+
   <script>
+  
+  function doSomething(a) {
+    var x = document.getElementById("testing");
+    var y = document.getElementById("test");
+  //if (x.style.display === "none") {
+	y.innerHTML  = a;
+    //x.style.display = "block";
+	console.log(a);
+   // alert('Form submitted!'+a);
+    return false;
+}
   
     $(document).ready(function() {
       $().ready(function() {
@@ -513,6 +607,145 @@ include("footer.php");?>
       });
     });
   </script>
+
+  <?php 
+  
+
+
+   ?>
+
+
+
+  <script>
+
+    function takeAction(event){
+
+       // var building = document.getElementById('building');
+       // var location = document.getElementById('location');
+       // var msg = document.getElementById('complain_message');
+        var id= event.target.name;
+
+        window.open("depthome.php?id="+id,"_self");
+
+
+
+
+
+    }
+
+
+    $(document).ready(function() {
+      // Javascript method's body can be found in assets/js/demos.js
+      md.initDashboardPageCharts();
+
+    });
+  </script>
+
+
+
+
+
+
+
+
+      <?php 
+
+      if (isset($_POST['forward_admin'])) {
+		  
+		    if(isset($_COOKIE['status'])){
+    $status=$_COOKIE['status'];
+  }else{
+    $status="Pending";
+  }
+  
+$query= mysqli_query($con,"UPDATE complain SET status='$status#' WHERE id='$id'");
+
+   
+  $remark = $_POST['remark'];
+$sql7="INSERT INTO admincomplain (`ogid`, `remark`) values ($id,'".$remark."')";
+//echo $sql7;
+  $query= mysqli_query($con,$sql7);
+
+         $query = mysqli_query($con,"SELECT email from user WHERE usertype='admin'");
+        $row = mysqli_fetch_array($query);
+        $mail_to = $row['email'];
+
+        echo  '<script>
+                
+		        $.ajax({              
+                url:"complain_submit_ajax.php",
+                type:"POST",
+               
+                data:"id='.$id.'&mail_to='.$mail_to.'",
+                cache:false,
+
+              
+            }).done(function(data){
+                console.log(data);
+                window.location.href = "depthome.php";
+
+            }).fail(function() { 
+                alert( "Login with Somaiya mail" );
+            });
+
+            </script>';
+            header("Location: depthome.php");
+      }
+
+       
+
+       ?>
+
+      
+      
+
+    
+
+  <script>
+
+  $("li").click(function(){
+    
+    var val=$(this).text();
+    $("#dropdownMenuLink").text($(this).text());
+   
+    document.cookie = "status=" + $(this).text();
+    
+    if($(this).text()=='In-Progress'){
+      $('#expense').hide();
+      $("#start").show();
+    }else if($(this).text()=='Resolved'){
+      $("#start").hide();
+      $('#expense').show();
+    }else{
+       $('#expense').hide();
+      $("#start").show();
+    }
+   /* $.ajax({
+      type: "POST",
+      url: "status_update.php",
+      data:"status="+val+"&id=<?php //echo $_GET['id']?>"
+    }).done(function(){
+      window.open("depthome.php","_self");
+    });
+
+*/
+
+    });
+	
+	  function viewDetails(){
+
+        var id= event.target.name;
+        window.open("admin_view.php?id="+id,"_self");
+     // window.location.href = "./admin_action.php";
+    }
+  
+  
+</script>
+
+
+
+
+
 </body>
 
 </html>

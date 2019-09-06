@@ -1,6 +1,7 @@
 <?php
 	//session_start();
 
+
   include("config/config.php");
   if(isset($_SESSION['name'])){
     $name = $_SESSION['name'];
@@ -44,13 +45,15 @@
 
 <body class="">
   <div class="wrapper ">
-    <div class="sidebar" data-color="purple" data-background-color="white" data-image="assets/img/sidebar-2.jpg">
+    <div class="sidebar" data-color="purple" data-background-color="white" data-image="assets/img/sidebar.jpg">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
         Tip 2: you can also add an image using data-image tag
     -->
-      <div class="logo">
+      <div class="logo" style="
+    background: white;
+">
         <a class="simple-text logo-normal">
           Complain Box
         </a>
@@ -81,13 +84,13 @@
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="./userprofile.php">
               <i class="material-icons">person</i>
               <p>My Profile</p>
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="./usercomplain.php">
+            <a class="nav-link" href="./usercomplain.php?status=">
               <i class="material-icons">content_paste</i>
               <p>My Complains</p>
             </a>
@@ -125,7 +128,7 @@
 		  <div class="col-md-12">
               <div class="card card-plain">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title mt-0"><b>Complains Status</b></h4>
+                  <h4 class="card-title mt-0"><b>Complain Status</b></h4>
                 </div>
                 </div>
                 </div>
@@ -133,7 +136,7 @@
 			<br/>
 		         <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-6">
-              <div class="card card-stats">
+              <div class="card card-stats" style="box-shadow:none;">
                 <div class="card-header card-header-danger card-header-icon">
                   <div class="card-icon">
                     <i class="material-icons">format_list_bulleted</i>
@@ -144,15 +147,14 @@
                 </div>
                 <div class="card-footer">
                   <div class="stats">
-				  
-                    <i class="material-icons">content_paste</i>Total applied complain
+				  <a href="./usercomplain.php?status=">View Details</a>
 
                   </div>
                 </div>
               </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6">
-              <div class="card card-stats">
+              <div class="card card-stats" style="box-shadow:none;">
                 <div class="card-header card-header-warning card-header-icon">
                   <div class="card-icon">
                     <i class="fa fa-clock-o"></i>
@@ -162,14 +164,13 @@
                   <h3 class="card-title"><?php echo $totpendingcomp?></h3>
                 </div>
                 <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons">error_outline</i>To pending complains
-                  </div>
+                  <div class="stats"><a href="./usercomplain.php?status=Pending">View Details</a>
+              </div>
                 </div>
               </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6">
-              <div class="card card-stats">
+              <div class="card card-stats" style="box-shadow:none;">
                 <div class="card-header card-header-info card-header-icon">
                   <div class="card-icon">
 				  <i class="fa fa-refresh"></i>
@@ -178,13 +179,12 @@
                   <h3 class="card-title"><?php echo $totinprogresscomp?></h3>
                 </div>
                 <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons">refresh</i> Total In-Progress Complains
-                  </div>
+                  <div class="stats"> <a href="./usercomplain.php?status=In-Progress">View Details</a>
+            </div>
                 </div>
               </div>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="col-lg-3 col-md-6 col-sm-6" style="box-shadow:none;">
               <div class="card card-stats">
                 <div class="card-header card-header-success card-header-icon">
                   <div class="card-icon">
@@ -195,19 +195,20 @@
                   <h3 class="card-title"><?php echo $totsolvedcomp?></h3>
                 </div>
                 <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons">check</i> Total complain solved 
-                  </div>
+                  <div class="stats"><a href="./usercomplain.php?status=Solved">View Details</a>
+                 </div>
                 </div>
               </div>
             </div>
           </div>
 		  
 		  <br/>
+		  <div class="row">
 		  <div class="col-md-12">
               <div class="card card-plain">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title mt-0"><b>Select Department </b></h4>
+                <div class="card-header card-header-primary" >
+                  <h4 class="card-title mt-0"><b>Select Department to complain</b></h4>
+                </div>
                 </div>
                 </div>
                 </div>
@@ -237,8 +238,8 @@
 		echo '		</br>
                   <h3 class="card-title text-center" name="'.$row["dname"].'"><b>'.$row["dname"].'</b></h3>									  
 				</br>
+				<a href="#complain" class="btn btn-info btn-block" name="'.$row["dname"].'" onClick="scrollToBottom(event)">Complain</a>
 				
-				<a href="#complain" class="btn btn-info btn-block" name="'.$row["dname"].'" onClick="scrollToBottom(event)">Click to Complain</a>
 				</form>
 				</div>
               </div>
@@ -261,9 +262,11 @@
 				 <br/>																		 
 			<div class="col-md-8 offset-md-2">
               <div class="card">
-                <div class="card-header card-header-primary">
+                <div class="card-header card-header-primary" style="
+    margin: 0;
+">
                   <h4 class="card-title" id="complain_card"></h4>
-                  <p class="card-category">Complain Form</p>
+                  <p class="card-category"></p>
                 </div>
                 <div class="card-body">
                   <form action="" enctype="multipart/form-data" style="margin-top: -40px;" method="POST">
@@ -288,7 +291,7 @@
                       
 						
 						
-                            <label class="bmd-label-floating"> Enter your complain here</label>
+                            <label class="bmd-label-floating"> Describe your complain</label>
 						 <textarea class="form-control" name="complain_body" rows="5" required><?php
                           if(isset($_SESSION['complain_body'])){
                               echo $_SESSION['complain_body'];
@@ -299,9 +302,13 @@
 
                        
                           <div class="form-group">
-						  <label class="bmd-label-floating">Supporting Doc</label>
-						 
-                            <label for="upload"
+						  
+						  <div class="row">
+						  <div class="col-lg-6 col-md-6 col-sm-12">
+						  <label class="bmd-label-floating">Supporting Document(Optional)</label>
+						 </div>
+                          <div class="col-lg-6 col-md-6 col-sm-12">
+						    <!--<label for="upload"
                                 style="margin: 0px 70px 10px 228px;
                                     border: 3px solid #9c27b0;
                                     border-radius: 13px;
@@ -309,9 +316,17 @@
                                     background-color: #9c27b0;
                                     color: white;
                                     cursor: pointer;">Upload File</label>
+									-->
+									<label for="upload" class="btn btn-primary">Upload</label>
                                     <input id='upload' name="upload" type="file" >
-                                    <div id="file-upload-filename" style=" margin: 0px 70px 10px 213px;"></div>
-                             <!-- <input type="file" class="form-control-file" id="exampleFormControlFile1">-->
+                             <!--       <div id="file-upload-filename" style=" margin: 0px 70px 10px 213px;"></div>
+                              <input type="file" class="form-control-file" id="exampleFormControlFile1">-->
+                          
+							</div>
+						  </div>
+						  
+						  
+                             <div id="file-upload-filename" ></div>
                           </div>
                        
                           <script type="text/css">
@@ -356,7 +371,7 @@
 
 
 
-                    	<input type="submit" name="com_submit" class="btn btn-primary btn-block" value="Submit Complain">
+                    	<input type="submit" name="com_submit" class="btn btn-primary" value="Submit">
 						
                     <div class="clearfix"></div>
                   </form>
@@ -547,6 +562,8 @@ include("footer.php");
      if($uploadOk==1){
 
       $datetime = date("Y-m-d H:i:s");
+	//    $datetime = date('m/d/Y H:i:s ', time());
+
       mysqli_query($con,"INSERT into complain(description,complainimg,Departmentname,status,complainant,complainantmail,building,location,complaindate) values('$body','$file_path','$department','Pending','$name','$email','$building','$location','$datetime')");
 
      $id=mysqli_insert_id($con);

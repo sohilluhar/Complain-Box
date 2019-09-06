@@ -55,7 +55,7 @@
 
 <body class="">
   <div class="wrapper ">
-    <div class="sidebar" data-color="purple" data-background-color="white" data-image="assets/img/sidebar-3.jpg">
+    <div class="sidebar" data-color="purple" data-background-color="white" data-image="assets/img/sidebar.jpg">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
@@ -86,39 +86,37 @@
                 </div>
         </li>
         
-        
-         <li class="nav-item ">
-            <a class="nav-link" href="./admindashboard.php">
+          <li class="nav-item ">
+            <a class="nav-link" >
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
             </a>
           </li>
       <li class="nav-item ">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="./adminprofile.php">
               <i class="material-icons">person</i>
               <p>My Profile</p>
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="test_report.php">
               <i class="material-icons">content_paste</i>
               <p>Reports</p>
             </a>
           </li>
             <li class="nav-item active">
-            <a class="nav-link" href="./adddepartment.php">
+            <a class="nav-link" >
               <i class="material-icons">group_add</i>
               <p>Add department</p>
             </a>
           </li>
 		  
-            <li class="nav-item  ">
+            <li class="nav-item ">
             <a class="nav-link" href="./editdepartment.php">
               <i class="material-icons">create</i>
               <p>Edit department</p>
             </a>
-          </li>
-		  
+          </li>	  
 		  
             <li class="nav-item ">
             <a class="nav-link" href="./removedepartment.php">
@@ -126,14 +124,13 @@
               <p>Remove department</p>
             </a>
           </li>
-		  
           <li class="nav-item ">
             <a class="nav-link" href="./logout.php">
               <i class="material-icons">arrow_back</i>
               <p>Logout</p>
             </a>
           </li>
-		 <!--
+      <!--
           <li class="nav-item ">
             <a class="nav-link" href="#">
               <i class="material-icons">library_books</i>
@@ -178,7 +175,7 @@
        <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="#pablo">Add Department</a>
+            <a class="navbar-brand" >Add Department</a>
           </div>
          
                 <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -196,9 +193,9 @@
           <div class="row">
             <div class="col-md-6 offset-md-3">
               <div class="card">
-                <div class="card-header card-header-primary">
+                <div class="card-header card-header-primary" style="margin:0;">
                   <h4 class="card-title">Department</h4>
-                  <p class="card-category">Add new department</p>
+                  <p class="card-category">Fill Details</p>
                 </div>
                 <div class="card-body">
                   <form  action="adddeptdb.php" method="post">
@@ -208,7 +205,7 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label-floating">Department Name</label>
-                          <input type="text" name="departmentname" autocomplete="off" class="form-control center" >
+                          <input type="text" name="departmentname" autocomplete="off" class="form-control center" required >
                         </div>
                       </div>
                     </div>
@@ -216,7 +213,7 @@
                      <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label-floating">Password for Department</label>
-                          <input type="password" name="passwrd1" autocomplete="off" class="form-control" >
+                          <input type="password" name="passwrd1" autocomplete="off" class="form-control" required>
                         </div>
                       </div>
                    
@@ -227,7 +224,7 @@
                      <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label-floating">Mail Id of head</label>
-                          <input type="mail" name="headmail" autocomplete="off" class="form-control" >
+                          <input type="mail" name="headmail" autocomplete="off" class="form-control" required>
                         </div>
                       </div>
                     </div>
@@ -243,7 +240,7 @@
                         </div>
                       </div>
                     </div>-->
-                    <button type="submit" class="btn btn-primary btn-block">Add Department</button>
+                    <button type="submit" class="btn btn-primary pull-left">Add Department</button>
 					
                     <div class="clearfix"></div>
                   </form>

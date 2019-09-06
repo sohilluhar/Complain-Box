@@ -11,24 +11,9 @@
     $res=mysqli_query($con,$sql);
 	$row=$res->fetch_assoc();
 	
-	if( $row['usertype']!='admin' )
-    {
-		if($row['usertype']=='User'){
-		header("Location: dashboard.php");
-        exit();
-		}
-		else if($row['usertype']=='Department'){
-		header("Location: depthome.php");
-        exit();	
-		}
-		else if($row['usertype']=='Manager'){
-		header("Location: managerdashboard.php");
-        exit();	
-			
-		}
 	}
 	
-	}
+	
     $sql = "SELECT name FROM user WHERE email='".$_SESSION["email"]."'";
     $res=$res_u=mysqli_query($con,$sql);
     $row=$res->fetch_assoc();
@@ -53,7 +38,7 @@
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    Admin Dashboard | Complain Box
+    Dashboard | Complain Box
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -67,14 +52,14 @@
 
 <body class="">
   <div class="wrapper ">
-    <div class="sidebar" data-color="purple" data-background-color="white" data-image="assets/img/sidebar.jpg" >
+    <div class="sidebar" data-color="purple" data-background-color="white" data-image="assets/img/sidebar.jpg">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
         Tip 2: you can also add an image using data-image tag
     -->
       <div class="logo">
-        <a class="simple-text logo-normal">
+        <a href="#" class="simple-text logo-normal">
           Complain Box
         </a>
       </div>
@@ -98,14 +83,14 @@
         </li>
         
         
-         <li class="nav-item active ">
+        <li class="nav-item active ">
             <a class="nav-link" >
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
             </a>
           </li>
       <li class="nav-item ">
-            <a class="nav-link" href="./adminprofile.php">
+            <a class="nav-link" href="./manprofile.php">
               <i class="material-icons">person</i>
               <p>My Profile</p>
             </a>
@@ -116,27 +101,15 @@
               <p>Reports</p>
             </a>
           </li>
+            
             <li class="nav-item ">
-            <a class="nav-link" href="./adddepartment.php">
-              <i class="material-icons">group_add</i>
-              <p>Add department</p>
-            </a>
-          </li>
-		  
-            <li class="nav-item ">
-            <a class="nav-link" href="./editdepartment.php">
+            <a class="nav-link" href="./editmandepartment.php">
               <i class="material-icons">create</i>
               <p>Edit department</p>
             </a>
           </li>	  
 		  
             <li class="nav-item ">
-            <a class="nav-link" href="./removedepartment.php">
-              <i class="material-icons">clear</i>
-              <p>Remove department</p>
-            </a>
-          </li>
-          <li class="nav-item ">
             <a class="nav-link" href="./logout.php">
               <i class="material-icons">arrow_back</i>
               <p>Logout</p>
@@ -412,12 +385,8 @@ echo "<td class='";
                   <p class="card-category text-center">Total complain</p>
                   
                   <h3 class="card-title text-center" name="'.$row["dname"].'">'.mysqli_num_rows($result1).'</h3>									  
+				</br>
 				
-				<div class="card-footer">
-                  <div class="stats">
-                   <a class="text-center" href="./statuscomplain.php?status=&department='.$row["dname"].'">View Details</a>
-                  </div>
-                </div>
 				</div>
               </div>
             </div>';
@@ -431,11 +400,8 @@ echo "<td class='";
                   <p class="card-category text-center">Pending complain</p>
                   
                   <h3 class="card-title text-center">'.$pendingcomp.'</h3>									  
-				<div class="card-footer">
-                  <div class="stats">
-                   <a href="./statuscomplain.php?status=Pending&department='.$row["dname"].'">View Details</a>
-                  </div>
-                </div>
+				</br>
+				
 				</div>
               </div>
             </div>';
@@ -452,11 +418,7 @@ echo "<td class='";
                   <p class="card-category text-center">In Progress complain</p>
                   
                   <h3 class="card-title text-center">'.$inprogresscomp.'</h3>									  
-				<div class="card-footer">
-                  <div class="stats">
-                   <a href="./statuscomplain.php?status=In-Progress&department='.$row["dname"].'">View Details</a>
-                  </div>
-                </div>
+				</br>
 				
 				</div>
               </div>
@@ -471,11 +433,8 @@ echo "<td class='";
                   <p class="card-category text-center">Solved complain</p>
                   
                   <h3 class="card-title text-center">'.$solvedcomp.'</h3>									  
-				<div class="card-footer">
-                  <div class="stats">
-                   <a href="./statuscomplain.php?status=Solved&department='.$row["dname"].'">View Details</a>
-                  </div>
-                </div>
+				</br>
+				
 				</div>
               </div>
             </div>';

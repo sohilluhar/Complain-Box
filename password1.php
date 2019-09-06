@@ -1,60 +1,7 @@
 <?php
+	
   include("config/config.php");
-  
-  
-  if(!isset($_SESSION['name'])){
-   
-        header("Location: index.php");
-        exit();
-    }
-  else{
-     $sql = "SELECT usertype FROM user WHERE email='".$_SESSION["email"]."'";
-    $res=mysqli_query($con,$sql);
-  $row=$res->fetch_assoc();
-  
-  if($row['usertype']=='admin'){
-	  $sidebar='
-	  <li class="nav-item ">
-            <a class="nav-link" href="./adddepartment.php">
-              <i class="material-icons">group_add</i>
-              <p>Add department</p>
-            </a>
-          </li>
-            <li class="nav-item ">
-            <a class="nav-link" href="./removedepartment.php">
-              <i class="material-icons">clear</i>
-              <p>Remove department</p>
-            </a>
-          </li>
-	  '
-	  ;
-  }else{
-	  $sidebar='';
-  }
-  }
-  
-  if(isset($_POST['department'])){
-	$deptname=$_POST['department'];
-	
-	
-	$sql = "SELECT * FROM user WHERE username='".$deptname."' ";
-	$result=mysqli_query($con,$sql);
-	$row = mysqli_fetch_array($result);
-	
-	$deptpasswd=$row['password'];
-	$deptmail=$row['email'];
-	$deptid=$row['id'];
-	
-		
-	$sql = "SELECT * FROM department WHERE dname='".$deptname."' ";
-	$result=mysqli_query($con,$sql);
-	$row = mysqli_fetch_array($result);
-	$deptdid=$row['id'];
-  }
-  else{
-	header("Location: index.php");
-	exit();
-  }
+  //display form to generate password and username
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,7 +12,7 @@
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-   
+    Password
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -85,137 +32,245 @@
 
         Tip 2: you can also add an image using data-image tag
     -->
- 
       <div class="logo">
-        <a href="#" class="simple-text logo-normal">
+        <a href="" class="simple-text logo-normal">
           Complain Box
         </a>
       </div>
-      
-      
       <div class="sidebar-wrapper">
         <ul class="nav">
-
-        <li class="nav-item">
-            <br/>
-            <div class="card-profile">
+		
+		<li class="nav-item">
+		<br/>
+			<div class="card-profile">
                 <div class="card-avatar">
                 
                     <img class="img" src="<?php  echo $_SESSION['imgurl'];  ?>" />
                 
                 </div>
-    <div class="card-body">
-                  <h5 class="card-title">   <?php echo $_SESSION['name'];  ?></h5>
+	<div class="card-body">
+                  <h5 class="card-title">	<?php echo $_SESSION['name'];  ?></h5>
                  
                 </div>
-        </li>
-        
-        
-        
-         <li class="nav-item ">
-            <a class="nav-link" href="./admindashboard.php" >
+		</li>
+		
+		
+         <li class="nav-item active ">
+            <a class="nav-link" href="#">
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
             </a>
-          </li>
-      <li class="nav-item ">
-            <a class="nav-link" href="./adminprofile.php">
+          </li><!--
+          <li class="nav-item ">
+            <a class="nav-link" href="#">
               <i class="material-icons">person</i>
               <p>My Profile</p>
             </a>
-          </li>
+          </li>-->
           <li class="nav-item ">
-            <a class="nav-link" href="test_report.php">
+            <a class="nav-link" href="./usercomplain.php?status=">
               <i class="material-icons">content_paste</i>
-              <p>Reports</p>
+              <p>My Complains</p>
             </a>
           </li>
-    
-		  
-            <li class="nav-item active">
-            <a class="nav-link" >
-              <i class="material-icons">create</i>
-              <p>Edit department</p>
-            </a>
-          </li>	  
-		
           <li class="nav-item ">
             <a class="nav-link" href="./logout.php">
               <i class="material-icons">arrow_back</i>
               <p>Logout</p>
             </a>
           </li>
-		</ul>
+     
+          <!--
+          <li class="nav-item ">
+            <a class="nav-link" href="#">
+              <i class="material-icons">library_books</i>
+              <p>Typography</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="#">
+              <i class="material-icons">bubble_chart</i>
+              <p>Icons</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="#">
+              <i class="material-icons">location_ons</i>
+              <p>Maps</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href=".#">
+              <i class="material-icons">notifications</i>
+              <p>Notifications</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="#">
+              <i class="material-icons">language</i>
+              <p>RTL Support</p>
+            </a>
+          </li>
+          <li class="nav-item active-pro ">
+            <a class="nav-link" href="#">
+              <i class="material-icons">unarchive</i>
+              <p>Upgrade to PRO</p>
+            </a>
+          </li>-->
+        </ul>
       </div>
     </div>
     <div class="main-panel">
-      <!-- Navbar -->
-       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+      <!-- Navbar 
+      <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand">Edit Department</a>
+            <a class="navbar-brand" href="#pablo">Set Password</a>
           </div>
-         
-                <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
             <span class="navbar-toggler-icon icon-bar"></span>
             <span class="navbar-toggler-icon icon-bar"></span>
             <span class="navbar-toggler-icon icon-bar"></span>
           </button>
-          
-         </div>
+          <div class="collapse navbar-collapse justify-content-end">
+            <form class="navbar-form">
+              <div class="input-group no-border">
+                <input type="text" value="" class="form-control" placeholder="Search...">
+                <button type="submit" class="btn btn-white btn-round btn-just-icon">
+                  <i class="material-icons">search</i>
+                  <div class="ripple-container"></div>
+                </button>
+              </div>
+            </form>
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="#pablo">
+                  <i class="material-icons">dashboard</i>
+                  <p class="d-lg-none d-md-block">
+                    Stats
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="material-icons">notifications</i>
+                  <span class="notification">5</span>
+                  <p class="d-lg-none d-md-block">
+                    Some Actions
+                  </p>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="#">Mike John responded to your email</a>
+                  <a class="dropdown-item" href="#">You have 5 new tasks</a>
+                  <a class="dropdown-item" href="#">You're now friend with Andrew</a>
+                  <a class="dropdown-item" href="#">Another Notification</a>
+                  <a class="dropdown-item" href="#">Another One</a>
+                </div>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="material-icons">person</i>
+                  <p class="d-lg-none d-md-block">
+                    Account
+                  </p>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
+                  <a class="dropdown-item" href="#">Profile</a>
+                  <a class="dropdown-item" href="#">Settings</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#">Log out</a>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
       </nav>
-     <!-- End Navbar -->
+      <!-- End Navbar -->
       <div class="content">
-    
-		
-		
-          <div class="row" id="department">
-		  
-		  	  <div class="col-md-12">
-              
-				
+        <div class="container-fluid">
+          <div class="row">
             <div class="col-md-6 offset-md-3">
               <div class="card">
-                <div class="card-header card-header-primary" style="margin:0;">
-                  <h4 class="card-title" id="department_card">Department: <?php  echo $deptname;  ?></h4>
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title">Profile</h4>
+                  <p class="card-category">Create username and Password</p>
                 </div>
                 <div class="card-body">
-                  <form  action="updatedeptdb.php" method="post">
+                  <form  action="adduserdb.php" method="post">
+                  <!--  <div class="row">
+                      <div class="col-md-5">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Company (disabled)</label>
+                          <input type="text" class="form-control" disabled>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Username</label>
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Email address</label>
+                          <input type="email" class="form-control">
+                        </div>
+                      </div>
+                    </div>
                     <div class="row">
-				
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Fist Name</label>
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Last Name</label>
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                    </div>-->
+                    <div class="row">
                       <div class="col-md-12">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Department Name</label>
-                          <input type="text" id="edeptname" name="departmentname" autocomplete="off" value="<?php  echo $deptname;  ?>" class="form-control center" >
+                          <label class="bmd-label-floating">Username</label>
+                          <input type="text" name="username" class="form-control center" >
                         </div>
                       </div>
                     </div>
                     <div class="row">
                      <div class="col-md-12">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Password of Department</label>
-                          <input type="text" id="edeptpass" name="passwrd" value="<?php  echo $deptpasswd;  ?>" class="form-control" >
+                          <label class="bmd-label-floating">Password</label>
+                          <input type="text" name="passwrd1" class="form-control" >
                         </div>
                       </div>
                    
                     </div>
-					  <div class="row">
-                   
-              
+					<!--   <div class="row">
                      <div class="col-md-12">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Mail Id of head</label>
-                          <input type="mail" id="edept" name="heademail"  value="<?php  echo $deptmail;  ?>" class="form-control" >
+                          <label class="bmd-label-floating">Confirm Password</label>
+                          <input type="password" name="passwrd2" class="form-control" >
                         </div>
                       </div>
+                   
                     </div>
-					<input type="hidden" name="deptid"  value="<?php  echo $deptid;  ?>" >
-					<input type="hidden" name="deptdid"  value="<?php  echo $deptdid;  ?>" >
-					<input type="hidden" name="oldname"  value="<?php  echo $deptname;  ?>" >
-                
-                    <button type="submit" class="btn btn-primary">Update</button>
-					
+                   <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label>About Me</label>
+                          <div class="form-group">
+                            <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</label>
+                            <textarea class="form-control" rows="5"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                    </div>-->
+                    <button type="submit" class="btn btn-primary pull-left">Save</button>
+					<a href="./dashboard.php" class="btn btn-primary pull-right">Skip</a>
                     <div class="clearfix"></div>
                   </form>
                 </div>
@@ -241,11 +296,38 @@
           </div>
         </div>
       </div>
-     
-<?php 
-include("footer.php");?>
-
-	 </div>
+      <!--<footer class="footer">
+        <div class="container-fluid">
+          <nav class="float-left">
+            <ul>
+              <li>
+                <a href="#">
+                  Complain Box
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  About Us
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  Blog
+                </a>
+              </li>
+             
+            </ul>
+          </nav>
+          <div class="copyright float-right">
+            &copy;
+            <script>
+              document.write(new Date().getFullYear())
+            </script>, made with <i class="material-icons">favorite</i> by
+            <a href="#" target="_blank">Complain Box</a> for a betterment.
+          </div>
+        </div>
+      </footer>
+   --> </div>
   </div>
  <!-- <div class="fixed-plugin">
     <div class="dropdown show-dropdown">
@@ -296,8 +378,25 @@ include("footer.php");?>
                 <a href="https://www.creative-tim.com/product/material-dashboard-pro" target="_blank" class="btn btn-warning btn-block">
                   Get the pro version
                 </a>
-            </li> -->
-    
+            </li> 
+        <li class="button-container">
+          <a href="https://demos.creative-tim.com/material-dashboard/docs/2.1/getting-started/introduction.html" target="_blank" class="btn btn-default btn-block">
+            View Documentation
+          </a>
+        </li>
+        <li class="button-container github-star">
+          <a class="github-button" href="https://github.com/creativetimofficial/material-dashboard" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star ntkme/github-buttons on GitHub">Star</a>
+        </li>
+        <li class="header-title">Thank you for 95 shares!</li>
+        <li class="button-container text-center">
+          <button id="twitter" class="btn btn-round btn-twitter"><i class="fa fa-twitter"></i> &middot; 45</button>
+          <button id="facebook" class="btn btn-round btn-facebook"><i class="fa fa-facebook-f"></i> &middot; 50</button>
+          <br>
+          <br>
+        </li>
+      </ul>
+    </div>
+  </div>-->
   <!--   Core JS Files   -->
   <script src="assets/js/core/jquery.min.js"></script>
   <script src="assets/js/core/popper.min.js"></script>
@@ -342,7 +441,6 @@ include("footer.php");?>
   <!-- Material Dashboard DEMO methods, don't include it in your project! -->
   <script src="assets/demo/demo.js"></script>
   <script>
-  
     $(document).ready(function() {
       $().ready(function() {
         $sidebar = $('.sidebar');

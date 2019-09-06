@@ -1,18 +1,15 @@
 <?php
-	session_start();
 	//verify and login user from database by providing id and password
 
+  include("config/config.php");
 	
 	$name=$_POST["username"];
 	$pass=$_POST["password"];
 	
-	
-	$con = new mysqli('localhost', 'root','' ,'complainbox');
-		if ($con->connect_error) 
-			die("Connection failed: " . $con->connect_error);
+	echo $name;
+	echo $pass;
 	$sqlque="select * from user where username='$name' AND password='$pass'";
 
-	
 	$res_u=mysqli_query($con,$sqlque);
 	if (mysqli_num_rows($res_u) == 1 ) 
 	{
@@ -34,6 +31,11 @@
 		}
 		else if($type=="admin"){
 		 header('Location: admindashboard.php');
+			  exit();
+		}
+		
+		else if($type=="Manager"){
+		 header('Location: managerdashboard.php');
 			  exit();
 		}
 		else{

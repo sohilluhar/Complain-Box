@@ -1,19 +1,12 @@
 <?php
-	session_start();
 
-	
-	$name="fbahjsg";
-	$details="Carpenter";
+  include("config/config.php");
+  date_default_timezone_set('Asia/Kolkata');
 
-	
-	$con = new mysqli('localhost', 'root','' ,'complainbox');
-		if ($con->connect_error) 
-			die("Connection failed: " . $con->connect_error);
-	
-
-		$sql="insert into complain (description,Departmentname) values('$details','$name');";
-				echo "updating..";
-		mysqli_query($con,$sql);
-		
+      $datetime = date("Y-m-d H:i:s");
+	  echo $datetime;
+	  
+	   mysqli_query($con,"INSERT into complain(description,complainimg,Departmentname,status,complainant,complainantmail,building,location,complaindate) values('test','','test','Pending','123','sohil.l','ksjce','123','$datetime')");
+echo $datetime;
 	
 ?>

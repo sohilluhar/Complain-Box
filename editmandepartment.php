@@ -1,60 +1,36 @@
 <?php
+	
   include("config/config.php");
-  
-  
-  if(!isset($_SESSION['name'])){
+	    if(!isset($_SESSION['name'])){
    
         header("Location: index.php");
         exit();
     }
-  else{
-     $sql = "SELECT usertype FROM user WHERE email='".$_SESSION["email"]."'";
+	else{
+		 $sql = "SELECT usertype FROM user WHERE email='".$_SESSION["email"]."'";
     $res=mysqli_query($con,$sql);
-  $row=$res->fetch_assoc();
-  
-  if($row['usertype']=='admin'){
-	  $sidebar='
-	  <li class="nav-item ">
-            <a class="nav-link" href="./adddepartment.php">
-              <i class="material-icons">group_add</i>
-              <p>Add department</p>
-            </a>
-          </li>
-            <li class="nav-item ">
-            <a class="nav-link" href="./removedepartment.php">
-              <i class="material-icons">clear</i>
-              <p>Remove department</p>
-            </a>
-          </li>
-	  '
-	  ;
-  }else{
-	  $sidebar='';
-  }
-  }
-  
-  if(isset($_POST['department'])){
-	$deptname=$_POST['department'];
+	$row=$res->fetch_assoc();
 	
+	if( $row['usertype']!='admin' )
+    {
+		if($row['usertype']=='User'){
+		header("Location: dashboard.php");
+        exit();
+		}
+		else if($row['usertype']=='Department'){
+		header("Location: depthome.php");
+        exit();
+
+			
+		}
+	}
 	
-	$sql = "SELECT * FROM user WHERE username='".$deptname."' ";
-	$result=mysqli_query($con,$sql);
-	$row = mysqli_fetch_array($result);
-	
-	$deptpasswd=$row['password'];
-	$deptmail=$row['email'];
-	$deptid=$row['id'];
-	
-		
-	$sql = "SELECT * FROM department WHERE dname='".$deptname."' ";
-	$result=mysqli_query($con,$sql);
-	$row = mysqli_fetch_array($result);
-	$deptdid=$row['id'];
-  }
-  else{
-	header("Location: index.php");
-	exit();
-  }
+	}
+    $sql = "SELECT name FROM user WHERE email='".$_SESSION["email"]."'";
+    $res=$res_u=mysqli_query($con,$sql);
+    $row=$res->fetch_assoc();
+    $uname=$row["name"];//set name to department name instead of gmail account name
+    $_SESSION["name"] =$uname;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,7 +41,7 @@
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-   
+   Edit Department | Complain Box
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -87,7 +63,7 @@
     -->
  
       <div class="logo">
-        <a href="#" class="simple-text logo-normal">
+        <a  class="simple-text logo-normal">
           Complain Box
         </a>
       </div>
@@ -111,15 +87,14 @@
         </li>
         
         
-        
          <li class="nav-item ">
-            <a class="nav-link" href="./admindashboard.php" >
+            <a class="nav-link" href="./managerdashboard.php" >
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
             </a>
           </li>
       <li class="nav-item ">
-            <a class="nav-link" href="./adminprofile.php">
+            <a class="nav-link" href="./manprofile.php">
               <i class="material-icons">person</i>
               <p>My Profile</p>
             </a>
@@ -130,15 +105,14 @@
               <p>Reports</p>
             </a>
           </li>
-    
-		  
+          
             <li class="nav-item active">
             <a class="nav-link" >
               <i class="material-icons">create</i>
               <p>Edit department</p>
             </a>
           </li>	  
-		
+		  
           <li class="nav-item ">
             <a class="nav-link" href="./logout.php">
               <i class="material-icons">arrow_back</i>
@@ -167,78 +141,37 @@
       </nav>
      <!-- End Navbar -->
       <div class="content">
-    
+        <div class="container-fluid">
+			  
+		<div class="row">
+						<?php
+
+	$sql = "SELECT * FROM department ";
+	$result=mysqli_query($con,$sql);
+		//display all department
+		while($row = mysqli_fetch_array($result)){ 
+				$dptname=$row['dname'];
+		
+		  echo '     <div class="col-lg-3 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                <div class="card-header ">';
+		
+			echo "<form method='POST' action='updatedept.php' id=".$row['id'].">"; 
+			echo " <input type='hidden' name='department' value=".$row['dname'].">";		
+		echo '		</br>
+                  <h3 class="card-title text-center" name="'.$row["dname"].'"><b>'.$row["dname"].'</b></h3>									  
+				</br>
+				
+				<button type="submit" class="btn btn-info btn-block" name="'.$row["dname"].'">Edit department</button>
+				</form>
+				</div>
+              </div>
+            </div>';
+		}
+?>
+		</div>
 		
 		
-          <div class="row" id="department">
-		  
-		  	  <div class="col-md-12">
-              
-				
-            <div class="col-md-6 offset-md-3">
-              <div class="card">
-                <div class="card-header card-header-primary" style="margin:0;">
-                  <h4 class="card-title" id="department_card">Department: <?php  echo $deptname;  ?></h4>
-                </div>
-                <div class="card-body">
-                  <form  action="updatedeptdb.php" method="post">
-                    <div class="row">
-				
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Department Name</label>
-                          <input type="text" id="edeptname" name="departmentname" autocomplete="off" value="<?php  echo $deptname;  ?>" class="form-control center" >
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                     <div class="col-md-12">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Password of Department</label>
-                          <input type="text" id="edeptpass" name="passwrd" value="<?php  echo $deptpasswd;  ?>" class="form-control" >
-                        </div>
-                      </div>
-                   
-                    </div>
-					  <div class="row">
-                   
-              
-                     <div class="col-md-12">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Mail Id of head</label>
-                          <input type="mail" id="edept" name="heademail"  value="<?php  echo $deptmail;  ?>" class="form-control" >
-                        </div>
-                      </div>
-                    </div>
-					<input type="hidden" name="deptid"  value="<?php  echo $deptid;  ?>" >
-					<input type="hidden" name="deptdid"  value="<?php  echo $deptdid;  ?>" >
-					<input type="hidden" name="oldname"  value="<?php  echo $deptname;  ?>" >
-                
-                    <button type="submit" class="btn btn-primary">Update</button>
-					
-                    <div class="clearfix"></div>
-                  </form>
-                </div>
-              </div>
-            </div>
-         <!--   <div class="col-md-4">
-              <div class="card card-profile">
-                <div class="card-avatar">
-                  <a href="#pablo">
-                    <img class="img" src="assets/img/faces/marc.jpg" />
-                  </a>
-                </div>
-                <div class="card-body">
-                  <h6 class="card-category text-gray">CEO / Co-Founder</h6>
-                  <h4 class="card-title">Alec Thompson</h4>
-                  <p class="card-description">
-                    Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
-                  </p>
-                  <a href="#pablo" class="btn btn-primary btn-round">Follow</a>
-                </div>
-              </div>
-            </div>-->
-          </div>
         </div>
       </div>
      

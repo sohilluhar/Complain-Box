@@ -29,6 +29,15 @@ if(isset($_POST["id"])){
 		echo $usertype;//return value to ajax
 	}
 	
+	
+	else 	if($row["usertype"]=="Manager")
+	{	
+		$sql2 = "UPDATE user SET imgurl='".$_POST["imgurl"]."' WHERE email='".$_POST["email"]."'";
+		$con->query($sql2);		
+		$usertype="Manager";
+		echo $usertype;//return value to ajax
+	}
+	
 	else{
 		if(!empty($result->fetch_assoc())){
 			$sql2 = "UPDATE user SET imgurl='".$_POST["imgurl"]."' WHERE email='".$_POST["email"]."'";

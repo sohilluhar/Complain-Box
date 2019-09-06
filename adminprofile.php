@@ -1,6 +1,25 @@
 <?php
-	session_start();
-	//display form to generate password and username
+	
+  include("config/config.php");
+  //display form to generate password and username
+  
+  $sql = "SELECT * FROM user WHERE email='".$_SESSION['email']."';";
+	$result=mysqli_query($con,$sql);
+		//display all department
+	$row = mysqli_fetch_array($result);
+	$uname=$row['username'];
+	$upass=$row['password'];
+	
+     $sql = "SELECT usertype FROM user WHERE email='".$_SESSION["email"]."'";
+    $res=mysqli_query($con,$sql);
+  $row=$res->fetch_assoc();
+  
+  if($row['usertype']=='Manager'){
+	  
+        header("Location: manprofile.php");
+        exit();
+  }
+  
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +30,7 @@
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    Password
+    Profile
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -25,7 +44,7 @@
 
 <body class="">
   <div class="wrapper ">
-    <div class="sidebar" data-color="purple" data-background-color="white" data-image="assets/img/sidebar-1.jpg">
+    <div class="sidebar" data-color="purple" data-background-color="white" data-image="assets/img/sidebar.jpg">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
@@ -54,22 +73,44 @@
 		</li>
 		
 		
+        
+		 
          <li class="nav-item  ">
-            <a class="nav-link" href="./dashboard.php">
+            <a class="nav-link" href="./admindashboard.php">
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
             </a>
           </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="#">
+      <li class="nav-item active">
+            <a class="nav-link">
               <i class="material-icons">person</i>
-              <p>User Profile </p>
+              <p>My Profile</p>
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="./complain.php">
+            <a class="nav-link" href="./test_report.php">
               <i class="material-icons">content_paste</i>
-              <p>Complain</p>
+              <p>Reports</p>
+            </a>
+          </li>
+            <li class="nav-item ">
+            <a class="nav-link" href="./adddepartment.php">
+              <i class="material-icons">group_add</i>
+              <p>Add department</p>
+            </a>
+          </li>
+		  
+            <li class="nav-item ">
+            <a class="nav-link" href="./editdepartment.php">
+              <i class="material-icons">create</i>
+              <p>Edit department</p>
+            </a>
+          </li>	  
+		  
+            <li class="nav-item ">
+            <a class="nav-link" href="./removedepartment.php">
+              <i class="material-icons">clear</i>
+              <p>Remove department</p>
             </a>
           </li>
           <li class="nav-item ">
@@ -79,7 +120,6 @@
             </a>
           </li>
      
-		
           <!--
           <li class="nav-item ">
             <a class="nav-link" href="#">
@@ -121,6 +161,20 @@
       </div>
     </div>
     <div class="main-panel">
+	         <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+            <a class="navbar-brand"><b>Profile</b></a>
+          </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+          </button>
+
+        </div>
+      </nav>
       <!-- Navbar 
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
@@ -190,7 +244,7 @@
       <div class="content">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 offset-md-3">
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title">Profile</h4>
@@ -236,7 +290,7 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label-floating">Username</label>
-                          <input type="text" name="username" class="form-control center" >
+                          <input type="text" name="username" class="form-control center" value="<?php echo $uname;  ?>" >
                         </div>
                       </div>
                     </div>
@@ -244,12 +298,12 @@
                      <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label-floating">Password</label>
-                          <input type="password" name="passwrd1" class="form-control" >
+                          <input type="text" name="passwrd1" class="form-control" value="<?php echo $upass;  ?>" >
                         </div>
                       </div>
                    
                     </div>
-					  <div class="row">
+					<!--   <div class="row">
                      <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label-floating">Confirm Password</label>
@@ -258,7 +312,7 @@
                       </div>
                    
                     </div>
-                   <!-- <div class="row">
+                   <div class="row">
                       <div class="col-md-12">
                         <div class="form-group">
                           <label>About Me</label>
@@ -269,8 +323,7 @@
                         </div>
                       </div>
                     </div>-->
-                    <button type="submit" class="btn btn-primary">Update Profile</button>
-					<a href="./dashboard.php" class="btn btn-primary">Skip</a>
+                    <button type="submit" class="btn btn-primary pull-left">Save</button>
                     <div class="clearfix"></div>
                   </form>
                 </div>

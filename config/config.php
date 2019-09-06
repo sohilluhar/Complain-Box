@@ -3,7 +3,7 @@
 ob_start();        // output buffer start 
 session_start();  //session start
 
-$timezone = date_default_timezone_set("Indian/Antananarivo");
+date_default_timezone_set('Asia/Kolkata');
 
 $con=mysqli_connect("localhost","root","","complainbox");
 

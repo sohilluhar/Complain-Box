@@ -39,14 +39,14 @@
 
 <body class="">
   <div class="wrapper ">
-    <div class="sidebar" data-color="purple" data-background-color="white" data-image="assets/img/sidebar-1.jpg">
+    <div class="sidebar" data-color="purple" data-background-color="white" data-image="assets/img/sidebar.jpg">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
         Tip 2: you can also add an image using data-image tag
     -->
       <div class="logo">
-        <a href="#" class="simple-text logo-normal">
+        <a  class="simple-text logo-normal">
           Complain Box
         </a>
       </div>
@@ -71,14 +71,14 @@
 		
 		
          <li class="nav-item active ">
-            <a class="nav-link" href="#">
+            <a class="nav-link">
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
             </a>
           </li>
      
           <li class="nav-item ">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="./deptstatuscomplain.php?status=">
               <i class="material-icons">content_paste</i>
               <p>View Complain</p>
             </a>
@@ -130,9 +130,9 @@
 </div>            
 			<br/>
 		         <div class="row">
-            <div class="col-lg-3 col-md-6 col-sm-6">
+           <div class="col-lg-3 col-md-6 col-sm-6">
               <div class="card card-stats">
-                <div class="card-header card-header-danger card-header-icon">
+                <div class="card-header card-header-primary card-header-icon">
                   <div class="card-icon">
                     <i class="material-icons">format_list_bulleted</i>
                   </div>
@@ -143,7 +143,7 @@
                 <div class="card-footer">
                   <div class="stats">
 				  
-                    <i class="material-icons">content_paste</i>Total complains
+                    <i class="material-icons">content_paste</i><a href="./deptstatuscomplain.php?status=">View Details</a>
 
                   </div>
                 </div>
@@ -161,7 +161,7 @@
                 </div>
                 <div class="card-footer">
                   <div class="stats">
-                    <i class="material-icons">error_outline</i>To pending complains
+                    <i class="material-icons">error_outline</i><a href="./deptstatuscomplain.php?status=Pending">View Details</a>
                   </div>
                 </div>
               </div>
@@ -177,7 +177,7 @@
                 </div>
                 <div class="card-footer">
                   <div class="stats">
-                    <i class="material-icons">refresh</i> Total In-Progress Complains
+                    <i class="material-icons">refresh</i><a href="./deptstatuscomplain.php?status=In-Progress">View Details</a>
                   </div>
                 </div>
               </div>
@@ -194,7 +194,7 @@
                 </div>
                 <div class="card-footer">
                   <div class="stats">
-                    <i class="material-icons">check</i> Total complain solved 
+                    <i class="material-icons">check</i><a href="./deptstatuscomplain.php?status=Solved">View Details</a>
                   </div>
                 </div>
               </div>
@@ -348,7 +348,7 @@ echo'  </div>';
               
       <div class="col-md-8 offset-md-2">
               <div class="card" id="dept_card">
-                <div class="card-header card-header-primary">
+                <div class="card-header card-header-primary" style="margin:0">
                   <h4 class="card-title" id="complain_card">Complain Id : '.$id.'</h4>
                   <!--
                   <p class="card-category">Complain By '.$cname.'</p>

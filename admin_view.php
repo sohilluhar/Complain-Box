@@ -11,6 +11,27 @@
     $res=mysqli_query($con,$sql);
   $row=$res->fetch_assoc();
   
+  if($row['usertype']=='admin'){
+	  $sidebar='
+	  <li class="nav-item ">
+            <a class="nav-link" href="./adddepartment.php">
+              <i class="material-icons">group_add</i>
+              <p>Add department</p>
+            </a>
+          </li>
+            <li class="nav-item ">
+            <a class="nav-link" href="./removedepartment.php">
+              <i class="material-icons">clear</i>
+              <p>Remove department</p>
+            </a>
+          </li>
+	  '
+	  ;
+  }else{
+	  $sidebar='';
+  }
+  
+  
   if( $row['usertype']!='admin' )
     {
     if($row['usertype']=='User'){
@@ -64,14 +85,14 @@
 
 <body class="">
   <div class="wrapper ">
-    <div class="sidebar" data-color="purple" data-background-color="white" >
+    <div class="sidebar" data-color="purple" data-background-color="white" data-image="assets/img/sidebar.jpg">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
         Tip 2: you can also add an image using data-image tag
     -->
       <div class="logo">
-        <a href="#" class="simple-text logo-normal">
+        <a  class="simple-text logo-normal">
           Complain Box
         </a>
       </div>
@@ -102,37 +123,26 @@
             </a>
           </li>
       <li class="nav-item ">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="./adminprofile.php">
               <i class="material-icons">person</i>
               <p>My Profile</p>
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="test_report.php">
               <i class="material-icons">content_paste</i>
               <p>Reports</p>
             </a>
           </li>
-            <li class="nav-item ">
-            <a class="nav-link" href="./adddepartment.php">
-              <i class="material-icons">group_add</i>
-              <p>Add department</p>
-            </a>
-          </li>
-      
+		  
             <li class="nav-item ">
             <a class="nav-link" href="./editdepartment.php">
               <i class="material-icons">create</i>
               <p>Edit department</p>
             </a>
-          </li>   
-      
-            <li class="nav-item ">
-            <a class="nav-link" href="./removedepartment.php">
-              <i class="material-icons">clear</i>
-              <p>Remove department</p>
-            </a>
-          </li>
+          </li>	  
+		  
+            <?php echo $sidebar;?>
           <li class="nav-item ">
             <a class="nav-link" href="./logout.php">
               <i class="material-icons">arrow_back</i>
@@ -148,7 +158,7 @@
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="#pablo">Perform Action</a>
+            <a class="navbar-brand" >View Complain</a>
           </div>
          
                 <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -239,7 +249,7 @@
               
       <div class="col-md-8 offset-md-2">
               <div class="card" id="dept_card">
-                <div class="card-header card-header-primary">
+                <div class="card-header card-header-primary" style="margin:0;">
                   <h4 class="card-title" id="complain_card">Complain Id : <?php echo $id; ?></h4>
                   <!--
                   <p class="card-category">Complain By '.$cname.'</p>

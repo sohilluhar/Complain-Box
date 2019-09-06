@@ -26,7 +26,7 @@
 
 <body class="">
   <div class="wrapper ">
-    <div class="sidebar" data-color="purple" data-background-color="white" data-image="assets/img/sidebar-3.jpg">
+    <div class="sidebar" data-color="purple" data-background-color="white" data-image="assets/img/sidebar.jpg">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
@@ -58,20 +58,20 @@
         </li>
         
         
-         <li class="nav-item ">
+          <li class="nav-item  ">
             <a class="nav-link" href="./admindashboard.php">
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
             </a>
           </li>
       <li class="nav-item ">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="./adminprofile.php">
               <i class="material-icons">person</i>
               <p>My Profile</p>
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="test_report.php">
               <i class="material-icons">content_paste</i>
               <p>Reports</p>
             </a>
@@ -83,27 +83,26 @@
             </a>
           </li>
 		  
-            <li class="nav-item  ">
+            <li class="nav-item ">
             <a class="nav-link" href="./editdepartment.php">
               <i class="material-icons">create</i>
               <p>Edit department</p>
             </a>
-          </li>
+          </li>	  
 		  
-            <li class="nav-item  active">
-            <a class="nav-link" href="./removedepartment.php">
+            <li class="nav-item active">
+            <a class="nav-link" >
               <i class="material-icons">clear</i>
               <p>Remove department</p>
             </a>
           </li>
-		  
           <li class="nav-item ">
             <a class="nav-link" href="./logout.php">
               <i class="material-icons">arrow_back</i>
               <p>Logout</p>
             </a>
           </li>
-		</ul>
+     </ul>
       </div>
     </div>
     <div class="main-panel">
@@ -111,7 +110,7 @@
        <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="#pablo">Edit Department</a>
+            <a class="navbar-brand" >Remove Department</a>
           </div>
          
                 <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -126,13 +125,6 @@
      <!-- End Navbar -->
       <div class="content">
         <div class="container-fluid">
-			  <div class="col-md-12">
-              <div class="card card-plain">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title mt-0"><b>Select Department to Remove </b></h4>
-                </div>
-                </div>
-                </div>
 		<div class="row">
 						<?php
 
@@ -152,7 +144,7 @@
                   <h3 class="card-title text-center" name="'.$row["dname"].'"><b>'.$row["dname"].'</b></h3>									  
 				</br>
 				
-				<a herf="#" class="btn btn-danger btn-block" style="color: white"  name="'.$row["dname"].'" onClick="scrollToBottom(event)">Delete Department</a>
+				<a herf="#" class="btn btn-danger btn-block" style="color: white"  name="'.$row["dname"].'" onClick="scrollToBottom(event)">Delete</a>
 				</form>
 				</div>
               </div>
@@ -292,9 +284,11 @@ Swal.fire({
 				swal("Error!", "Erro occur try again!", "error");
 			}
 			else{
+				
 				swal("Deleted!", "Department Successfully deleted!", "success");
-									
-				window.location.href = './removedepartment.php';
+				setTimeout(function(){
+					window.location.href = "./removedepartment.php";
+				},1000);					
 			}
             }).fail(function() { 
                 alert( "Error occur. Try again later" );

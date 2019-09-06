@@ -11,18 +11,24 @@
     $res=mysqli_query($con,$sql);
   $row=$res->fetch_assoc();
   
-  if( $row['usertype']!='admin' )
-    {
-    if($row['usertype']=='User'){
-    header("Location: dashboard.php");
-        exit();
-    }
-    else if($row['usertype']=='Department'){
-    header("Location: depthome.php");
-        exit();
-
-      
-    }
+  if($row['usertype']=='admin'){
+	  $sidebar='
+	  <li class="nav-item ">
+            <a class="nav-link" href="./adddepartment.php">
+              <i class="material-icons">group_add</i>
+              <p>Add department</p>
+            </a>
+          </li>
+            <li class="nav-item ">
+            <a class="nav-link" href="./removedepartment.php">
+              <i class="material-icons">clear</i>
+              <p>Remove department</p>
+            </a>
+          </li>
+	  '
+	  ;
+  }else{
+	  $sidebar='';
   }
   
   }
@@ -50,7 +56,7 @@
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    Admin Dashboard | Complain Box
+    Complain Box
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -64,7 +70,7 @@
 
 <body class="">
   <div class="wrapper ">
-    <div class="sidebar" data-color="purple" data-background-color="white" >
+    <div class="sidebar" data-color="purple" data-background-color="white" data-image="assets/img/sidebar.jpg">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
@@ -95,6 +101,7 @@
         </li>
         
         
+         
          <li class="nav-item active ">
             <a class="nav-link" href="./admindashboard.php">
               <i class="material-icons">dashboard</i>
@@ -102,37 +109,28 @@
             </a>
           </li>
       <li class="nav-item ">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="./adminprofile.php">
               <i class="material-icons">person</i>
               <p>My Profile</p>
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="test_report.php">
               <i class="material-icons">content_paste</i>
               <p>Reports</p>
             </a>
           </li>
-            <li class="nav-item ">
-            <a class="nav-link" href="./adddepartment.php">
-              <i class="material-icons">group_add</i>
-              <p>Add department</p>
-            </a>
-          </li>
-      
+  
             <li class="nav-item ">
             <a class="nav-link" href="./editdepartment.php">
               <i class="material-icons">create</i>
               <p>Edit department</p>
             </a>
-          </li>   
-      
-            <li class="nav-item ">
-            <a class="nav-link" href="./removedepartment.php">
-              <i class="material-icons">clear</i>
-              <p>Remove department</p>
-            </a>
-          </li>
+          </li>	  
+		  
+         <?php 
+			echo $sidebar;
+		 ?>
           <li class="nav-item ">
             <a class="nav-link" href="./logout.php">
               <i class="material-icons">arrow_back</i>
@@ -148,7 +146,7 @@
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="#pablo">Perform Action</a>
+            <a class="navbar-brand">Perform Action</a>
           </div>
          
                 <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -231,7 +229,7 @@
               
       <div class="col-md-8 offset-md-2">
               <div class="card" id="dept_card">
-                <div class="card-header card-header-primary">
+                <div class="card-header card-header-primary" style="margin:0;">
                   <h4 class="card-title" id="complain_card">Complain Id : <?php echo $id; ?></h4>
                   <!--
                   <p class="card-category">Complain By '.$cname.'</p>
@@ -429,9 +427,9 @@
                       </a>
             
                       <ul class="dropdown-menu btn-block" aria-labelledby="dropdownMenuLink" >
-                        <li class="dropdown-item" id="item1" name="pending" href="#">Pending</li>
-                        <li class="dropdown-item" id="item2" name="inprogress" href="#">In-Progress</li>
-                        <li class="dropdown-item" id="item3" name="resolved" href="#">Resolved</li>
+                        <li class="dropdown-item complain_status" id="item1" name="pending" href="#">Pending</li>
+                        <li class="dropdown-item complain_status" id="item2" name="inprogress" href="#">In-Progress</li>
+                        <li class="dropdown-item complain_status" id="item3" name="resolved" href="#">Resolved</li>
                       </ul>
                     </div>
                    
@@ -497,7 +495,7 @@
                 <br>
                 <div class="card-header card-header-warning card-header-icon">
                   
-                  <p class="card-category text-left text-primary">Forward to Department :</p>
+                  <p class="card-category text-left text-primary">Assign to Department :</p>
                   
                 </div>
                 <div class="card-footer" style="margin-top:0px;">
@@ -514,7 +512,7 @@
 						$result=mysqli_query($con,$sql);
                         	while($row = mysqli_fetch_array($result)){  
 								
-								echo'<li class="dropdown-item" id="item'.$row['id'].'" name="'.$row['dname'].'" href="#">'.$row['dname'].'</li>';
+								echo'<li class="dropdown-item forward_department" id="item'.$row['id'].'" name="'.$row['dname'].'" href="#">'.$row['dname'].'</li>';
 							
 							}
 					  ?>
@@ -531,7 +529,7 @@
 
 </div>
 
-    <input type="submit" name="reg_complain" class="btn btn-primary btn-block" value="Update Status">
+    <input type="submit" name="reg_complain" class="btn btn-info " value="Update">
 	
    
 
@@ -648,9 +646,9 @@ if(isset($_POST['reg_complain'])){
     $status="Pending";
   }
  if(isset($_COOKIE['Department'])){
-    $deptn=$_COOKIE['Department'];
+    $deptn=$_COOKIE['Department'].",";
   }else{
-    $deptn="Pending";
+    $deptn='';
   }
 	
 
@@ -659,11 +657,11 @@ if(isset($_POST['reg_complain'])){
 
 //$sql7="UPDATE complain SET status='".$status."' , time_constraint=".$timer." ,cost=".$cost." WHERE id=".$id.";";
 //echo $sql7;
-/*if(isset($_POST['timer'])|| isset($_POST['cost']))
+if($_POST['timer']!=''||$_POST['cost']!='')
   $query= mysqli_query($con,"UPDATE complain SET status='$status#' , time_constraint='$timer' , cost='$cost' WHERE id='$id'");
-else{*/
-	 $query= mysqli_query($con,"UPDATE complain SET Departmentname=concat( '$deptn ,',Departmentname)  WHERE id='$id'");
-//}
+else{
+	 $query= mysqli_query($con,"UPDATE complain SET Departmentname=concat( '$deptn',Departmentname)  WHERE id='$id'");
+}
    
  header("Location:admindashboard.php");
 
@@ -868,15 +866,27 @@ else{*/
 
   <script>
 
-  $("li").click(function(){
+    $(".forward_department").click(function(){
+
+      var val=$(this).text();
+      $("#dropdownMenuLink1").text($(this).text());
+      document.cookie = "Department=" + $(this).text();
+
+
+    });
+
+
+
+
+  $(".complain_status").click(function(){
     
     var val=$(this).text();
     $("#dropdownMenuLink").text($(this).text());
 	
-    $("#dropdownMenuLink1").text($(this).text());
+  //  $("#dropdownMenuLink1").text($(this).text());
    
     document.cookie = "status=" + $(this).text();
-    document.cookie = "Department=" + $(this).text();
+  //  document.cookie = "Department=" + $(this).text();
     
     if($(this).text()=='In-Progress'){
       $('#expense').hide();

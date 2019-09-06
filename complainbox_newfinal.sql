@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 27, 2019 at 05:06 PM
+-- Generation Time: Sep 06, 2019 at 05:44 AM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.1.28
 
@@ -52,7 +52,9 @@ INSERT INTO `admincomplain` (`id`, `ogid`, `remark`) VALUES
 (12, 39, 'abcd'),
 (13, 38, ''),
 (14, 53, ''),
-(15, 18, '');
+(15, 18, ''),
+(16, 63, 'remark here'),
+(17, 69, 'unable to solve');
 
 -- --------------------------------------------------------
 
@@ -83,7 +85,7 @@ INSERT INTO `complain` (`id`, `description`, `complainimg`, `Departmentname`, `c
 (1, 'Door is not opening properly in B205', 'assets/pictures/carp.jpg', 'Carpenter', '2019-08-19 13:19:09', 'Resolved', 'Sohil Luhar', 'sohil.luhar@somaiya.edu', 'ARYABHATTA ENGINEERING BUILDING', 'Room number 201', 1, 0),
 (2, 'Window in broken in B301', 'assets/pictures/carp.jpg', 'Carpenter', '2019-08-19 13:19:59', 'Pending', 'Sohil Luhar', 'sohil.luhar@somaiya.edu', 'ARYABHATTA ENGINEERING BUILDING', 'Room number 201', 0, 0),
 (3, 'Desk is broken needs to be changed', 'assets/pictures/carp.jpg', 'Carpenter', '2019-08-19 15:05:17', 'Resolved', 'Sohil Luhar', 'sohil.luhar@somaiya.edu', 'ARYABHATTA ENGINEERING BUILDING', 'Room number 201', 0, 0),
-(18, 'my wifi is not working', 'assets/pictures/carp.jpg', 'Networking', '2019-08-20 13:53:27', 'In-Progress#', 'Sohil Luhar', 'sohil.luhar@somaiya.edu', 'ARYABHATTA ENGINEERING BUILDING', 'Room number 201', 0, 0),
+(18, 'my wifi is not working', 'assets/pictures/carp.jpg', 'Carpenter', '2019-08-20 13:53:27', 'Pending#', 'Sohil Luhar', 'sohil.luhar@somaiya.edu', 'ARYABHATTA ENGINEERING BUILDING', 'Room number 201', 0, 0),
 (25, 'networking test', 'assets/pictures/welding.jpg', 'Networking', '2019-08-20 16:17:23', 'Pending', 'Sohil Luhar', 'sohil.luhar@somaiya.edu', 'ARYABHATTA ENGINEERING BUILDING', 'Room number 201', 0, 0),
 (26, 'complain in carpenter department describe all problem here', 'assets/pictures/welding.jpg', 'Carpenter', '2019-08-20 16:22:38', 'Pending', 'Sohil Luhar', 'sohil.luhar@somaiya.edu', 'ARYABHATTA ENGINEERING BUILDING', 'Room number 201', 0, 0),
 (27, 'i am doing complain in network department', 'assets/pictures/welding.jpg', 'Networking', '2019-08-20 16:24:25', 'Pending', 'Sohil Luhar', 'sohil.luhar@somaiya.edu', 'ARYABHATTA ENGINEERING BUILDING', 'Room number 201', 0, 0),
@@ -111,8 +113,12 @@ INSERT INTO `complain` (`id`, `description`, `complainimg`, `Departmentname`, `c
 (58, 'testing carpenter', '', 'Carpenter', '2019-08-26 02:34:37', 'Resolved', 'PARTH SHETH', 'sheth.pr@somaiya.edu', 'BHASKARACHARYA', '203', 1, 0),
 (59, 'tets', 'assets/img/26-08-2019-09-35-47-Capture.PNG', 'Carpenter', '2019-08-26 04:05:47', 'In-Progress', 'PARTH SHETH', 'sheth.pr@somaiya.edu', 'KJ SOMAIYA SCIENCE AND COMMERCE BUILDING', '203', 1, 0),
 (60, 'test complain', 'assets/img/26-08-2019-13-18-19-Physics JEE Main.JPG', 'Carpenter', '2019-08-26 07:48:19', 'Resolved#', 'PARTH SHETH', 'sheth.pr@somaiya.edu', 'BHASKARACHARYA', '101', 0, 500),
-(61, 'Despite defining the area assigned to each vehicle, cars are parked amidst two parking spots. \r\nOne vehicle occupies the space for 2-3 vehicles leading to mismanagement. Two-wheelers \r\nare placed nowhere near the allotted zone. This creates problem for other people as they \r\nhave to then spend a lot of time finding parking spots in other localities. It induces \r\nfrustration and tension for safety of vehicles', 'assets/img/27-08-2019-05-40-45-Penguins.jpg', 'Carpenter', '2019-08-27 00:10:45', 'In-Progress', 'PARTH SHETH', 'sheth.pr@somaiya.edu', 'ARYABHATTA ENGINEERING BUILDING', '203', 4, 0),
-(62, 'TEST', '', 'Networking', '2019-08-27 04:56:02', 'In-Progress', 'PARTH SHETH', 'sheth.pr@somaiya.edu', 'BHASKARACHARYA', '203', 10, 0);
+(62, 'TEST', '', 'Networking', '2019-08-27 04:56:02', 'In-Progress', 'PARTH SHETH', 'sheth.pr@somaiya.edu', 'BHASKARACHARYA', '203', 10, 0),
+(63, 'complain related to carpenter', 'assets/img/31-08-2019-07-36-08-Capture.PNG', 'Cleaning ,Networking ', '2019-08-31 02:06:08', 'Pending', 'Sohil Luhar', 'sohil.luhar1@somaiya.edu', 'KJ SOMAIYA SCIENCE AND COMMERCE BUILDING', 'room number 203', 0, 500),
+(64, 'testing for test', 'assets/img/02-09-2019-17-16-45-Capture.PNG', 'test', '2019-09-02 11:46:45', 'Pending', 'PARTH SHETH', 'sheth.pr@somaiya.edu', 'BHASKARACHARYA', '201', 0, 0),
+(65, 'test complain goes here', 'assets/img/02-09-2019-18-07-43-2ba453b85e23df9f71e1ee482f30ab73.jpg', 'Carpenter', '0000-00-00 00:00:00', 'Pending', 'PARTH SHETH', 'sheth.pr@somaiya.edu', 'KJ SOMAIYA SCIENCE AND COMMERCE BUILDING', '201', 0, 0),
+(70, 'test complain', 'assets/img/03-09-2019-10-07-30-Physics JEE Main.JPG', 'test', '2019-09-03 04:37:30', 'In-Progress', 'PARTH SHETH', 'sheth.pr@somaiya.edu', 'ARYABHATTA ENGINEERING BUILDING', '201', 3, 0),
+(71, 'desk is broken', 'assets/img/03-09-2019-18-33-19-2ba453b85e23df9f71e1ee482f30ab73.jpg', 'Carpenter', '2019-09-03 13:03:19', 'Pending', 'PARTH SHETH', 'sheth.pr@somaiya.edu', 'BHASKARACHARYA', '201', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -134,7 +140,7 @@ INSERT INTO `department` (`id`, `dname`, `deptimg`) VALUES
 (1, 'Carpenter', 'assets/pictures/carp.jpg'),
 (2, 'Networking', 'assets/pictures/network.png\r\n'),
 (4, 'Cleaning', 'assets/pictures/download.png'),
-(8, 'test', 'assets/pictures/download.png');
+(18, 'test', 'assets/pictures/download.png');
 
 -- --------------------------------------------------------
 
@@ -157,13 +163,12 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `username`, `email`, `password`, `usertype`, `Imgurl`) VALUES
-(1, 'Carpenter', 'Carpenter', 'sohil.luhar@somaiya.edu', '1234', 'Department', 'https://lh3.googleusercontent.com/a-/AAuE7mAbhWd2Kit5xCUWw7FdrSthnhybZxIljFYj61idgQ=s96-c'),
+(1, 'Carpenter', 'Carpenter', 'sohil.luhar1@somaiya.edu', '1234', 'Department', 'https://lh3.googleusercontent.com/a-/AAuE7mAbhWd2Kit5xCUWw7FdrSthnhybZxIljFYj61idgQ=s96-c'),
 (6, 'Networking', 'Networking', 'saurabhkumar.t@somaiya.edu', '123', 'Department', 'https://lh4.googleusercontent.com/-JDkrAd_uw64/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rfRL_wdizFA_IXtyqPMDG3wlm0oNA/s96-c/photo.jpg'),
 (7, 'Cleaning', 'Cleaning', 'sohil.luhar1@somaiya.edu', '1234', 'Department', 'https://lh3.googleusercontent.com/a-/AAuE7mADj06SSwdTWP8WEF_xqpSEa_yAPhQcIS9nSiTG=s96-c'),
 (8, 'admin', 'admin', 'sohil.l@somaiya.edu', '123', 'admin', 'https://lh3.googleusercontent.com/a-/AAuE7mAbhWd2Kit5xCUWw7FdrSthnhybZxIljFYj61idgQ=s96-c'),
-(12, 'Sohil Luhar', 'sohil', 'sohil.luhar1@somaiya.edu', '123', 'User', 'https://lh3.googleusercontent.com/a-/AAuE7mADj06SSwdTWP8WEF_xqpSEa_yAPhQcIS9nSiTG=s96-c'),
-(14, 'PARTH SHETH', '123', 'sheth.pr@somaiya.edu', '123', 'User', 'https://lh6.googleusercontent.com/-H8SDs1ZNIcI/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rd-NxcWfCQWfXpWTRRHQZH0oYOC3A/s96-c/photo.jpg'),
-(18, 'test', 'test', 'abcde@gmail.com', '123', 'Department', '');
+(12, 'Sohil Luhar', 'sohil', 'sohil.luhar@somaiya.edu', '123', 'Manager', 'https://lh3.googleusercontent.com/a-/AAuE7mADj06SSwdTWP8WEF_xqpSEa_yAPhQcIS9nSiTG=s96-c'),
+(22, 'test', 'test', 'abcds@gmail.com', '123', 'Department', '');
 
 --
 -- Indexes for dumped tables
@@ -201,25 +206,25 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `admincomplain`
 --
 ALTER TABLE `admincomplain`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `complain`
 --
 ALTER TABLE `complain`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT for table `department`
 --
 ALTER TABLE `department`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

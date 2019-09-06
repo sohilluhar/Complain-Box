@@ -100,13 +100,12 @@
 		<div class="col-lg-4 col-md-6 ml-auto mr-auto">
           <div class="card card-login">
             <form class="form" method="post" action="logindb.php">
-              <div class="card-header card-header-primary text-center">
+              <div class="card-header card-header-primary text-center" style="margin:0;">
                 <h4 class="card-title" style="font-size:">Login </h4>
                 <div class="social-line">
               
                 </div>
               </div>
-              <p class="description text-center">login here</p>
               <div class="card-body">
              
                 <div class="input-group">
@@ -134,8 +133,9 @@
 			  
               <div class="footer text-center">
                 <button type="submit" class="btn btn-primary btn-link btn-wd btn-lg">Login</button>
+				<!--
                 <a href="./forgotpassword.php" class="btn btn-primary btn-link btn-wd btn-lg">Forgot Password?</a>
-				
+				-->
 				<p><b>Login Using  Somaiya Mail</b></p>
 				  <div class="row">
                         <div class="col-md-12">
@@ -143,7 +143,7 @@
                         </div>
                    </div>
 				
-                <a href="./help.php" class="btn btn-primary btn-link btn-wd btn-lg">Can't Sign In?</a>
+                <!--<a href="./help.php" class="btn btn-primary btn-link btn-wd btn-lg">Can't Sign In?</a>-->
 				 </div>
 				
               </div>
@@ -199,13 +199,21 @@
 						console.log("Admin");						
 						window.location.href = 'admindashboard.php';
 					}
+					
+				else if(usertype=="Manager"){
+					console.log("In Manager");
+					window.location.href = 'managerdashboard.php';
+					}
+					
+					
 				else if(usertype=="User"){
 					console.log("In user");
 					window.location.href = 'dashboard.php';
 					}
+					
 					else if(usertype=="Firstuser"){
 						console.log("In first user");						
-						window.location.href = 'password.php';
+						window.location.href = 'userprofile.php';
 					}
 						
 					//window.location.href = 'dashboard.php';
