@@ -454,7 +454,7 @@
                   <div class="stats">
                   <div class="form-group">
                      
-                       <input type="number"  name="timer" class="form-control" style="">
+                       <input type="number"  name="timer" class="form-control" value=0 style="">
                     </div>
                    
                    
@@ -477,7 +477,7 @@
                   <div class="stats">
                   <div class="form-group">
                      
-                       <input type="number" name="cost" class="form-control" >
+                       <input type="number" name="cost" class="form-control" value=0>
                     </div>
                    
                    
@@ -508,11 +508,30 @@
                       <ul class="dropdown-menu btn-block" aria-labelledby="dropdownMenuLink" >
 					  
 					  <?php
+					  
+					  $deptsql="SELECT * FROM complain WHERE id=$id";
+					  $resultdpt=mysqli_query($con,$deptsql);
+                      $rowdpt = mysqli_fetch_array($resultdpt);
+					  $compdept=$rowdpt['Departmentname'];
+					  
+					  
 							$sql = "SELECT * FROM department";
 						$result=mysqli_query($con,$sql);
-                        	while($row = mysqli_fetch_array($result)){  
+                        	
+							while($row = mysqli_fetch_array($result)){  
+							
+							
+								if(strpos($compdept,$row['dname'])!==false){
+									echo'';
+								}else{
+								echo'
 								
-								echo'<li class="dropdown-item forward_department" id="item'.$row['id'].'" name="'.$row['dname'].'" href="#">'.$row['dname'].'</li>';
+								<a href="./forwarddept.php?dept='.$row['dname'].'&id='.$id.'">
+								<li class="dropdown-item forward_department" id="item'.$row['id'].'" name="'.$row['dname'].'" href="#">'.$row['dname'].'</li>
+								</a>
+								
+								
+								';}
 							
 							}
 					  ?>
@@ -529,7 +548,7 @@
 
 </div>
 
-    <input type="submit" name="reg_complain" class="btn btn-info " value="Update">
+    <input type="submit" name="reg_complain" class="btn btn-primary " value="Update">
 	
    
 
@@ -657,11 +676,8 @@ if(isset($_POST['reg_complain'])){
 
 //$sql7="UPDATE complain SET status='".$status."' , time_constraint=".$timer." ,cost=".$cost." WHERE id=".$id.";";
 //echo $sql7;
-if($_POST['timer']!=''||$_POST['cost']!='')
-  $query= mysqli_query($con,"UPDATE complain SET status='$status#' , time_constraint='$timer' , cost='$cost' WHERE id='$id'");
-else{
-	 $query= mysqli_query($con,"UPDATE complain SET Departmentname=concat( '$deptn',Departmentname)  WHERE id='$id'");
-}
+  $query= mysqli_query($con,"UPDATE complain SET status='$status' , time_constraint='$timer' , cost='$cost' WHERE id='$id'");
+
    
  header("Location:admindashboard.php");
 

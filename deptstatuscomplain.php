@@ -252,7 +252,7 @@ while($row = mysqli_fetch_array($result)){
 		echo "'  style='    font-weight: 500;'>".$row['status']."</td>";  
 							//echo "<td>".$row['complainant']."</td>"; 
 							//echo "<td>".$row['complainantmail']."</td>"; 
-							echo '<td><button type="button" class="btn btn-primary" name="'.$row['id'].'" onclick="viewDetails()">View Details</button></td>'; 
+							echo '<td><button type="button" class="btn btn-primary" name="'.$row['id'].'" onclick="takeAction(event)">Take Action</button></td>'; 
 	
 						}
                    
@@ -670,6 +670,23 @@ $sql7="INSERT INTO admincomplain (`ogid`, `remark`) values ($id,'".$remark."')";
         window.open("admin_view.php?id="+id,"_self");
      // window.location.href = "./admin_action.php";
     }
+	
+	function takeAction(event){
+
+       // var building = document.getElementById('building');
+       // var location = document.getElementById('location');
+       // var msg = document.getElementById('complain_message');
+        var id= event.target.name;
+
+        window.open("depthome.php?id="+id,"_self");
+
+
+
+
+
+    }
+	
+	
   
   
 </script>

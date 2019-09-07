@@ -13,7 +13,14 @@
 	
 	//Destroy entire session    
 	session_destroy(); 
-		
-	header('Location: index.php');
-	exit();
+	
+	echo '
+	<script>
+ 
+				window.location.href = "https://accounts.google.com/Logout";
+	</script>
+ 
+	';
+
+
 ?>

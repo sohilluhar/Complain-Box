@@ -572,8 +572,7 @@ include("footer.php");
      unset($_SESSION['complain_body']);
      unset($_COOKIE['building']);
 	 
-	 	$con = new mysqli("localhost", "root", "", "complainbox");
-
+	 
 
 	$sql = "SELECT email FROM user where name='$department' ";
 	$result=mysqli_query($con,$sql);

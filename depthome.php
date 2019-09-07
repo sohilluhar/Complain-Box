@@ -1068,6 +1068,8 @@ margin-top: 34px;
     $status="Pending";
   }
   
+  
+  
 $query= mysqli_query($con,"UPDATE complain SET status='$status#' WHERE id='$id'");
 
    
